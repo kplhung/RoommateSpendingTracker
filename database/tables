@@ -2,7 +2,7 @@ CREATE TABLE Users (user_id VARCHAR(255), password VARCHAR(25), PRIMARY KEY (use
 
 CREATE TABLE Groups (group_id INTEGER, group_name VARCHAR(20), PRIMARY KEY(group_id))
 
-CREATE TABLE Bills (bill_id INTEGER, amount INTEGER, due_date CHAR(10), description VARCHAR(255))
+CREATE TABLE Bills (bill_id INTEGER, user_id VARCHAR(255), amount INTEGER, due_date CHAR(10), description VARCHAR(255), FOREIGN KEY (user_id) REFERENCES Users)
 
 CREATE TABLE UserGroups (user_id VARCHAR(255), group_id INTEGER, FOREIGN KEY (user_id) REFERENCES Users, FOREIGN KEY (group_id) REFERENCES Groups)
 
