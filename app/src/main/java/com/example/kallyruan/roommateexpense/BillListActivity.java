@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,15 +18,20 @@ public class BillListActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.landing_page);
-        ListView gridview = (ListView) findViewById(R.id.bills_list);
+        ListView listView = (ListView) findViewById(R.id.bills_list);
         ArrayList<Bill> bills = getBills();
-        gridview.setAdapter(new BillAdapter(this, bills));
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                Toast.makeText(BillListActivity.this, "" + position,
-                        Toast.LENGTH_SHORT).show();
+        BillAdapter adapter=new BillAdapter(this, bills);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view, int position, long id)
+            {
+                int pos=position+1;
+                Toast.makeText(BillListActivity.this, Integer.toString(pos)+" Clicked", Toast.LENGTH_SHORT).show();
             }
+
         });
     }
 
