@@ -13,9 +13,9 @@ import java.util.List;
 
 public class GroupListAcitivity extends Activity{
     // this following idList is just made up for temporary testing
-    public static List<Integer> idList=Arrays.asList(10001,10002);
-    public static List<String> nameList=Arrays.asList("RodinCollege 1010","RodinCollege 1011");
-    public static List<Integer> participationList=Arrays.asList(4,3);
+    public static ArrayList<Integer>  idList= new ArrayList<Integer>(Arrays.asList(10001,10002));
+    public static ArrayList<String> nameList= new ArrayList<String>(Arrays.asList("RodinCollege 1010","RodinCollege 1011"));
+    public static ArrayList<Integer> participationList=new ArrayList<Integer>(Arrays.asList(4,3));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
