@@ -20,4 +20,9 @@ public class MenuActivity extends Activity {
         Intent i = new Intent(this,GroupListAcitivity.class);
         startActivityForResult(i,1);
     }
+    
+    public void createGroup(View view){
+        Intent i = new Intent(this,CreateActivity.class);
+        startActivityForResult(i,1);
+    }
 }
