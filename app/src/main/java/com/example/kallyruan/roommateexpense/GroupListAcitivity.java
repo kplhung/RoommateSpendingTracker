@@ -1,7 +1,9 @@
 package com.example.kallyruan.roommateexpense;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,5 +60,11 @@ public class GroupListAcitivity extends Activity{
         int index = idList.size()-1;
         int last = idList.get(index);
         return (Integer) (last+1) ;
+    }
+    public void loadBillList(View view){
+        Intent i = new Intent(this,BillListActivity.class);
+        //temporarily show info for group 1
+        i.putExtra("group_id", idList.get(0) + "");
+        startActivity(i);
     }
 }
