@@ -1,17 +1,13 @@
 package com.example.kallyruan.roommateexpense;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by Lily on 2/17/2018.
@@ -54,7 +50,6 @@ public class BillAdapter extends BaseAdapter {
             billName=(TextView) view.findViewById(R.id.bill_name);
             billAmt=(TextView) view.findViewById(R.id.bill_amount);
             billDate=(TextView) view.findViewById(R.id.bill_date);
-
         }
 
         Bill bill = bills.get(position);

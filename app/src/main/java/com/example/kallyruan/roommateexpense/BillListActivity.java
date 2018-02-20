@@ -17,7 +17,7 @@ public class BillListActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.landing_page);
+        setContentView(R.layout.activity_bill_list);
         ListView listView = (ListView) findViewById(R.id.bills_list);
         ArrayList<Bill> bills = getBills();
         BillAdapter adapter=new BillAdapter(this, bills);
