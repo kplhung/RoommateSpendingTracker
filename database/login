@@ -1,0 +1,10 @@
+AWS Database Info
+instance ID: cis350project
+port: 3306
+DB name: CIS350APP
+username: roommatespending
+password: tracker350
+host name: cis350project.crthvh2wxus6.us-east-2.rds.amazonaws.com
+
+This is what I run to access the database: 
+mysql --local-infile -h cis350project.crthvh2wxus6.us-east-2.rds.amazonaws.com -P 3306 -u roommatespending CIS350APP -ptracker350

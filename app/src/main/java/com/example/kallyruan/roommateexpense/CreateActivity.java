@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -19,7 +22,6 @@ public class CreateActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_group);
-
     }
 
     //send invitation and undate recent group list
@@ -61,6 +63,9 @@ public class CreateActivity extends Activity {
         GroupListAcitivity.idList.add(groupId);
         GroupListAcitivity.nameList.add(groupName);
         GroupListAcitivity.participationList.add(memberNumber);
+
+        TextView message = (TextView) findViewById(R.id.message);
+        message.setVisibility(View.VISIBLE);
     }
 
     //send invitation email to given invitee email addresses
