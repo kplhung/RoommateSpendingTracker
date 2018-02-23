@@ -23,7 +23,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".BillListActivity"/>
-        <activity android:name=".GroupListAcitivity" />
         <activity android:name=".MenuActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignupActivity"></activity>

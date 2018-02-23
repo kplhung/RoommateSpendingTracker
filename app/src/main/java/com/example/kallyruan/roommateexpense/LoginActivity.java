@@ -4,9 +4,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -15,23 +22,56 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        EditText login = findViewById(R.id.emailField);
+        final EditText login = findViewById(R.id.emailField);
         login.setTextColor(Color.LTGRAY);
         login.setText("jonsnow@winterfell.com");
 
-        EditText pw = findViewById(R.id.passwordField);
+        final EditText pw = findViewById(R.id.passwordField);
         pw.setTextColor(Color.LTGRAY);
         pw.setText("password");
 
         final Button loginButton = findViewById(R.id.loginButton);
+
+        // establish db connection
+        final Connection con = DBConnect.getConnection();
+        if (con == null) {
+            Log.v("Fail", "No connection!");
+        }
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // check to see if login and password combo is valid
-                // TODO: finish these cases
-                // case 1: username does not match an existing one
-                // case 2: password isn't correct
-                // case 3: username and password correct -> go to landing page
-                startActivity(new Intent(getApplicationContext(), MenuActivity.class));
+                String email = login.getText().toString();
+                String password = pw.getText().toString();
+
+                String query = "SELECT password FROM Users WHERE user_id = " + email;
+
+                try {
+                    Statement stmt = con.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+                    String realPassword = "";
+                    // case 1: username does not match an existing one
+                    if (!rs.next()) {
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                "User does not exist; please sign up!", Toast.LENGTH_SHORT);
+                        // redirect to sign up page
+                        startActivity(new Intent(getApplicationContext(), SignupActivity.class));
+                    } else {
+                        realPassword = rs.getString("password");
+                        // case 2: password is incorrect
+                        if (!realPassword.equals(password)) {
+                            Toast toast = Toast.makeText(getApplicationContext(),
+                                    "Incorrect password", Toast.LENGTH_SHORT);
+                            // redirect to sign up page
+                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                            // refresh page
+                        } else {
+                            startActivity(new Intent(getApplicationContext(), MenuActivity.class));
+                        }
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
     }
