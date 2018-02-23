@@ -5,45 +5,62 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.kallyruan.roommateexpense.LoginActivity"
+    android:background="#caf0f7"
     tools:layout_editor_absoluteY="81dp">
 
     <TextView
-        android:id="@+id/loginText"
-        android:layout_width="78dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="29dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="28dp"
+        android:id="@+id/loginSticker"
+        android:layout_width="98dp"
+        android:layout_height="39dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="104dp"
         android:gravity="center"
-        android:text="Login"
+        android:text="Username"
         android:textSize="18dp"
-        app:layout_constraintBottom_toTopOf="@+id/emailField"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/passwordSticker"
+        android:layout_width="98dp"
+        android:layout_height="39dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="152dp"
+        android:gravity="center"
+        android:text="Password"
+        android:textSize="18dp"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/emailField"
-        android:layout_width="213dp"
-        android:layout_height="35dp"
-        android:layout_marginBottom="368dp"
-        android:layout_marginLeft="42dp"
-        android:layout_marginStart="42dp"
+        android:layout_width="207dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="13dp"
+        android:layout_marginLeft="84dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="106dp"
         android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/passwordField"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginText" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/passwordField"
-        android:layout_width="213dp"
-        android:layout_height="35dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="76dp"
+        android:layout_width="209dp"
+        android:layout_height="42dp"
+        android:layout_marginBottom="324dp"
+        android:layout_marginStart="136dp"
         android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginText" />
+        app:layout_constraintTop_toBottomOf="@+id/emailField" />
 
     <Button
         android:id="@+id/loginButton"

@@ -1,12 +1,10 @@
 package com.example.kallyruan.roommateexpense; /**
  * Created by Kelly on 2/22/2018.
+ * This class returns a connection object used to connect to a MySQL database.
  */
-import android.util.Log;
 
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
+
 public class DBConnect {
 
     static Connection getConnection() {
@@ -18,12 +16,13 @@ public class DBConnect {
             String dbName = "CIS350APP";
             String userName = "roommatespending";
             String password = "tracker350";
-            String connectString = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName +
-                    "?user=" + userName + "&password=" + password;
-            con = DriverManager.getConnection(connectString);
+            String url = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName + "?user=" +
+                    userName + "&password=" + password;
+            con = DriverManager.getConnection(url);
 
         } catch (SQLException err) {
             System.out.println(err.getMessage());
+            err.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
