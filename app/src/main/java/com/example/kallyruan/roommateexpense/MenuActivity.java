@@ -13,7 +13,7 @@ public class MenuActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.landing_page);
+        setContentView(R.layout.activity_menu);
     }
 
     public void myGroup(View view){
@@ -24,5 +24,10 @@ public class MenuActivity extends Activity {
     public void createGroup(View view){
         Intent i = new Intent(this,CreateActivity.class);
         startActivityForResult(i,1);
+    }
+
+    public void joinGroup(View view){
+        Intent i = new Intent(this,JoinGroupActivity.class);
+        startActivityForResult(i, 1);
     }
 }
