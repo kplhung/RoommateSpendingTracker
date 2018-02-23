@@ -2,6 +2,7 @@ package com.example.kallyruan.roommateexpense;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
