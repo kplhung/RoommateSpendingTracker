@@ -2,9 +2,9 @@ package com.example.kallyruan.roommateexpense;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,11 +39,14 @@ public class SignupActivity extends AppCompatActivity {
                 String password = pw.getText().toString();
 
                 String query = "SELECT * FROM Users WHERE user_id = '" + email + "'";
+                Statement stmt = null;
+                ResultSet rs = null;
                 try {
-                    Statement stmt = con.createStatement();
-                    ResultSet rs = stmt.executeQuery(query);
+                    stmt = con.createStatement();
+                    rs = stmt.executeQuery(query);
+                    Handler h = new Handler();
                     if (!rs.next()) {
-                        // case1: successful sign up
+                        // case 1: successful sign up
                         query = "INSERT INTO Users VALUES(\"" + email + "\",\"" + password + "\")";
                         // redirect to login page
                         stmt = con.createStatement();
@@ -52,10 +55,15 @@ public class SignupActivity extends AppCompatActivity {
                                 "Success! Redirecting to login page; please login with" +
                                         " your new account info.", Toast.LENGTH_LONG);
                         toast.show();
-                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                        h.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                startActivity(new Intent(getApplicationContext(),
+                                        LoginActivity.class));
+                            }
+                        }, 500);
                     } else {
                         // case 2: email address is already associated with existing account
-                        Log.v("Kelly", "place2");
                         Toast toast = Toast.makeText(getApplicationContext(),
                                 "There is already an account associated with this email address;" +
                                         " please use a different one.", Toast.LENGTH_LONG);

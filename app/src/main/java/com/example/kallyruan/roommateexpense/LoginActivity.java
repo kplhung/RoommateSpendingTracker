@@ -2,6 +2,7 @@ package com.example.kallyruan.roommateexpense;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,11 +40,14 @@ public class LoginActivity extends AppCompatActivity {
                 String password = pw.getText().toString();
 
                 String query = "SELECT password FROM Users WHERE user_id = " + email;
+                ResultSet rs = null;
+                Statement stmt = null;
 
                 try {
-                    Statement stmt = con.createStatement();
-                    ResultSet rs = stmt.executeQuery(query);
+                    stmt = con.createStatement();
+                    rs = stmt.executeQuery(query);
                     String realPassword = "";
+                    Handler h = new Handler();
                     // case 1: username does not match an existing one
                     if (!rs.next()) {
                         Toast toast = Toast.makeText(getApplicationContext(),
@@ -51,7 +55,13 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT);
                         // redirect to sign up page
                         toast.show();
-                        startActivity(new Intent(getApplicationContext(), SignupActivity.class));
+                        h.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                startActivity(new Intent(getApplicationContext(),
+                                        SignupActivity.class));
+                            }
+                        }, 500);
                     } else {
                         realPassword = rs.getString("password");
                         // case 2: password is incorrect
@@ -60,8 +70,8 @@ public class LoginActivity extends AppCompatActivity {
                                     "Password is incorrect.", Toast.LENGTH_SHORT);
                             // redirect to sign up page
                             toast.show();
-                            // refresh page
                         } else {
+                            // case 3: username and password are correct; bring to menu
                             startActivity(new Intent(getApplicationContext(), MenuActivity.class));
                         }
                     }
