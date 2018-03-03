@@ -17,7 +17,7 @@ public class MenuActivity extends Activity {
     }
 
     public void myGroup(View view){
-        Intent i = new Intent(this,GroupListAcitivity.class);
+        Intent i = new Intent(this,GroupListActivity.class);
         startActivityForResult(i,1);
     }
     
