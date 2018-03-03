@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 /**
@@ -58,11 +56,11 @@ public class CreateActivity extends Activity {
         System.out.println("number = "+memberNumber);
         sendinvitation(inviteeEmail);
 
-        Integer groupId = GroupListAcitivity.newGroupId();
+        Integer groupId = GroupListActivity.newGroupId();
         System.out.println("newGroupID = "+groupId);
-        GroupListAcitivity.idList.add(groupId);
-        GroupListAcitivity.nameList.add(groupName);
-        GroupListAcitivity.participationList.add(memberNumber);
+        GroupListActivity.idList.add(groupId);
+        GroupListActivity.nameList.add(groupName);
+        GroupListActivity.participationList.add(memberNumber);
 
         TextView message = (TextView) findViewById(R.id.message);
         message.setVisibility(View.VISIBLE);

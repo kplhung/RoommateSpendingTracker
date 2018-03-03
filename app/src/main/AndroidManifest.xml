@@ -18,7 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GroupListAcitivity">
+        <activity android:name=".GroupListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -29,5 +29,6 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignupActivity"></activity>
         <activity android:name=".JoinGroupActivity"/>
+        <activity android:name=".CreateActivity"/>
     </application>
 </manifest>
