@@ -14,7 +14,7 @@ import java.util.List;
  * Created by kallyruan on 13/2/18.
  */
 
-public class GroupListActivity extends Activity{
+public class GroupListAcitivity extends Activity{
     // this following idList is just made up for temporary testing
     public static ArrayList<Integer>  idList= new ArrayList<Integer>(Arrays.asList(10001,10002));
     public static ArrayList<String> nameList= new ArrayList<String>(Arrays.asList("RodinCollege 1010","RodinCollege 1011"));

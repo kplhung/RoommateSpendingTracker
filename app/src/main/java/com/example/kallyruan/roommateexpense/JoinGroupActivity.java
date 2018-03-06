@@ -3,6 +3,7 @@ package com.example.kallyruan.roommateexpense;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -35,7 +36,7 @@ public class JoinGroupActivity extends Activity{
         return group;
     }
     private void seeGroups(){
-        Intent i = new Intent(this,GroupListActivity.class);
+        Intent i = new Intent(this,GroupListAcitivity.class);
         startActivityForResult(i,1);
         finish();
     }
