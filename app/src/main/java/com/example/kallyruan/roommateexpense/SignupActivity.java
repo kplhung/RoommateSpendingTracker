@@ -55,7 +55,6 @@ public class SignupActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     } else {
                         // case 2: email address is already associated with existing account
-                        Log.v("Kelly", "place2");
                         Toast toast = Toast.makeText(getApplicationContext(),
                                 "There is already an account associated with this email address;" +
                                         " please use a different one.", Toast.LENGTH_LONG);
