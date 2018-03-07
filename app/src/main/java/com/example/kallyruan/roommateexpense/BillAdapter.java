@@ -1,10 +1,12 @@
 package com.example.kallyruan.roommateexpense;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -19,6 +21,8 @@ public class BillAdapter extends BaseAdapter {
     private TextView billName;
     private TextView billAmt;
     private TextView billDate;
+    private Button billConfirmButton;
+
     public BillAdapter(Activity activity, ArrayList<Bill> bills){
         this.mActivity = activity;
         this.bills = bills;
@@ -40,22 +44,35 @@ public class BillAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup viewGroup) {
+    public View getView(int position, final View view, ViewGroup viewGroup) {
         LayoutInflater inflater = mActivity.getLayoutInflater();
+        final View createdView;
 
         if(view == null){
 
-            view=inflater.inflate(R.layout.bills_list_row, null);
+            createdView = inflater.inflate(R.layout.bills_list_row, null);
 
-            billName=(TextView) view.findViewById(R.id.bill_name);
-            billAmt=(TextView) view.findViewById(R.id.bill_amount);
-            billDate=(TextView) view.findViewById(R.id.bill_date);
+            billName = (TextView) createdView.findViewById(R.id.bill_name);
+            billAmt = (TextView) createdView.findViewById(R.id.bill_amount);
+            billDate = (TextView) createdView.findViewById(R.id.bill_date);
+            billConfirmButton = (Button) createdView.findViewById(R.id.bill_confirm);
+        } else {
+            createdView = view;
         }
 
-        Bill bill = bills.get(position);
+        final Bill bill = bills.get(position);
         billName.setText(bill.getName());
         billAmt.setText(bill.getAmount());
         billDate.setText(bill.getDueDate());
-        return view;
+
+        billConfirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setVisibility(View.GONE);
+                createdView.setVisibility(View.GONE);
+                // TODO: (Kelly) add logic to remove Bill from DB
+            }
+        });
+        return createdView;
     }
 }

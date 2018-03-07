@@ -20,7 +20,7 @@ public class BillListActivity extends Activity {
         setContentView(R.layout.activity_bill_list);
         ListView listView = (ListView) findViewById(R.id.bills_list);
         ArrayList<Bill> bills = getBills();
-        BillAdapter adapter=new BillAdapter(this, bills);
+        BillAdapter adapter = new BillAdapter(this, bills);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -28,8 +28,9 @@ public class BillListActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id)
             {
-                int pos=position+1;
-                Toast.makeText(BillListActivity.this, Integer.toString(pos)+" Clicked", Toast.LENGTH_SHORT).show();
+                int pos = position + 1;
+                Toast.makeText(BillListActivity.this, Integer.toString(pos)+" Clicked",
+                        Toast.LENGTH_SHORT).show();
             }
 
         });
