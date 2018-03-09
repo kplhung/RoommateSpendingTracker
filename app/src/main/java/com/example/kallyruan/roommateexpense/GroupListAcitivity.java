@@ -70,6 +70,15 @@ public class GroupListAcitivity extends Activity{
         view_alert.setAdapter(adapter_alert);
     }
 
+    public void backToMenu(View view){
+        Intent i = new Intent(this,MenuActivity.class);
+        startActivityForResult(i,1);
+    }
+
+    public void manageGroupAction(View view){
+        Intent i = new Intent(this,GroupManageActivity.class);
+        startActivityForResult(i,1);
+    }
 
     // give next new group id to calling method
     public static Integer newGroupId(){
