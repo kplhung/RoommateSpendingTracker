@@ -30,47 +30,32 @@ public class SignupActivity extends AppCompatActivity {
 
         final Button signUpButton = findViewById(R.id.signUpButton);
 
-        // establish db connection
-        final Connection con = DBConnect.getConnection();
-
         signUpButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String email = username.getText().toString();
                 String password = pw.getText().toString();
 
-                String query = "SELECT * FROM Users WHERE user_id = '" + email + "'";
-                Statement stmt = null;
-                ResultSet rs = null;
-                try {
-                    stmt = con.createStatement();
-                    rs = stmt.executeQuery(query);
-                    Handler h = new Handler();
-                    if (!rs.next()) {
-                        // case 1: successful sign up
-                        query = "INSERT INTO Users VALUES(\"" + email + "\",\"" + password + "\")";
-                        // redirect to login page
-                        stmt = con.createStatement();
-                        stmt.executeUpdate(query);
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                "Success! Redirecting to login page; please login with" +
-                                        " your new account info.", Toast.LENGTH_LONG);
-                        toast.show();
-                        h.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                startActivity(new Intent(getApplicationContext(),
-                                        LoginActivity.class));
-                            }
-                        }, 500);
-                    } else {
-                        // case 2: email address is already associated with existing account
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                "There is already an account associated with this email address;" +
-                                        " please use a different one.", Toast.LENGTH_LONG);
-                        toast.show();
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                DBQueries db = DBQueries.getInstance();
+                boolean success = db.signUp(email, password);
+
+                Handler h = new Handler();
+                if (success) {
+                    // case 1: successful sign up
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Success! Redirecting to login page; please login with" +
+                                    " your new account info.", Toast.LENGTH_LONG);
+                    toast.show();
+                    h.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {startActivity(new Intent(getApplicationContext(),
+                                LoginActivity.class));}
+                    }, 500);
+                } else {
+                    // case 2: email address is already associated with existing account
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "There is already an account associated with this email address;" +
+                                    " please use a different one.", Toast.LENGTH_LONG);
+                    toast.show();
                 }
             }
         });
