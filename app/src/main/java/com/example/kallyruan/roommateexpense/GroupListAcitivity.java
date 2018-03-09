@@ -3,6 +3,8 @@ package com.example.kallyruan.roommateexpense;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.view.View;
 
@@ -15,10 +17,19 @@ import java.util.List;
  */
 
 public class GroupListAcitivity extends Activity{
-    // this following idList is just made up for temporary testing
+
+    // hard-code data
+    // this following idList is just made up for temporary testing, will be update after database all set up
     public static ArrayList<Integer>  idList= new ArrayList<Integer>(Arrays.asList(10001,10002));
     public static ArrayList<String> nameList= new ArrayList<String>(Arrays.asList("RodinCollege 1010","RodinCollege 1011"));
     public static ArrayList<Integer> participationList=new ArrayList<Integer>(Arrays.asList(4,3));
+    public static ArrayList<String> alertList=new ArrayList<String>(Arrays.asList("","DUE"));
+
+    //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
+    ArrayAdapter<Integer> adapter_id;
+    ArrayAdapter<String> adapter_name;
+    ArrayAdapter<Integer> adapter_participation;
+    ArrayAdapter<String> adapter_alert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,40 +39,56 @@ public class GroupListAcitivity extends Activity{
     }
 
     public void showGroupList() {
-        //the following code is competitive... though i don't know how to avoid findViewById for every time....
-        if(idList.size()>=1) {
-            TextView row2Column1 = (TextView) findViewById(R.id.row2Column1);
-            row2Column1.setText(Integer.toString(idList.get(0)));
-            TextView row2Column2 = (TextView) findViewById(R.id.row2Column2);
-            row2Column2.setText(nameList.get(0));
-            TextView row2Column3 = (TextView) findViewById(R.id.row2Column3);
-            row2Column3.setText(Integer.toString(participationList.get(0)));
-        }
-        if(idList.size()>=2) {
-            TextView row3Column1 = (TextView) findViewById(R.id.row3Column1);
-            row3Column1.setText(Integer.toString(idList.get(1)));
-            TextView row3Column2 = (TextView) findViewById(R.id.row3Column2);
-            row3Column2.setText(nameList.get(1));
-            TextView row3Column3 = (TextView) findViewById(R.id.row3Column3);
-            row3Column3.setText(Integer.toString(participationList.get(1)));
-        }
+    // this part should connect with database and show all groups user had
 
-        if(idList.size()>=3) {
-            TextView row4Column1 = (TextView) findViewById(R.id.row4Column1);
-            row4Column1.setText(Integer.toString(idList.get(2)));
-            TextView row4Column2 = (TextView) findViewById(R.id.row4Column2);
-            row4Column2.setText(nameList.get(2));
-            TextView row4Column3 = (TextView) findViewById(R.id.row4Column3);
-            row4Column3.setText(Integer.toString(participationList.get(2)));
-        }
+        //Fill the list view of id
+        ListView view_id = (ListView) findViewById(R.id.listView_id);
+        adapter_id=new ArrayAdapter<Integer>(this,
+                android.R.layout.simple_list_item_1,
+                idList);
+        view_id.setAdapter(adapter_id);
 
+        //Fill the list view of name
+        ListView view_name = (ListView) findViewById(R.id.listView_name);
+        adapter_name=new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1,
+                nameList);
+        view_name.setAdapter(adapter_name);
+
+        //Fill the list view of participation
+        ListView view_participation = (ListView) findViewById(R.id.listView_participation);
+        adapter_participation=new ArrayAdapter<Integer>(this,
+                android.R.layout.simple_list_item_1,
+                participationList);
+        view_participation.setAdapter(adapter_participation);
+
+        //Fill the list view of alert
+        ListView view_alert = (ListView) findViewById(R.id.listView_alert);
+        adapter_alert=new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1,
+                alertList);
+        view_alert.setAdapter(adapter_alert);
     }
 
+    public void backToMenu(View view){
+        Intent i = new Intent(this,MenuActivity.class);
+        startActivityForResult(i,1);
+    }
+
+    public void manageGroupAction(View view){
+        Intent i = new Intent(this,GroupManageActivity.class);
+        startActivityForResult(i,1);
+    }
+
+    // give next new group id to calling method
     public static Integer newGroupId(){
         int index = idList.size()-1;
         int last = idList.get(index);
         return (Integer) (last+1) ;
     }
+
+
+    //load bill list
     public void loadBillList(View view){
         Intent i = new Intent(this,BillListActivity.class);
         //temporarily show info for group 1
