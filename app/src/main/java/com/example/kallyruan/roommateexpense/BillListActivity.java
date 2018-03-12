@@ -1,6 +1,7 @@
 package com.example.kallyruan.roommateexpense;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -43,5 +44,10 @@ public class BillListActivity extends Activity {
         allBills.add(bill1);
         allBills.add(bill2);
         return allBills;
+    }
+
+    public void addBill(View view){
+        Intent i = new Intent(this, AddBillActivity.class);
+        startActivityForResult(i,1);
     }
 }

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">RoommateExpense</string>
+    <string-array name="bill_date_timeframes">
+        <item>Week</item>
+        <item>Month</item>
+        <item>Year</item>
+    </string-array>
 </resources>

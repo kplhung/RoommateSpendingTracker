@@ -1,6 +1,7 @@
 package com.example.kallyruan.roommateexpense;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,5 +58,7 @@ public class BillAdapter extends BaseAdapter {
         billAmt.setText(bill.getAmount());
         billDate.setText(bill.getDueDate());
         return view;
+    }
+    public void changeBill(View view){
     }
 }
