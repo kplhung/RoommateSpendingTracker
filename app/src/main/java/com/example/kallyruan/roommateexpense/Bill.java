@@ -11,6 +11,9 @@ public class Bill {
         this.amount = amount;
         this.dueDate = dueDate;
     }
+    public void updateDueDate(String newDueDate){
+        this.dueDate = newDueDate;
+    }
     public String getName(){
         return name;
     }

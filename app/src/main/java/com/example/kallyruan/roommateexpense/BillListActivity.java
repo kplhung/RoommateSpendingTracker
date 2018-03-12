@@ -49,4 +49,9 @@ public class BillListActivity extends Activity {
         allBills.add(bill2);
         return allBills;
     }
+
+    public void addBill(View view){
+        Intent i = new Intent(this, AddBillActivity.class);
+        startActivityForResult(i,1);
+    }
 }
