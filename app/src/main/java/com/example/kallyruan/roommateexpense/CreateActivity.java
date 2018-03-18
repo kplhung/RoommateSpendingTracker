@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import java.util.Random;
 
 import org.w3c.dom.Text;
 
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 public class CreateActivity extends Activity {
 
     final String PROMOTEDINFO ="Type invitee email address";
+    ArrayList<String> inviteeEmail=new ArrayList<>();
+    int new_id;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,46 +29,35 @@ public class CreateActivity extends Activity {
 
     //send invitation and undate recent group list
     public void createGroup(View view){
-        String groupName;
-        ArrayList<String> inviteeEmail=new ArrayList<>();
-        int memberNumber=0;
-        String email;
 
+        //get groupName
         EditText name= (EditText) findViewById(R.id.groupName);
-        groupName= name.getText().toString();
+        String groupName= name.getText().toString();
 
-        // the following codes are a bit too repetitive but i haven't figured out how to improve it...
-        EditText invitee1= (EditText) findViewById(R.id.invitee1);
-        email=invitee1.getText().toString();
-        if (!email.equals(PROMOTEDINFO)){
-            inviteeEmail.add(email);
-            memberNumber+=1;
-        }
-
+        //Check whether have invitee email
+        EditText invitee= (EditText) findViewById(R.id.invitee1);
+        checkEmail(invitee);
         EditText invitee2= (EditText) findViewById(R.id.invitee2);
-        email=invitee2.getText().toString();
-        if (!email.equals(PROMOTEDINFO)){
-            inviteeEmail.add(email);
-            memberNumber+=1;
-        }
-
+        checkEmail(invitee2);
         EditText invitee3= (EditText) findViewById(R.id.invitee3);
-        email=invitee3.getText().toString();
-        if (!email.equals(PROMOTEDINFO)){
-            inviteeEmail.add(email);
-            memberNumber+=1;
-        }
-        System.out.println("number = "+memberNumber);
+        checkEmail(invitee3);
+
         sendinvitation(inviteeEmail);
 
-        Integer groupId = GroupListAcitivity.newGroupId();
-        System.out.println("newGroupID = "+groupId);
-        GroupListAcitivity.idList.add(groupId);
-        GroupListAcitivity.nameList.add(groupName);
-        GroupListAcitivity.participationList.add(memberNumber);
 
-        TextView message = (TextView) findViewById(R.id.message);
-        message.setVisibility(View.VISIBLE);
+        String user_id=LoginActivity.email;
+        DBQueries db = DBQueries.getInstance();
+
+        //add group information to database, if success then show message
+        boolean result=db.createGroup(user_id,groupName);
+        if(result==true){
+            //show successful created message
+            TextView message = (TextView) findViewById(R.id.message);
+            message.setVisibility(View.VISIBLE);
+        }else{
+            System.out.println("something wrong with add group to db");
+        }
+
     }
 
     //send invitation email to given invitee email addresses
@@ -76,5 +68,12 @@ public class CreateActivity extends Activity {
     public void backToMenu(View view) {
         Intent i = new Intent(this,MenuActivity.class);
         startActivityForResult(i,1);
+    }
+
+    public void checkEmail(EditText invitee){
+        String email=invitee.getText().toString();
+        if (!email.equals(PROMOTEDINFO)){
+            inviteeEmail.add(email);
+        }
     }
 }

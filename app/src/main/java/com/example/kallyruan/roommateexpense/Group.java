@@ -1,5 +1,6 @@
 package com.example.kallyruan.roommateexpense;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -8,7 +9,10 @@ import java.util.ArrayList;
 
 public class Group {
     private String code;
+    private String name;
     private ArrayList<User> users;
+    private int participation;
+    private String alert;
 
     public Group(String code, User user){
         this.code = code;
@@ -16,9 +20,18 @@ public class Group {
         this.users.add(user);
     }
 
+    public Group(String id, String name, int participation,String alert){
+        this.code =id;
+        this.name =name;
+        this.participation=participation;
+        this.alert=alert;
+    }
+
     public String getCode(){
         return code;
     }
+
+    public String getName(){return name;}
 
     public ArrayList<User> getUsers(){
         return users;
@@ -26,5 +39,18 @@ public class Group {
 
     public void addUser(User user){
         this.users.add(user);
+    }
+
+    public int getParticipation(){
+        /*
+        DBQueries db = DBQueries.getInstance();
+        int number = db.groupParticipation(name);
+        */
+        //hard-code
+        int number =2;
+        return number;
+    }
+    public String getAlert(){
+        return alert;
     }
 }
