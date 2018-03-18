@@ -425,7 +425,7 @@ public class DBQueries {
      * @return if the group_id is taken
      */
     boolean groupExists(String group_id) {
-        String query = "SELECT * FROM Groups WHERE group_id = " + group_id;
+        String query = "SELECT * FROM Groups WHERE group_id = '" + group_id + "'";
         Statement stmt = null;
         ResultSet rs = null;
 
@@ -460,8 +460,8 @@ public class DBQueries {
             group_id = generateId();
         }
 
-        String groups = "INSERT INTO Groups VALUES (" + group_id + ", " + group_name + ")";
-        String userGroups = "INSERT INTO UserGroups VALUES (" + user_id + ", " + group_id + ")";
+        String groups = "INSERT INTO Groups VALUES ('" + group_id + "', '" + group_name + "')";
+        String userGroups = "INSERT INTO UserGroups VALUES (" + user_id + ", '" + group_id + "')";
         Statement stmt = null;
 
         try {
