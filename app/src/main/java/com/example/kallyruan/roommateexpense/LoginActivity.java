@@ -31,52 +31,39 @@ public class LoginActivity extends AppCompatActivity {
 
         final Button loginButton = findViewById(R.id.loginButton);
 
-        // establish db connection
-        final Connection con = DBConnect.getConnection();
-
         loginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String email = "'" + login.getText().toString() + "'";
                 String password = pw.getText().toString();
 
-                String query = "SELECT password FROM Users WHERE user_id = " + email;
-                ResultSet rs = null;
-                Statement stmt = null;
+                DBQueries db = DBQueries.getInstance();
+                int rs = db.login(email, password);
 
-                try {
-                    stmt = con.createStatement();
-                    rs = stmt.executeQuery(query);
-                    String realPassword = "";
-                    Handler h = new Handler();
-                    // case 1: username does not match an existing one
-                    if (!rs.next()) {
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                "User does not exist; redirecting you to sign up page!",
-                                Toast.LENGTH_SHORT);
-                        // redirect to sign up page
-                        toast.show();
-                        h.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                startActivity(new Intent(getApplicationContext(),
-                                        SignupActivity.class));
-                            }
-                        }, 500);
-                    } else {
-                        realPassword = rs.getString("password");
-                        // case 2: password is incorrect
-                        if (!realPassword.equals(password)) {
-                            Toast toast = Toast.makeText(getApplicationContext(),
-                                    "Password is incorrect.", Toast.LENGTH_SHORT);
-                            // redirect to sign up page
-                            toast.show();
-                        } else {
-                            // case 3: username and password are correct; bring to menu
-                            startActivity(new Intent(getApplicationContext(), MenuActivity.class));
+                Handler h = new Handler();
+                // case 1: username does not match an existing one
+                if (rs == 0) {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "User does not exist; redirecting you to sign up page!",
+                            Toast.LENGTH_SHORT);
+                    // redirect to sign up page
+                    toast.show();
+                    h.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            startActivity(new Intent(getApplicationContext(),
+                                    SignupActivity.class));
                         }
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                    }, 500);
+                } else if (rs == 1) {
+                    // case 2: password is incorrect
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Password is incorrect.", Toast.LENGTH_SHORT);
+                    // redirect to sign up page
+                    toast.show();
+                }
+                else {
+                    // case 3: username and password are correct; bring to menu
+                    startActivity(new Intent(getApplicationContext(), MenuActivity.class));
                 }
             }
         });

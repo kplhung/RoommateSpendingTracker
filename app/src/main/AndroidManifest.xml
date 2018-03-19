@@ -29,5 +29,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignupActivity"></activity>
         <activity android:name=".JoinGroupActivity"/>
+        <activity android:name=".CreateActivity" />
+        <activity android:name=".GroupManageActivity" />
     </application>
 </manifest>
