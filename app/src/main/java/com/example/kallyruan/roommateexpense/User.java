@@ -22,9 +22,6 @@ public class User {
 
     //Singleton pattern. If already has this instance, return it. Otherwise, create a new one.
     public static User getInstance(String username){
-        if (instance==null){
-
-            
             //get user information from database
             ArrayList<Group> allgroups = new ArrayList<Group>();
             String userEmail = LoginActivity.email;
