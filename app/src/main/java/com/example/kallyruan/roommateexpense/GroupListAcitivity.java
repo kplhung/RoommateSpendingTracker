@@ -46,5 +46,14 @@ public class GroupListAcitivity extends Activity{
         Intent i = new Intent(this,GroupManageActivity.class);
         startActivityForResult(i,1);
     }
+     //load bill list
+    public void loadBillList(View view){
+        Intent i = new Intent(this, BillListActivity.class);
+        //temporarily show info for group 1
+        Intent j = getIntent();
+        i.putExtra("group_id", idList.get(0) + "");
+        i.putExtra("username", j.getStringExtra("username"));
+        startActivity(i);
+    }
 
 }
