@@ -63,7 +63,7 @@ public class GroupListAcitivity extends Activity{
         return (Integer) (last+1) ;
     }
     public void loadBillList(View view){
-        Intent i = new Intent(this,BillListActivity.class);
+        Intent i = new Intent(this, BillListActivity.class);
         //temporarily show info for group 1
         i.putExtra("group_id", idList.get(0) + "");
         startActivity(i);
