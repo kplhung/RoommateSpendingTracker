@@ -8,7 +8,6 @@ import android.database.SQLException;
  */
 
 public class User {
-    private static User instance;
     private String username;
     private ArrayList<Group> groups;
 
@@ -24,20 +23,19 @@ public class User {
     //Singleton pattern. If already has this instance, return it. Otherwise, create a new one.
     public static User getInstance(String username){
         if (instance==null){
-            //right now something wrong with handling database, hence would use temporary data
 
-            /*
+            
             //get user information from database
             ArrayList<Group> allgroups = new ArrayList<Group>();
             String userEmail = LoginActivity.email;
             // try to connect dababase
             try {
                 DBQueries db = DBQueries.getInstance();
-                User present = new User(userEmail);
                 ResultSet rs = db.userGroups(userEmail);
                 // get all group information and add to ArrayList<Group>
                 try {
                     while (rs.next()) {
+                        System.out.println("User group information loading.")
                         String code = rs.getString("group_id");
                         String name = rs.getString("group_name");
                         int participation = db.groupParticipation(code);
@@ -49,8 +47,9 @@ public class User {
                 }
             }catch(SQLException e) {
                     e.printStackTrace();
-            }*/
-
+            }
+/*
+  //right now something wrong with handling database, hence would use temporary data
             //hard-code data
             ArrayList<Group> allgroups = new ArrayList<Group>();
             //before the db is set up, we will use hard-coded data
@@ -58,12 +57,10 @@ public class User {
             Group group2 = new Group("101", "test1",3,"not yet");
             allgroups.add(group1);
             allgroups.add(group2);
-
+*/
             return new User(username,allgroups);
-        }else{
-            return instance;
-        }
     }
+        
     public String getUsername(){
         return username;
     }
