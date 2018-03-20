@@ -28,16 +28,13 @@ public class User {
             // try to connect dababase
             try {
                 DBQueries db = DBQueries.getInstance();
-                System.out.println(userEmail);
                 ResultSet rs = db.userGroups(userEmail);
                 // get all group information and add to ArrayList<Group>
                 try {
                     while (rs.next()) {
                         System.out.println("User group information loading.");
                         String code = rs.getString("group_id");
-                        System.out.println(code);
                         String name = db.groupName(code);
-                        System.out.println(name);
                         int participation = db.groupParticipation(code);
                         String alert = "Not implemented yet";
                         allgroups.add(new Group(code, name, participation, alert));
