@@ -20,7 +20,7 @@ public class User {
         this.groups=groups;
     }
 
-    //Singleton pattern. If already has this instance, return it. Otherwise, create a new one.
+    //get the latest user information from DB
     public static User getInstance(String username){
             //get user information from database
             ArrayList<Group> allgroups = new ArrayList<Group>();
@@ -68,7 +68,7 @@ public class User {
 
     public Group getNthGroup(int index){
         int total = groups.size();
-        if(index>0 && index<= total) {
+        if(index>=0 && index<= total) {
             return groups.get(index);
         }else{
             System.out.println("group index out of range.");

@@ -2,6 +2,7 @@ package com.example.kallyruan.roommateexpense;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -57,16 +58,35 @@ public class GroupManageActivity extends Activity{
     }
 
     public void exitGroup(View view){
-        DBQueries db = DBQueries.getInstance();
         String userEmail=LoginActivity.email;
-        String group = User.getInstance(userEmail).getNthGroup(action_index).getCode();
+        User present = User.getInstance(userEmail);
+        System.out.println("now try to get the "+action_index+"th group.");
+        Group selectedGroup=present.getNthGroup(action_index);
+        String groupCode = selectedGroup.getCode();
+        System.out.println(groupCode);
+
+        try {
+            DBQueries db = DBQueries.getInstance();
+            Boolean result = db.leaveGroup(userEmail, groupCode);
+            if (!result) {
+                System.out.println("Leave group action failed");
+            }else{
+                System.out.println("successfully exist group.");
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        //String group = User.getInstance(userEmail).getNthGroup(action_index).getCode();
+        //System.out.println(group);
+        /*
         Boolean result = db.leaveGroup(userEmail,group);
         if (!result){
             System.out.println("Leave group action failed");
         }
-
-        Intent i = new Intent(this,GroupManageActivity.class);
-        startActivityForResult(i,1);
+*/
+        //Intent i = new Intent(this,GroupManageActivity.class);
+        //startActivityForResult(i,1);
     }
 
     public void deleteGroup(View view){
