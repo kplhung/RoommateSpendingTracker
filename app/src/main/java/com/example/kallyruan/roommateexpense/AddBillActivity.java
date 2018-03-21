@@ -29,7 +29,6 @@ public class AddBillActivity extends Activity{
         super.onCreate(savedInstanceState);
         Intent i = getIntent();
         this.group_id = i.getStringExtra("group_id");
-
         setContentView(R.layout.activity_add_bill);
         Spinner spinner = (Spinner) findViewById(R.id.timeframe_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
