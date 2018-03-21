@@ -21,7 +21,7 @@ public class MenuActivity extends Activity {
         String username = i.getStringExtra("username");
         Intent j = new Intent(this,GroupListAcitivity.class);
         j.putExtra("username", username);
-        startActivityForResult(i,1);
+        startActivityForResult(j,1);
     }
     
     public void createGroup(View view){

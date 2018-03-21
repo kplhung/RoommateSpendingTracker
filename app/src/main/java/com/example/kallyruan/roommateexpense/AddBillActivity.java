@@ -2,12 +2,11 @@ package com.example.kallyruan.roommateexpense;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -22,9 +21,15 @@ import java.util.ArrayList;
 
 public class AddBillActivity extends Activity{
     private int reminder_timeframe;
+    private DBQueries instance = DBQueries.getInstance();
+    private String group_id;
+    private RoommateAdapter roommate_adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent i = getIntent();
+        this.group_id = i.getStringExtra("group_id");
+
         setContentView(R.layout.activity_add_bill);
         Spinner spinner = (Spinner) findViewById(R.id.timeframe_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -47,8 +52,7 @@ public class AddBillActivity extends Activity{
         });
         ListView listView = (ListView) findViewById(R.id.split_bill_list);
         ArrayList<User> roommates = getRoommates();
-        RoommateAdapter roommate_adapter = new RoommateAdapter(this, roommates);
-        Log.i("listview", ""+(listView == null));
+        this.roommate_adapter = new RoommateAdapter(this, roommates);
         listView.setAdapter(roommate_adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -63,7 +67,18 @@ public class AddBillActivity extends Activity{
 
     public void saveBill(View view){
         String label = ((TextView) findViewById(R.id.label_input)).getText().toString();
+        String desc = ((TextView) findViewById(R.id.description_input)).getText().toString();
+        String due = ((TextView) findViewById(R.id.duedate_input)).getText().toString();
 
+        ListView listview = (ListView) findViewById(R.id.split_bill_list);
+
+        for (int i=0; i<listview.getChildCount(); i++){
+            View row = listview.getChildAt(i);
+            String name = row.findViewById(R.id.roommate_name).toString();
+            double amt = Double.parseDouble(((TextView)row.findViewById(R.id.pay_amt)).getText().toString());
+//            instance.addBill(name, this.group_id, label, amt, due, desc);
+        }
+        finish();
     }
 
     public ArrayList<User> getRoommates(){
