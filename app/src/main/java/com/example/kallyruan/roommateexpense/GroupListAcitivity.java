@@ -51,7 +51,7 @@ public class GroupListAcitivity extends Activity{
         Intent i = new Intent(this, BillListActivity.class);
         //temporarily show info for group 1
         Intent j = getIntent();
-//        i.putExtra("group_id", idList.get(0) + "");
+        i.putExtra("group_id", idList.get(0) + "");
         i.putExtra("username", j.getStringExtra("username"));
         startActivity(i);
     }
