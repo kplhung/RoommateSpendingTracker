@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
-    android:descendantFocusability="blocksDescendants"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,28 +11,42 @@
         android:id="@+id/groupTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
-        android:text="Click to manage groups"
+        android:text="Click name to delete group or exist"
         android:textSize="20dp"
+        app:layout_constraintTop_toBottomOf="parent"
+        android:layout_marginTop="40dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent" />
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp" />
+
+    <TextView
+        android:id="@+id/groupName"
+        android:text="Group name"
+        android:textSize="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="60dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/groupTitle"
+        app:layout_constraintStart_toEndOf="@+id/ID" />
+
 
 
     <ListView
-        android:id="@+id/listView_manage"
-        android:layout_width="wrap_content"
+        android:id="@+id/listView_name"
+        android:layout_width="133dp"
         android:layout_height="350dp"
         android:gravity="start"
         android:textSize="15sp"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:layout_marginTop="40dp"
-        app:layout_constraintTop_toBottomOf="@id/groupTitle"
-        tools:layout_editor_absoluteY="118dp" />
+        android:layout_marginLeft="3dp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@id/listView_id"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/groupName" />
 
     <Button
-        android:id="@+id/deleteGroup"
+        android:id="@+id/delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
@@ -47,7 +60,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <Button
-        android:id="@+id/exitGroup"
+        android:id="@+id/exit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
@@ -58,10 +71,10 @@
         android:layout_marginLeft="80dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="30dp"
-        app:layout_constraintTop_toBottomOf="@+id/deleteGroup"/>
+        app:layout_constraintTop_toBottomOf="@+id/delete"/>
 
     <Button
-        android:id="@+id/cancelGroup"
+        android:id="@+id/cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
@@ -72,7 +85,7 @@
         android:layout_marginLeft="80dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="30dp"
-        app:layout_constraintTop_toBottomOf="@+id/exitGroup"/>
+        app:layout_constraintTop_toBottomOf="@+id/exit"/>
 
 
     <Button
@@ -85,7 +98,7 @@
         android:layout_marginLeft="130dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="2dp"
-        app:layout_constraintTop_toBottomOf="@+id/listView_manage"/>
+        app:layout_constraintTop_toBottomOf="@+id/listView_name"/>
 
 
 </android.support.constraint.ConstraintLayout>
