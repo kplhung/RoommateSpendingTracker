@@ -445,30 +445,6 @@ public class DBQueries {
     }
 
     /**
-     * Returns the group name (in a ResultSet), given a group_id
-     * @param group_id
-     * @return group_name
-     */
-    String groupName(String group_id) {
-        String query = "SELECT * FROM Groups WHERE group_id = '" + group_id + "'";
-        Statement stmt = null;
-        ResultSet rs = null;
-
-        try {
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(query);
-
-            if (rs.next()) {
-                return rs.getString("group_name");
-            }
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-
-        return "";
-    }
-
-    /**
      * Updates the database with the new group, given a user_id of the creator and the
      * user-specified name of the group
      * @param user_id

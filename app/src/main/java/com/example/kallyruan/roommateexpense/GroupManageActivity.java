@@ -2,7 +2,6 @@ package com.example.kallyruan.roommateexpense;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.SQLException;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,26 +10,26 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 /**
  * Created by kallyruan on 9/3/18.
  */
 
-public class GroupManageActivity extends Activity{
+public class GroupManageActivity extends Activity {
 
     ArrayAdapter<String> adapter_name;
-    GroupAdapter adapter;
     int action_index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manage_group);
-        showGroupList();
 
-        ListView view_name = (ListView) findViewById(R.id.listView_manage);
-        view_name.setItemsCanFocus(false);
+        //Fill the list view of name
+        ListView view_name = (ListView) findViewById(R.id.listView_name);
+        adapter_name=new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1,
+                GroupListAcitivity.nameList);
+        view_name.setAdapter(adapter_name);
         view_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
                 action_index=position;
@@ -38,59 +37,48 @@ public class GroupManageActivity extends Activity{
                 showActionOption();
             }
         });
-
-    }
-
-    public void showGroupList() {
-        ListView listView = (ListView) findViewById(R.id.listView_manage);
-        ArrayList<Group> list = User.getInstance(LoginActivity.email).getGroups();
-        GroupAdapter adapter = new GroupAdapter(this, list);
-        listView.setAdapter(adapter);
     }
 
     public void showActionOption(){
-        Button action1=(Button)findViewById(R.id.exitGroup);
+        Button action1=(Button)findViewById(R.id.exit);
         action1.setVisibility(View.VISIBLE);
-        Button action2=(Button)findViewById(R.id.deleteGroup);
+        Button action2=(Button)findViewById(R.id.delete);
         action2.setVisibility(View.VISIBLE);
-        Button action3=(Button)findViewById(R.id.cancelGroup);
+        Button action3=(Button)findViewById(R.id.cancel);
         action3.setVisibility(View.VISIBLE);
     }
 
     public void exitGroup(View view){
-        String userEmail=LoginActivity.email;
-        User present = User.getInstance(userEmail);
-        System.out.println("now try to get the "+action_index+"th group.");
-        Group selectedGroup=present.getNthGroup(action_index);
-        String groupCode = selectedGroup.getCode();
-        System.out.println(groupCode);
+        //here should delete this group information in the database!!
 
-        try {
-            DBQueries db = DBQueries.getInstance();
-            Boolean result = db.leaveGroup(userEmail, groupCode);
-            if (!result) {
-                System.out.println("Leave group action failed");
-            }else{
-                System.out.println("successfully exist group.");
-            }
-        }catch (SQLException e) {
-            e.printStackTrace();
-        }
+        //for now, just delete from hard-code data
+        GroupListAcitivity.idList.remove(action_index);
+        GroupListAcitivity.nameList.remove(action_index);
+        GroupListAcitivity.participationList.remove(action_index);
+        GroupListAcitivity.alertList.remove(action_index);
 
-        //String group = User.getInstance(userEmail).getNthGroup(action_index).getCode();
-        //System.out.println(group);
-        /*
-        Boolean result = db.leaveGroup(userEmail,group);
-        if (!result){
-            System.out.println("Leave group action failed");
-        }
-*/
-        //Intent i = new Intent(this,GroupManageActivity.class);
-        //startActivityForResult(i,1);
+        //here should check whether i am the last one to leave this group, if so, then should delete
+        //this group information in the database!!
+
+
+        Intent i = new Intent(this,GroupManageActivity.class);
+        startActivityForResult(i,1);
     }
 
     public void deleteGroup(View view){
-        //have not gotten the SQL function yet
+        //firstly, check whether have the permission to delete group,
+
+
+        //if have the permission,
+        //delete group information in all memebers' record in the database!!
+
+        //for now, just delete from hard-code data
+        GroupListAcitivity.idList.remove(action_index);
+        GroupListAcitivity.nameList.remove(action_index);
+        GroupListAcitivity.participationList.remove(action_index);
+        GroupListAcitivity.alertList.remove(action_index);
+        //here should also delete other user data in this group
+
 
         Intent i = new Intent(this,GroupManageActivity.class);
         startActivityForResult(i,1);
@@ -105,4 +93,5 @@ public class GroupManageActivity extends Activity{
         Intent i = new Intent(this,GroupListAcitivity.class);
         startActivityForResult(i,1);
     }
+
 }
