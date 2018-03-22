@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 
 
 /**
+ * Contains functions for all database queries supported in the app
  * Created by evephelps on 3/9/18.
  */
 
@@ -42,10 +44,10 @@ public class DBQueries {
 
     /**
      * Throws an IllegalArgumentException if the password is null
-     * @param password
+     * @param p
      */
-    void nullPassword(String password) {
-        if (password == null) {
+    void nullPassword(String p) {
+        if (p == null) {
             throw new IllegalArgumentException("Cannot have an empty password");
         }
     }
@@ -70,7 +72,7 @@ public class DBQueries {
             throw new IllegalArgumentException("Must enter a non-empty due date");
         }
 
-        if (date.length() != 9 && date.length() != 10) {
+        if (date.length() != 10) {
             throw new IllegalArgumentException("Due date must be 9 or 10 characters long");
         }
 
@@ -269,8 +271,8 @@ public class DBQueries {
         //DOESN'T CHECK IF THE USER OR GROUP EXISTS -- CAN ADD THIS, BUT SHOULD BE GUARANTEED
         //BASED ON IMPLEMENTATION
 
-        String query = "SELECT bill_id, bill_name, amount, due_date, description FROM (Bills AS " +
-                "B INNER JOIN (SELECT bill_id FROM GroupBills WHERE group_id = " + group_id + ") " +
+        String query = "SELECT B.bill_id, B.bill_name, B.amount, B.due_date, B.description FROM (Bills AS " +
+                "B INNER JOIN (SELECT bill_id FROM GroupBills WHERE group_id = '" + group_id + "') " +
                 "AS G ON B.bill_id = G.bill_id) WHERE user_id = " + email;
         Statement stmt = null;
         ResultSet rs = null;
@@ -283,6 +285,38 @@ public class DBQueries {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * Handles safe deletion of a user's account from the database
+     * @param email
+     * @return whether the deletion was successful
+     */
+    boolean deleteAccount(String email) {
+        nullEmail(email);
+
+        String users = "DELETE FROM Users WHERE user_id = " + email;
+        Statement stmt = null;
+
+        String group_id = null;
+
+        ResultSet usersGroups = userGroups(email);
+        try {
+            //delete all bills and groups -- all bills must be assigned an associated group
+            while (usersGroups != null && usersGroups.next()) {
+                group_id = usersGroups.getString("group_id");
+                leaveGroup(email, group_id);
+            }
+
+            //remove the user from Users
+            stmt = con.createStatement();
+            stmt.executeUpdate(users);
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     /**
@@ -317,17 +351,17 @@ public class DBQueries {
     /**
      * Creates a bill based on the inputted information
      * @param user
-     * @param group
+     * @param group_id
      * @param name
      * @param amt
-     * @param due
+     * @param date
      * @param desc
      * @return if the bill addition was successful
      */
-    boolean addBill(String user, String group, String name, double amt, String due, String desc) {
+    boolean addBill(String user, String group_id, String name, double amt, String date, String desc) {
         nullEmail(user);
-        nullGroup(group);
-        validDueDate(due);
+        nullGroup(group_id);
+        validDueDate(date);
 
         //DOESN'T CHECK IF THE USER OR GROUP EXISTS -- CAN ADD THIS, BUT SHOULD BE GUARANTEED
         //BASED ON IMPLEMENTATION
@@ -338,8 +372,8 @@ public class DBQueries {
         }
 
         String bills = "INSERT INTO Bills VALUES (" + newBillId + ", " + name + ", " + user +
-                ", " + amt + ", " + due + ", " + desc + ")";
-        String groupBills = "INSERT INTO GroupBills VALUES(" + group + ", " + newBillId + ")";
+                ", " + amt + ", " + date + ", " + desc + ")";
+        String groupBills = "INSERT INTO GroupBills VALUES(" + group_id + ", " + newBillId + ")";
         Statement stmt = null;
 
         try {
@@ -355,6 +389,13 @@ public class DBQueries {
         return false;
     }
 
+    /**
+     * Deletes the specified bill from the database
+     * @param user_id
+     * @param group_id
+     * @param bill_id
+     * @return whether the delete was successful
+     */
     boolean deleteBill(String user_id, String group_id, String bill_id) {
         nullEmail(user_id);
         nullGroup(group_id);
@@ -362,15 +403,19 @@ public class DBQueries {
         //DOESN'T CHECK IF THE USER/GROUP/BILL EXISTS, BUT SHOULD BE GUARANTEED BASED ON
         //IMPLEMENTATION
 
-        String groupBills = "DELETE FROM GroupBills WHERE group_id=" + group_id + " AND bill_id=" +
-                bill_id;
-        String bills = "DELETE FROM Bills WHERE bill_id = " + bill_id + " AND user_id = " + user_id;
-        Statement stmt = null;
+        String groupBills = "DELETE FROM GroupBills WHERE group_id = ? AND bill_id = ?";
+        String bills = "DELETE FROM Bills WHERE bill_id = ? AND user_id = " + user_id;
+        PreparedStatement stmt = null;
 
         try {
-            stmt = con.createStatement();
-            stmt.executeUpdate(groupBills);
-            stmt.executeUpdate(bills);
+            stmt = con.prepareStatement(groupBills);
+            stmt.setString(1, group_id);
+            stmt.setString(2, bill_id);
+            stmt.executeUpdate();
+
+            stmt = con.prepareStatement(bills);
+            stmt.setString(1, bill_id);
+            stmt.executeUpdate();
             return true;
         } catch(SQLException e) {
             e.printStackTrace();
@@ -379,6 +424,12 @@ public class DBQueries {
         return false;
     }
 
+    /**
+     * Updates the bill's due date in the database
+     * @param bill_id
+     * @param due_date
+     * @return whether the update was successful
+     */
     boolean changeDueDate(String bill_id, String due_date) {
         validDueDate(due_date);
 
@@ -398,6 +449,12 @@ public class DBQueries {
         return false;
     }
 
+    /**
+     * Updates the bill's amount in the database
+     * @param bill_id
+     * @param amt
+     * @return whether the update was successful
+     */
     boolean changeAmount(String bill_id, double amt) {
         //DOESN'T CHECK IF THE BILL EXISTS, BUT SHOULD BE GUARANTEED BASED ON IMPLEMENTATION
 
@@ -442,6 +499,57 @@ public class DBQueries {
         }
 
         return false;
+    }
+
+    /**
+     * Returns the group name (in a ResultSet), given a group_id
+     * @param group_id
+     * @return group_name
+     */
+    String groupName(String group_id) {
+        String query = "SELECT * FROM Groups WHERE group_id = '" + group_id + "'";
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(query);
+
+            if (rs.next()) {
+                return rs.getString("group_name");
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+
+    /**
+     * Finds all information on all the bills assigned to the group
+     * @param group_id of the group
+     * @return a ResultSet including the bill_id, bill_name, amount, due_date, and description
+     * for each of the group's bills
+     */
+    ResultSet groupBills(String group_id) {
+        nullGroup(group_id);
+
+        //DOESN'T CHECK IF THE GROUP EXISTS, BUT SHOULD BE GUARANTEED BASED ON IMPLEMENTATION
+
+        String query = "SELECT bill_id, bill_name, amount, due_date, description FROM Bills " +
+                "WHERE group_id = '" + group_id + "'";
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(query);
+            return rs;
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     /**
@@ -519,22 +627,31 @@ public class DBQueries {
 
         String bill_id = null;
 
-        String groupBills = "DELETE FROM GroupBills WHERE group_id = " + group_id + " AND bill_id" +
-                " = " + bill_id;
-        String bills = "DELETE FROM Bills WHERE bill_id = " + bill_id + " AND user_id = " + user_id;
-        String userGroups = "DELETE FROM UserGroups WHERE user_id = " + user_id + " AND group_id " +
-                "= " + group_id;
-        Statement stmt = null;
+        String groupBills = "DELETE FROM GroupBills WHERE group_id = ? AND bill_id = ?";
+        String bills = "DELETE FROM Bills WHERE bill_id = ? AND user_id = " + user_id;
+        String userGroups = "DELETE FROM UserGroups WHERE user_id = " + user_id + " AND group_id = ?";
+        PreparedStatement s = null;
+
         ResultSet usersBills = userBillsInGroup(user_id, group_id);
         try {
-            while (usersBills.next()) {
+            while (usersBills != null && usersBills.next()) {
                 bill_id = usersBills.getString("bill_id");
-                stmt.executeUpdate(groupBills);
-                stmt.executeUpdate(bills);
-            }
-            stmt.executeUpdate(userGroups);
 
-            deleteGroup(group_id);
+                s = con.prepareStatement(groupBills);
+                s.setString(1, group_id);
+                s.setString(2, bill_id);
+                s.executeUpdate();
+
+                s = con.prepareStatement(bills);
+                s.setString(1, bill_id);
+                s.executeUpdate();
+            }
+            s = con.prepareStatement(userGroups);
+            s.setString(1, group_id);
+            s.executeUpdate();
+
+            if (groupParticipation(group_id) == 0)
+                deleteGroup(group_id);
 
             return true;
         } catch(SQLException e) {
@@ -544,25 +661,47 @@ public class DBQueries {
     }
 
     /**
-     * Checks if the group should be deleted (participation 0) and deletes accordingly
-     * @param group_id
-     * @return if the delete was successful
+     * Deletes a group and all of its associated bill information for all users
+     * @param group_id of the group
+     * @return whether the delete was successful
      */
     boolean deleteGroup(String group_id) {
         nullGroup(group_id);
 
-        if (groupParticipation(group_id) == 0) {
-            String groups = "DELETE FROM Groups WHERE group_id = " + group_id;
-            Statement stmt = null;
+        String groups = "DELETE FROM Groups WHERE group_id = ?";
+        String userGroups = "DELETE FROM UserGroups WHERE group_id = ?";
+        String groupBills = "DELETE FROM GroupBills WHERE group_id = ?";
+        String bills = "DELETE FROM Bills WHERE bill_id = ?";
+        PreparedStatement s = null;
 
-            try {
-                stmt = con.createStatement();
-                stmt.executeUpdate(groups);
-                return true;
-            } catch(SQLException e) {
-                e.printStackTrace();
+        String bill_id = null;
+
+        ResultSet groupsBills = groupBills(group_id);
+        try {
+            s = con.prepareStatement(userGroups);
+            s.setString(1, group_id);
+            s.executeUpdate();
+
+            s = con.prepareStatement(groupBills);
+            s.setString(1, group_id);
+            s.executeUpdate();
+
+            s = con.prepareStatement(groups);
+            s.setString(1, group_id);
+            s.executeUpdate();
+
+            while (groupsBills != null && groupsBills.next()) {
+                bill_id = groupsBills.getString("bill_id");
+                s = con.prepareStatement(bills);
+                s.setString(1, bill_id);
+                s.executeUpdate();
             }
+
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
         }
+
         return false;
     }
 
@@ -574,8 +713,8 @@ public class DBQueries {
     int groupParticipation(String group_id) {
         nullGroup(group_id);
 
-        String query = "SELECT COUNT(DISTINCT user_id) FROM UserGroups WHERE group_id = " +
-                group_id;
+        String query = "SELECT COUNT(DISTINCT user_id) FROM UserGroups WHERE group_id = '" +
+                group_id + "'";
         Statement stmt = null;
         ResultSet rs = null;
         int count = -1;
@@ -583,7 +722,8 @@ public class DBQueries {
         try {
             stmt = con.createStatement();
             rs = stmt.executeQuery(query);
-            count = rs.getInt(0);
+            if(rs.next())
+                count = rs.getInt(1);
         } catch(SQLException e) {
             e.printStackTrace();
         }

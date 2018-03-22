@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class LoginActivity extends AppCompatActivity {
+    public static String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String email = "'" + login.getText().toString() + "'";
+                email = "'" + login.getText().toString() + "'";
                 String password = pw.getText().toString();
 
                 DBQueries db = DBQueries.getInstance();
@@ -63,8 +64,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else {
                     // case 3: username and password are correct; bring to menu
-                    Intent i = new Intent(getApplicationContext(), MenuActivity.class);
-                    i.putExtra("username", email);
                     startActivity(new Intent(getApplicationContext(), MenuActivity.class));
                 }
             }

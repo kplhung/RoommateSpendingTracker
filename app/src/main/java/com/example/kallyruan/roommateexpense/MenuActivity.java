@@ -17,10 +17,7 @@ public class MenuActivity extends Activity {
     }
 
     public void myGroup(View view){
-        Intent i = getIntent();
-        String username = i.getStringExtra("username");
-        Intent j = new Intent(this,GroupListAcitivity.class);
-        j.putExtra("username", username);
+        Intent i = new Intent(this,GroupListAcitivity.class);
         startActivityForResult(i,1);
     }
     
