@@ -59,10 +59,12 @@ public class BillListActivity extends Activity {
                 String name = bill_rs.getString("bill_name");
                 String amt = bill_rs.getString("amount");
                 String due_date = bill_rs.getString("due_date");
-                Bill bill = new Bill(name, amt, due_date);
+                String id = bill_rs.getString("bill_id");
+                Bill bill = new Bill(name, amt, due_date, id);
                 allBills.add(bill);
             }
         } catch(SQLException e){
+            e.printStackTrace();
         }
         return allBills;
     }

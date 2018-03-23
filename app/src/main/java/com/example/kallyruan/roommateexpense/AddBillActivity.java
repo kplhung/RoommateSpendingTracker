@@ -73,7 +73,7 @@ public class AddBillActivity extends Activity{
 
         ListView listview = (ListView) findViewById(R.id.split_bill_list);
 
-        for (int i=0; i<listview.getChildCount(); i++){
+        for (int i = 0; i < listview.getChildCount(); i++){
             View row = listview.getChildAt(i);
             String name = ((TextView) row.findViewById(R.id.roommate_name)).getText().toString();
             double amt = Double.parseDouble(((TextView)row.findViewById(R.id.pay_amt)).getText().toString());
