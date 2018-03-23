@@ -21,7 +21,7 @@ public class User {
         this.groups=groups;
     }
 
-    //Singleton pattern. If already has this instance, return it. Otherwise, create a new one.
+    //this function is to get all user group information and return
     public static User getInstance(String username){
             //get user information from database
             ArrayList<Group> allgroups = new ArrayList<Group>();
@@ -33,7 +33,6 @@ public class User {
                 // get all group information and add to ArrayList<Group>
                 try {
                     while (rs.next()) {
-                        System.out.println("User group information loading.");
                         String code = rs.getString("group_id");
                         String name = db.groupName(code);
                         int participation = db.groupParticipation(code);
@@ -46,16 +45,6 @@ public class User {
             }catch(SQLException e) {
                     e.printStackTrace();
             }
-/*
-  //right now something wrong with handling database, hence would use temporary data
-            //hard-code data
-            ArrayList<Group> allgroups = new ArrayList<Group>();
-            //before the db is set up, we will use hard-coded data
-            Group group1 = new Group("100", "test",2,"not yet");
-            Group group2 = new Group("101", "test1",3,"not yet");
-            allgroups.add(group1);
-            allgroups.add(group2);
-*/
             return new User(username,allgroups);
     }
         
@@ -67,6 +56,7 @@ public class User {
 
     public void addGroup(Group group) { this.groups.add(group); }
 
+    // this function is to return the selected group with index n
     public Group getNthGroup(int index){
         int total = groups.size();
         if(index>=0 && index< total) {
