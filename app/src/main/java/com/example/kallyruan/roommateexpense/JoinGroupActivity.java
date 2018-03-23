@@ -12,29 +12,28 @@ import android.widget.EditText;
  */
 
 public class JoinGroupActivity extends Activity{
-    private User user;
+    private User userInstance = User.getInstance(LoginActivity.email);
+    private DBQueries dbInstance = DBQueries.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //should get username from db, or pass it from Intent
-        this.user = new User("User");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_group);
     }
 
     public void joinGroup(View view){
         String code = ((EditText) findViewById(R.id.enterCodeField)).getText().toString();
-        //check if code is in the database; for now, it will always be true if something is entered
         if (code != null){
-            Group newGroup = getGroup(code);
-            this.user.addGroup(newGroup);
+            Log.i("code", code);
+            Log.i("email", LoginActivity.email);
+            Group newGroup = new Group(code, userInstance);
+            userInstance.addGroup(newGroup);
+            int i = dbInstance.addUserToGroup(LoginActivity.email, code);
+            Log.i("failed", i+"");
             seeGroups();
         }
     }
-    private Group getGroup(String code){
-        Group group = new Group(code, user);
-        //should fetch group from db
-        return group;
-    }
+
     private void seeGroups(){
         Intent i = new Intent(this,GroupListAcitivity.class);
         startActivityForResult(i,1);
