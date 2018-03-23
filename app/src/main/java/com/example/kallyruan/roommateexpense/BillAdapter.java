@@ -22,14 +22,10 @@ public class BillAdapter extends BaseAdapter {
     private TextView billAmt;
     private TextView billDate;
     private Button billConfirmButton;
-    private String groupID;
-    private String username;
 
-    public BillAdapter(Activity activity, ArrayList<Bill> bills, String groupID, String username){
+    public BillAdapter(Activity activity, ArrayList<Bill> bills){
         this.mActivity = activity;
         this.bills = bills;
-        this.groupID = groupID;
-        this.username = username;
     }
 
     @Override
@@ -75,11 +71,6 @@ public class BillAdapter extends BaseAdapter {
                 v.setVisibility(View.GONE);
                 createdView.setVisibility(View.GONE);
                 // TODO: (Kelly) add logic to remove Bill from DB
-                DBQueries db = DBQueries.getInstance();
-                // TODO: bill ID info; fix dummy variable
-                String billID = null;
-
-                boolean success = db.deleteBill(username, groupID, billID);
             }
         });
         return createdView;
