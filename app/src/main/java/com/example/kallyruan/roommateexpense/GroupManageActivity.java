@@ -56,11 +56,14 @@ public class GroupManageActivity extends Activity{
         action3.setVisibility(View.VISIBLE);
     }
 
+    //this function is to exist group and delete this group information from this user DB.
+    //if this user is the last one in the group, then delete group record
     public void exitGroup(View view){
         DBQueries db = DBQueries.getInstance();
         String userEmail=LoginActivity.email;
         String group = User.getInstance(userEmail).getNthGroup(action_index).getCode();
         Boolean result = db.leaveGroup(userEmail,group);
+        //check whether action successful
         if (!result){
             System.out.println("Leave group action failed");
         }
@@ -69,12 +72,21 @@ public class GroupManageActivity extends Activity{
         startActivityForResult(i,1);
     }
 
+    //this function is to delete group information from all members' DB and the group record as well
     public void deleteGroup(View view){
-        //have not gotten the SQL function yet
+        DBQueries db = DBQueries.getInstance();
+        String userEmail=LoginActivity.email;
+        String group = User.getInstance(userEmail).getNthGroup(action_index).getCode();
+        boolean result=db.deleteGroup(group);
+        //check whether action successful
+        if (!result){
+            System.out.println("Delete group action failed");
+        }
 
         Intent i = new Intent(this,GroupManageActivity.class);
         startActivityForResult(i,1);
     }
+
 
     public void cancel(View view){
         Intent i = new Intent(this,GroupManageActivity.class);
