@@ -3,6 +3,7 @@ package com.example.kallyruan.roommateexpense;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -48,22 +49,27 @@ public class GroupManageActivity extends Activity{
     }
 
     public void showActionOption(){
-        Button action1=(Button)findViewById(R.id.exitGroup);
-        action1.setVisibility(View.VISIBLE);
-        Button action2=(Button)findViewById(R.id.deleteGroup);
-        action2.setVisibility(View.VISIBLE);
-        Button action3=(Button)findViewById(R.id.cancelGroup);
-        action3.setVisibility(View.VISIBLE);
+        Button exitGroup = (Button) findViewById(R.id.exitGroup);
+        exitGroup.setVisibility(View.VISIBLE);
+
+        Button deleteGroup = (Button)findViewById(R.id.deleteGroup);
+        deleteGroup.setVisibility(View.VISIBLE);
+
+        Button cancelGroup = (Button)findViewById(R.id.cancelGroup);
+        cancelGroup.setVisibility(View.VISIBLE);
+
+        Button emailGroup = (Button) findViewById(R.id.emailGroup);
+        emailGroup.setVisibility(View.VISIBLE);
     }
 
     //this function is to exist group and delete this group information from this user DB.
     //if this user is the last one in the group, then delete group record
     public void exitGroup(View view){
         DBQueries db = DBQueries.getInstance();
-        String userEmail=LoginActivity.email;
+        String userEmail = LoginActivity.email;
         String group = User.getInstance(userEmail).getNthGroup(action_index).getCode();
-        Boolean result = db.leaveGroup(userEmail,group);
-        //check whether action successful
+        Boolean result = db.leaveGroup(userEmail, group);
+
         if (!result){
             System.out.println("Leave group action failed");
         }
@@ -87,6 +93,26 @@ public class GroupManageActivity extends Activity{
         startActivityForResult(i,1);
     }
 
+    // this emails users in the group with a reminder to pay
+    public void emailGroup(View view) {
+        String userEmail = LoginActivity.email;
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("message/rfc822");
+        DBQueries dbq = DBQueries.getInstance();
+        ArrayList<String> members = dbq.groupMembers(User.getInstance(userEmail).getNthGroup(
+                action_index).getCode());
+        String[] emailAddresses = new String[members.size()];
+        members.toArray(emailAddresses);
+        i.putExtra(Intent.EXTRA_EMAIL, emailAddresses);
+        i.putExtra(Intent.EXTRA_SUBJECT, "Reminder to pay bills");
+        i.putExtra(Intent.EXTRA_TEXT, "Hello! Please remember to pay your bills!");
+        try {
+            startActivity(Intent.createChooser(i, "Send mail..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Log.v("unsuccessful", "bad");
+            // Toast.makeText(MyActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     public void cancel(View view){
         Intent i = new Intent(this,GroupManageActivity.class);

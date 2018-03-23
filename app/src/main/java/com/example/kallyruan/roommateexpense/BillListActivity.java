@@ -26,7 +26,7 @@ public class BillListActivity extends Activity {
         setContentView(R.layout.activity_bill_list);
         ListView listView = (ListView) findViewById(R.id.bills_list);
         ArrayList<Bill> bills = getBills();
-        BillAdapter adapter = new BillAdapter(this, bills);
+        BillAdapter adapter = new BillAdapter(this, bills, group_id, username);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
