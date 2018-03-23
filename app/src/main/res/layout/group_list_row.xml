@@ -16,16 +16,6 @@
         android:focusableInTouchMode="false"/>
 
     <TextView
-        android:id="@+id/groupID"
-        android:layout_height="wrap_content"
-        android:layout_width="70dp"
-        android:layout_weight="1"
-        android:textStyle="bold"
-        android:focusable="false"
-        android:focusableInTouchMode="false"/>
-
-
-    <TextView
         android:id="@+id/groupName"
         android:layout_height="wrap_content"
         android:layout_width="70dp"
