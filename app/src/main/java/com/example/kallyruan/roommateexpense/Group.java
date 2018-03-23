@@ -40,16 +40,6 @@ public class Group {
     public void addUser(User user){
         this.users.add(user);
     }
-
-    public int getParticipation(){
-        /*
-        DBQueries db = DBQueries.getInstance();
-        int number = db.groupParticipation(name);
-        */
-        //hard-code
-        int number =2;
-        return number;
-    }
     public String getAlert(){
         return alert;
     }
