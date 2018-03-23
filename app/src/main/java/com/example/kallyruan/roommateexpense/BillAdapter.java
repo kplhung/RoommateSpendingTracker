@@ -73,7 +73,8 @@ public class BillAdapter extends BaseAdapter {
             public void onClick(View v) {
                 v.setVisibility(View.GONE);
                 createdView.setVisibility(View.GONE);
-                // TODO: (Kelly) add logic to remove Bill from DB
+                DBQueries dbq = DBQueries.getInstance();
+                dbq.deleteBill(LoginActivity.email, groupID, bill.getBillID());
             }
         });
         return createdView;
