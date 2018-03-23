@@ -30,6 +30,7 @@ public class Group {
     public String getCode(){
         return code;
     }
+    public int getParticipation(){return participation;}
 
     public String getName(){return name;}
 
