@@ -13,7 +13,7 @@ public class User {
         this.username = username;
         this.groups = new ArrayList<Group>();
     }
-    public String getUsername(){
+    public String getName(){
         return username;
     }
 
