@@ -64,7 +64,9 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else {
                     // case 3: username and password are correct; bring to menu
-                    startActivity(new Intent(getApplicationContext(), MenuActivity.class));
+                    Intent i = new Intent(getApplicationContext(), MenuActivity.class);
+                    i.putExtra("username", email);
+                    startActivity(i);
                 }
             }
         });

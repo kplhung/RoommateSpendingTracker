@@ -15,6 +15,7 @@ public class User {
         this.username = username;
         this.groups = new ArrayList<Group>();
     }
+
     public User(String username, ArrayList<Group> groups){
         this.username = username;
         this.groups=groups;

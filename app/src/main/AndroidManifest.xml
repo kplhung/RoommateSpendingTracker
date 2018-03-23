@@ -24,12 +24,18 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".BillListActivity"/>
+        <activity android:name=".BillListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".MenuActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignupActivity"></activity>
         <activity android:name=".JoinGroupActivity"/>
         <activity android:name=".CreateActivity" />
         <activity android:name=".GroupManageActivity" />
+        <activity android:name=".AddBillActivity"/>
     </application>
 </manifest>
