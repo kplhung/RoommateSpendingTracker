@@ -74,10 +74,10 @@ public class DBQueries {
         }
 
         if (date.length() != 10) {
-            throw new IllegalArgumentException("Due date must be 9 or 10 characters long");
+            throw new IllegalArgumentException("Due date must be 10 characters long");
         }
 
-        if (date.charAt(4) != '-' || date.charAt(6) != '-') {
+        if (date.charAt(4) != '-' || date.charAt(7) != '-') {
             throw new IllegalArgumentException("Must enter a correctly formatted due date");
         }
     }
@@ -368,13 +368,13 @@ public class DBQueries {
         //BASED ON IMPLEMENTATION
 
         String newBillId = generateId();
-        while (billExists(newBillId)) {
-            newBillId = generateId();
-        }
+//        while (billExists(newBillId)) {
+//            newBillId = generateId();
+//        }
 
-        String bills = "INSERT INTO Bills VALUES (" + newBillId + ", " + name + ", " + user +
-                ", " + amt + ", " + date + ", " + desc + ")";
-        String groupBills = "INSERT INTO GroupBills VALUES(" + group_id + ", " + newBillId + ")";
+        String bills = "INSERT INTO Bills VALUES ('" + newBillId + "', '" + name + "', " + user +
+                ", " + amt + ", '" + date + "', '" + desc + "')";
+        String groupBills = "INSERT INTO GroupBills VALUES('" + group_id + "', '" + newBillId + "')";
         Statement stmt = null;
 
         try {

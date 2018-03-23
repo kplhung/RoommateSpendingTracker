@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.view.View;
@@ -23,13 +24,22 @@ public class GroupListAcitivity extends Activity{
 
     //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
     ArrayAdapter<Integer> adapter_id;
-
+    private int action_index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.existing_group);
         showGroupList();
+
+        ListView view_name = (ListView) findViewById(R.id.listView_id);
+        view_name.setItemsCanFocus(false);
+        view_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
+                action_index=position;
+            }
+        });
+
     }
 
     public void showGroupList() {
@@ -52,9 +62,11 @@ public class GroupListAcitivity extends Activity{
     public void loadBillList(View view){
         Intent i = new Intent(this, BillListActivity.class);
         //temporarily show info for group 1
-        Intent j = getIntent();
-//        i.putExtra("group_id", idList.get(0) + "");
-        i.putExtra("username", j.getStringExtra("username"));
+        String userEmail = LoginActivity.email;
+        String group_id = User.getInstance(userEmail).getNthGroup(
+                action_index).getCode();
+        Log.i("group_id gouplist", group_id);
+        i.putExtra("group_id", group_id);
         startActivity(i);
     }
 

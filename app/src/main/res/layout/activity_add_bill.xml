@@ -47,6 +47,7 @@
         android:id="@+id/duedate_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:hint="YYYY-MM-DD"
         app:layout_constraintTop_toBottomOf="@id/description_input"
         app:layout_constraintLeft_toRightOf="@id/duedate_label"/>
 
