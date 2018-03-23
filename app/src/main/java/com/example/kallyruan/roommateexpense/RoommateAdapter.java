@@ -47,7 +47,7 @@ public class RoommateAdapter extends BaseAdapter {
         }
 
         User roommate = roommates.get(i);
-        this.roommate_name.setText(roommate.getName());
+        this.roommate_name.setText(roommate.getUsername());
         return view;
     }
 }

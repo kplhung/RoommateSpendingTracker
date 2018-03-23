@@ -596,7 +596,7 @@ public class DBQueries {
         nullGroup(group_id);
 
         if (userExists(user_id)) {
-            String userGroups = "INSERT INTO UserGroups VALUES (" + user_id + ", " + group_id + ")";
+            String userGroups = "INSERT INTO UserGroups VALUES (" + user_id + ", '" + group_id + "')";
             Statement stmt = null;
 
             try {
