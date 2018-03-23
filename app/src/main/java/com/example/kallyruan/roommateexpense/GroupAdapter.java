@@ -19,7 +19,6 @@ public class GroupAdapter extends BaseAdapter {
     private Activity mActivity;
     private ArrayList<Group> groups;
     private Button delete;
-    private TextView groupID;
     private TextView groupName;
     private TextView participation;
     private TextView alert;
@@ -52,7 +51,6 @@ public class GroupAdapter extends BaseAdapter {
         if(view == null){
             createdView = inflater.inflate(R.layout.group_list_row, null);
             delete=(Button) createdView.findViewById(R.id.Manage);
-            groupID = (TextView) createdView.findViewById(R.id.groupID);
             groupName = (TextView) createdView.findViewById(R.id.groupName);
             participation = (TextView) createdView.findViewById(R.id.groupParticipation);
             alert=(TextView) createdView.findViewById(R.id.alert);
@@ -61,10 +59,8 @@ public class GroupAdapter extends BaseAdapter {
         }
 
         final Group group = groups.get(position);
-        groupID.setText(group.getCode());
         groupName.setText(group.getName());
-        //participation.setText(group.getParticipation());
-        participation.setText("5");
+        participation.setText(Integer.toString(group.getParticipation()));
         alert.setText(group.getAlert());
 
         return createdView;
