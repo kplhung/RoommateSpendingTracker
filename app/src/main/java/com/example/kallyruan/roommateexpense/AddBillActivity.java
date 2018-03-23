@@ -2,8 +2,10 @@ package com.example.kallyruan.roommateexpense;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -73,9 +75,25 @@ public class AddBillActivity extends Activity{
 
         for (int i=0; i<listview.getChildCount(); i++){
             View row = listview.getChildAt(i);
-            String name = row.findViewById(R.id.roommate_name).toString();
+            String name = ((TextView) row.findViewById(R.id.roommate_name)).getText().toString();
             double amt = Double.parseDouble(((TextView)row.findViewById(R.id.pay_amt)).getText().toString());
-//            instance.addBill(name, this.group_id, label, amt, due, desc);
+            try {
+                Log.i("name", name);
+                Log.i("groupid", group_id);
+                Log.i("label", label);
+                Log.i("amt", ""+amt);
+                Log.i("duedate", due);
+                Log.i("desc", desc);
+                instance.addBill(name, this.group_id, label, amt, due, desc);
+            }catch (IllegalArgumentException e){
+                //toast the error message;
+                Context context = getApplicationContext();
+                CharSequence text = e.getMessage();
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }
         }
         finish();
     }
@@ -83,10 +101,12 @@ public class AddBillActivity extends Activity{
     public ArrayList<User> getRoommates(){
         ArrayList<User> roommates = new ArrayList<User>();
         //before the db is set up, we will use hard-coded data
-        User user1 = new User("name1");
-        User user2 = new User("name2");
-        roommates.add(user1);
-        roommates.add(user2);
+//        User user1 = new User("name1");
+//        User user2 = new User("name2");
+//        roommates.add(user1);
+//        roommates.add(user2);
+        roommates.add(new User(LoginActivity.email));
+
         return roommates;
     }
 }
