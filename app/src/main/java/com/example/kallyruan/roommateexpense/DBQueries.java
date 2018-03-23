@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
 
 
 /**
@@ -499,6 +500,29 @@ public class DBQueries {
         }
 
         return false;
+    }
+
+    /**
+     * Returns a list of the email addresses of members in the group
+     * @param group_id
+     * @return list of members
+     */
+    ArrayList<String> groupMembers(String group_id) {
+        ArrayList<String> members = new ArrayList<String>();
+        String query = "SELECT user_id FROM UserGroups WHERE group_id = '" + group_id + "'";
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(query);
+            while(rs.next()) {
+                members.add(rs.getString("user_id"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return members;
     }
 
     /**

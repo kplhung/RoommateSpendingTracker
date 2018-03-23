@@ -30,9 +30,21 @@ public class CreateActivity extends Activity {
     //send invitation and undate recent group list
     public void createGroup(View view){
 
+        String groupName;
+        ArrayList<String> inviteeEmail = new ArrayList<>();
+        int memberNumber = 0;
+        String email;
         //get groupName
-        EditText name= (EditText) findViewById(R.id.groupName);
-        String groupName= name.getText().toString();
+        EditText name = (EditText) findViewById(R.id.groupName);
+        groupName= name.getText().toString();
+
+        // the following codes are a bit too repetitive but i haven't figured out how to improve it...
+        EditText invitee1 = (EditText) findViewById(R.id.invitee1);
+        email = invitee1.getText().toString();
+        if (!email.equals(PROMOTEDINFO)){
+            inviteeEmail.add(email);
+            memberNumber += 1;
+        }
 
         //Check whether have invitee email
         EditText invitee= (EditText) findViewById(R.id.invitee1);

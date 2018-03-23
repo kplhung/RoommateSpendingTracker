@@ -22,10 +22,13 @@ public class BillAdapter extends BaseAdapter {
     private TextView billAmt;
     private TextView billDate;
     private Button billConfirmButton;
+    private String groupID, userName;
 
-    public BillAdapter(Activity activity, ArrayList<Bill> bills){
+    public BillAdapter(Activity activity, ArrayList<Bill> bills, String groupID, String userName){
         this.mActivity = activity;
         this.bills = bills;
+        this.groupID = groupID;
+        this.userName = userName;
     }
 
     @Override

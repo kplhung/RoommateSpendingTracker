@@ -12,6 +12,7 @@
         android:id="@+id/groupTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:text="Click to manage groups"
@@ -74,6 +75,24 @@
         android:layout_marginTop="30dp"
         app:layout_constraintTop_toBottomOf="@+id/exitGroup"/>
 
+    <Button
+        android:id="@+id/emailGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="emailGroup"
+        android:visibility="invisible"
+        android:text="Remind Group"
+        android:textSize="25dp"
+        android:layout_marginLeft="80dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toBottomOf="@+id/cancelGroup"/>
+
+
+
+
+        />
 
     <Button
         android:id="@+id/back"
@@ -86,6 +105,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="2dp"
         app:layout_constraintTop_toBottomOf="@+id/listView_manage"/>
+
+
 
 
 </android.support.constraint.ConstraintLayout>
