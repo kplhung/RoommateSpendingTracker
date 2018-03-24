@@ -48,7 +48,6 @@ public class BillListActivity extends Activity {
     public ArrayList<Bill> getBills(){
         ResultSet bill_rs = instance.userBillsInGroup(LoginActivity.email, group_id);
         ArrayList<Bill> allBills = new ArrayList<Bill>();
-        Log.i("get bill", "yay");
         //before the db is set up, we will use hard-coded data
 //        Bill bill1 = new Bill("Rent", "2400", "2018/03/01");
 //        Bill bill2 = new Bill("Electricity", "50", "2018/03/01");
