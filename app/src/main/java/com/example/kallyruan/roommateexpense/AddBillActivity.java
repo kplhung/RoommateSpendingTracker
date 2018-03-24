@@ -95,7 +95,7 @@ public class AddBillActivity extends Activity{
                 toast.show();
             }
         }
-        Intent i = new Intent(this,GroupListAcitivity.class);
+        Intent i = new Intent(this,BillListActivity.class);
         startActivityForResult(i,1);
         finish();
     }
