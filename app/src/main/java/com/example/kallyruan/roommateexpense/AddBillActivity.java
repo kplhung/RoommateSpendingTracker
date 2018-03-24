@@ -14,6 +14,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -52,7 +54,11 @@ public class AddBillActivity extends Activity{
             }
         });
         ListView listView = (ListView) findViewById(R.id.split_bill_list);
-        ArrayList<User> roommates = getRoommates();
+        ArrayList<String> roommates_Ids = instance.groupMembers(group_id);
+        ArrayList<User> roommates = new ArrayList<User> ();
+        for (String user: roommates_Ids){
+            roommates.add(new User(user));
+        }
         this.roommate_adapter = new RoommateAdapter(this, roommates);
         listView.setAdapter(roommate_adapter);
 
@@ -78,12 +84,6 @@ public class AddBillActivity extends Activity{
             String name = ((TextView) row.findViewById(R.id.roommate_name)).getText().toString();
             double amt = Double.parseDouble(((TextView)row.findViewById(R.id.pay_amt)).getText().toString());
             try {
-                Log.i("name", name);
-                Log.i("groupid", group_id);
-                Log.i("label", label);
-                Log.i("amt", ""+amt);
-                Log.i("duedate", due);
-                Log.i("desc", desc);
                 instance.addBill(name, this.group_id, label, amt, due, desc);
             }catch (IllegalArgumentException e){
                 //toast the error message;
@@ -95,18 +95,8 @@ public class AddBillActivity extends Activity{
                 toast.show();
             }
         }
+        Intent i = new Intent(this,GroupListAcitivity.class);
+        startActivityForResult(i,1);
         finish();
-    }
-
-    public ArrayList<User> getRoommates(){
-        ArrayList<User> roommates = new ArrayList<User>();
-        //before the db is set up, we will use hard-coded data
-//        User user1 = new User("name1");
-//        User user2 = new User("name2");
-//        roommates.add(user1);
-//        roommates.add(user2);
-        roommates.add(new User(LoginActivity.email));
-
-        return roommates;
     }
 }
