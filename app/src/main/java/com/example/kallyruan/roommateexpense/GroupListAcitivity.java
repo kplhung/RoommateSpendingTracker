@@ -37,6 +37,7 @@ public class GroupListAcitivity extends Activity{
         view_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
                 action_index=position;
+                loadBillList(view);
             }
         });
 

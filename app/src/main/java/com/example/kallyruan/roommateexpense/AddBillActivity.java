@@ -96,6 +96,7 @@ public class AddBillActivity extends Activity{
             }
         }
         Intent i = new Intent(this,BillListActivity.class);
+        i.putExtra("group_id", group_id);
         startActivityForResult(i,1);
         finish();
     }
