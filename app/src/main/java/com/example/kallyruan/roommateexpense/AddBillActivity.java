@@ -76,28 +76,46 @@ public class AddBillActivity extends Activity{
         String label = ((TextView) findViewById(R.id.label_input)).getText().toString();
         String desc = ((TextView) findViewById(R.id.description_input)).getText().toString();
         String due = ((TextView) findViewById(R.id.duedate_input)).getText().toString();
+        Log.i("desc", desc);
+        if (label == "" || desc == "" || due == ""){
+            Context context = getApplicationContext();
+            CharSequence text = "Missing a field";
+            int duration = Toast.LENGTH_SHORT;
 
-        ListView listview = (ListView) findViewById(R.id.split_bill_list);
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+        else{
+            ListView listview = (ListView) findViewById(R.id.split_bill_list);
 
-        for (int i = 0; i < listview.getChildCount(); i++){
-            View row = listview.getChildAt(i);
-            String name = ((TextView) row.findViewById(R.id.roommate_name)).getText().toString();
-            double amt = Double.parseDouble(((TextView)row.findViewById(R.id.pay_amt)).getText().toString());
-            try {
-                instance.addBill(name, this.group_id, label, amt, due, desc);
-            }catch (IllegalArgumentException e){
-                //toast the error message;
-                Context context = getApplicationContext();
-                CharSequence text = e.getMessage();
-                int duration = Toast.LENGTH_SHORT;
+            for (int i = 0; i < listview.getChildCount(); i++) {
+                View row = listview.getChildAt(i);
+                String name = ((TextView) row.findViewById(R.id.roommate_name)).getText().toString();
+                try {
+                    double amt = Double.parseDouble(((TextView) row.findViewById(R.id.pay_amt)).getText().toString());
+                    instance.addBill(name, this.group_id, label, amt, due, desc);
+                    Intent intent = new Intent(this, BillListActivity.class);
+                    intent.putExtra("group_id", group_id);
+                    startActivityForResult(intent, 1);
+                    finish();
+                } catch (NumberFormatException e) {
+                    Context context = getApplicationContext();
+                    CharSequence text = "Enter a valid number for amount required to pay";
+                    int duration = Toast.LENGTH_SHORT;
 
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                } catch (IllegalArgumentException e) {
+                    //toast the error message;
+                    Context context = getApplicationContext();
+                    CharSequence text = e.getMessage();
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
             }
         }
-        Intent i = new Intent(this,BillListActivity.class);
-        i.putExtra("group_id", group_id);
-        startActivityForResult(i,1);
-        finish();
+
     }
 }

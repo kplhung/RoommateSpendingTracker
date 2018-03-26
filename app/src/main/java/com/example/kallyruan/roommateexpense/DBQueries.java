@@ -330,7 +330,7 @@ public class DBQueries {
      * @return true if the bill id is already being used, false otherwise
      */
     boolean billExists(String bill_id) {
-        String query = "SELECT * FROM Bills WHERE bill_id = " + bill_id;
+        String query = "SELECT * FROM Bills WHERE bill_id = '" + bill_id + "'";
         Statement stmt = null;
         ResultSet rs = null;
 
@@ -368,12 +368,11 @@ public class DBQueries {
         //BASED ON IMPLEMENTATION
 
         String newBillId = generateId();
-//        while (billExists(newBillId)) {
-//            newBillId = generateId();
-//        }
-
-        String bills = "INSERT INTO Bills VALUES ('" + newBillId + "', '" + name + "', " + user +
-                ", " + amt + ", '" + date + "', '" + desc + "')";
+        while (billExists(newBillId)) {
+            newBillId = generateId();
+        }
+        String bills = "INSERT INTO Bills VALUES (\"" + newBillId + "\", \"" + name + "\", \"" +
+                user + "\", \"" + amt + "\", \"" + date + "\", \"" + desc + "\")";
         String groupBills = "INSERT INTO GroupBills VALUES('" + group_id + "', '" + newBillId + "')";
         Statement stmt = null;
 
