@@ -5,8 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
+import java.util.Calendar;
+import java.util.Date;
+import android.content.ContentValues;
 
 /**
  * Contains functions for all database queries supported in the app
@@ -17,6 +20,7 @@ public class DBQueries {
     private static DBQueries ourInstance = new DBQueries();
     private final Connection con;
     private final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
     public static DBQueries getInstance() {
         if (ourInstance == null) {
@@ -101,8 +105,8 @@ public class DBQueries {
      * Generates a random 20 character sequence based on the English alphabet and integers 0-9
      * @return the random 20 character string
      */
-    String generateId() {
-        StringBuilder testId = new StringBuilder(20);
+    String generateCode(int length) {
+        StringBuilder testId = new StringBuilder(length);
         for (int i = 0; i < 20; i++) {
             int index = (int) (Math.random() * alphabet.length());
             testId.append(alphabet.charAt(index));
@@ -204,6 +208,101 @@ public class DBQueries {
             }
         }
         return false;
+    }
+
+    /**
+     * Stores a reset code for the user in the database, as well as the day that the code
+     * was created.
+     * @param email the email of the user who forgot his/her password
+     * @return the 6-char code needed to reset the user's password, null if the user doesn't
+     * exist or the database otherwise fails to set a code
+     */
+    String forgotPassword(String email) {
+        nullEmail(email);
+
+        if (userExists(email)) {
+            String code = generateCode(6);
+            Calendar c = Calendar.getInstance();
+            c.add(Calendar.DAY_OF_MONTH, 7); //one week from today
+            String expiry = dateFormat.format(c.getTime());
+
+            String query = "UPDATE Users SET reset_code = ?, expiry_date = ? WHERE user_id = ?";
+            PreparedStatement stmt = null;
+
+            try {
+                stmt = con.prepareStatement(query);
+                stmt.setString(1, code);
+                stmt.setString(2, expiry);
+                stmt.setString(3, email);
+                stmt.executeUpdate();
+
+                return code;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Determine if the user should be able to update his/her password
+     * @param email the user
+     * @param code the 6 character code required to allow password update
+     * @return 2 if the update is allowed, 1 if the code already expired, 0 if if the
+     * code is incorrect or the queries failed
+     */
+    int allowReset(String email, String code) {
+        nullEmail(email);
+
+        if (userExists(email)) {
+            String reset_code = "SELECT reset_code FROM Users WHERE user_id = " + email;
+            String expiry_date = "SELECT expiry_date FROM Users WHERE user_id = " + email;
+            ResultSet rs = null;
+            Statement stmt = null;
+
+            try {
+                stmt = con.createStatement();
+                rs = stmt.executeQuery(reset_code);
+                rs.next();
+                String storedCode = rs.getString("reset_code");
+
+                rs = stmt.executeQuery(expiry_date);
+                rs.next();
+                String date = rs.getString("expiry_date");
+                Date expiry = dateFormat.parse(date);
+                Date today = new Date();
+
+                if (code != null && code.equals(storedCode)) {
+                    //code hasn't expired yet, and it's the right code
+                    if (today.before(expiry)) {
+                        //edit the expiry date so the code is no longer valid
+                        Calendar c = Calendar.getInstance();
+                        c.add(Calendar.DAY_OF_MONTH, -1); //set it to yesterday
+                        String newExpiry = dateFormat.format(c.getTime());
+
+                        String query = "UPDATE Users SET expiry_date = ? WHERE user_id = ?";
+                        PreparedStatement update = null;
+                        update = con.prepareStatement(query);
+                        update.setString(1, newExpiry);
+                        update.setString(2, email);
+                        update.executeUpdate();
+
+                        return 2;
+                    }
+                    //code is correct but it already expired
+                    else {
+                        return 1;
+                    }
+                }
+                //code is incorrect
+                else {
+                    return 0;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return 0;
     }
 
     /**
@@ -367,9 +466,9 @@ public class DBQueries {
         //DOESN'T CHECK IF THE USER OR GROUP EXISTS -- CAN ADD THIS, BUT SHOULD BE GUARANTEED
         //BASED ON IMPLEMENTATION
 
-        String newBillId = generateId();
+        String newBillId = generateCode(20);
         while (billExists(newBillId)) {
-            newBillId = generateId();
+            newBillId = generateCode(20);
         }
         String bills = "INSERT INTO Bills VALUES (\"" + newBillId + "\", \"" + name + "\", \"" +
                 user + "\", \"" + amt + "\", \"" + date + "\", \"" + desc + "\")";
@@ -586,9 +685,9 @@ public class DBQueries {
         nullEmail(user_id);
         nullGroupName(group_name);
 
-        String group_id = generateId();
+        String group_id = generateCode(20);
         while (groupExists(group_id)) {
-            group_id = generateId();
+            group_id = generateCode(20);
         }
 
         String groups = "INSERT INTO Groups VALUES ('" + group_id + "', '" + group_name + "')";
