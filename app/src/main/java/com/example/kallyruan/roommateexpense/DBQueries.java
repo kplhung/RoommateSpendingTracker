@@ -306,6 +306,34 @@ public class DBQueries {
     }
 
     /**
+     * Handles resetting the user's password with the new one
+     * @param user the user
+     * @param password the new password
+     * @return whether the update was successful
+     */
+    boolean resetPassword(String user, String password) {
+        nullEmail(user);
+        nullPassword(password);
+
+        if (userExists(user)) {
+            String query = "UPDATE Users SET password = ? WHERE user_id = ?";
+            ResultSet rs = null;
+            PreparedStatement stmt = null;
+            try {
+                stmt = con.prepareStatement(query);
+                stmt.setString(1, password);
+                stmt.setString(2, user);
+                stmt.executeUpdate();
+
+                return true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    /**
      * Finds all the groups that a user is in
      * @param email of the user
      * @return the group_ids of the groups, in a ResultSet
