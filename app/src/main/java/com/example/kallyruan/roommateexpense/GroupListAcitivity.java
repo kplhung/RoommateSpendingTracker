@@ -30,6 +30,9 @@ public class GroupListAcitivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.existing_group);
+        ImageView icon=findViewById(R.id.user_icon);
+        //hard-code here to show one icon
+        icon.setImageResource(R.mipmap.usericon_2);
         showGroupList();
 
         ListView view_name = (ListView) findViewById(R.id.listView_id);
