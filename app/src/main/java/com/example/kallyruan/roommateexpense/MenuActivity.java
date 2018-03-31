@@ -33,4 +33,9 @@ public class MenuActivity extends Activity {
         Intent i = new Intent(this,JoinGroupActivity.class);
         startActivityForResult(i, 1);
     }
+
+    public void changePassword(View view) {
+        Intent i = new Intent(this, PasswordChangeActivity.class);
+        startActivityForResult(i, 1);
+    }
 }

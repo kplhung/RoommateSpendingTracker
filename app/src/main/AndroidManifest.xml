@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kallyruan.roommateexpense">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -15,27 +15,35 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".GroupListAcitivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".BillListActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".MenuActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".SignupActivity"></activity>
-        <activity android:name=".JoinGroupActivity"/>
+        <activity android:name=".SignupActivity" />
+        <activity android:name=".JoinGroupActivity" />
         <activity android:name=".CreateActivity" />
         <activity android:name=".GroupManageActivity" />
-        <activity android:name=".AddBillActivity"/>
+        <activity android:name=".AddBillActivity" />
+        <activity
+            android:name=".PasswordChangeActivity"
+            android:label="@string/title_activity_password_change"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
+
 </manifest>

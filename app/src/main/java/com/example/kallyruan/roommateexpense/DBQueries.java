@@ -1,5 +1,7 @@
 package com.example.kallyruan.roommateexpense;
 
+import android.util.Log;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -174,6 +176,37 @@ public class DBQueries {
             return true;
 
         } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * Checks if given password matches user's password
+     * @param email of user
+     * @param oldPassword of user
+     * @return true if correct password given, false otherwise
+     */
+    boolean enteredCorrectPassword(String email, String oldPassword) {
+        /* email is associated with a given user, based on implementation; i.e.,
+           user is guaranteed to exist */
+        nullEmail(email);
+        nullPassword(oldPassword);
+
+        String query = "SELECT password FROM Users WHERE user_id = " + email;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(query);
+            rs.next();
+
+            if (oldPassword.equals(rs.getString("password"))) {
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
