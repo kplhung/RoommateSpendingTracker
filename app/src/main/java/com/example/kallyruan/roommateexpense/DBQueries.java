@@ -468,7 +468,7 @@ public class DBQueries {
 
         //DOESN'T CHECK IF THE BILL EXISTS, BUT SHOULD BE GUARANTEED BASED ON IMPLEMENTATION
 
-        String bills = "UPDATE Bills SET due_date = " + due_date + " WHERE bill_id = " + bill_id;
+        String bills = "UPDATE Bills SET due_date = '" + due_date + "' WHERE bill_id = '" + bill_id + "'";
         Statement stmt = null;
 
         try {
@@ -491,7 +491,7 @@ public class DBQueries {
     boolean changeAmount(String bill_id, double amt) {
         //DOESN'T CHECK IF THE BILL EXISTS, BUT SHOULD BE GUARANTEED BASED ON IMPLEMENTATION
 
-        String bills = "UPDATE Bills SET amount = " + amt + " WHERE bill_id = " + bill_id;
+        String bills = "UPDATE Bills SET amount = " + amt + " WHERE bill_id = '" + bill_id + "'";
         Statement stmt = null;
 
         try {
