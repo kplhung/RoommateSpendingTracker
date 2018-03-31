@@ -93,7 +93,6 @@
         android:id="@+id/user_icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        app:srcCompat="@mipmap/userIcon_2"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="6dp"
         android:layout_marginStart="10dp"
@@ -107,9 +106,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:layout_marginLeft="15dp"
         android:text="UserNickname"
         android:textSize="20dp"
-        app:layout_constraintStart_toRightOf="@+id/user_icon"
+        app:layout_constraintStart_toEndOf="@+id/user_icon"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="70dp" />
 
