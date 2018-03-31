@@ -5,4 +5,6 @@
         <item>Month</item>
         <item>Year</item>
     </string-array>
+    <string name="title_activity_password_change">PasswordChangeActivity</string>
+    <string name="please_enter_your_old_password">Please enter your old password.</string>
 </resources>
