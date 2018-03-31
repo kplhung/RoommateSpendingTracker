@@ -1,7 +1,10 @@
 package com.example.kallyruan.roommateexpense;
 
+/**
+ * Created by Lily on 3/31/2018.
+ */
+
 import android.app.Activity;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,24 +14,16 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by Lily on 2/17/2018.
- */
-
-public class BillAdapter extends BaseAdapter {
+public class UpcomingBillAdapter extends BaseAdapter {
     private Activity mActivity;
     private ArrayList<Bill> bills;
     private TextView billName;
     private TextView billAmt;
     private TextView billDate;
-    private Button billConfirmButton;
-    private String groupID, userName;
 
-    public BillAdapter(Activity activity, ArrayList<Bill> bills, String groupID, String userName){
+    public UpcomingBillAdapter(Activity activity, ArrayList<Bill> bills){
         this.mActivity = activity;
         this.bills = bills;
-        this.groupID = groupID;
-        this.userName = userName;
     }
 
     @Override
@@ -53,12 +48,11 @@ public class BillAdapter extends BaseAdapter {
 
         if(view == null){
 
-            createdView = inflater.inflate(R.layout.bills_list_row, null);
+            createdView = inflater.inflate(R.layout.upcoming_bills_list_row, null);
 
             billName = (TextView) createdView.findViewById(R.id.bill_name);
             billAmt = (TextView) createdView.findViewById(R.id.bill_amount);
             billDate = (TextView) createdView.findViewById(R.id.bill_date);
-            billConfirmButton = (Button) createdView.findViewById(R.id.bill_confirm);
         } else {
             createdView = view;
         }
@@ -68,15 +62,6 @@ public class BillAdapter extends BaseAdapter {
         billAmt.setText(bill.getAmount());
         billDate.setText(bill.getDueDate());
 
-        billConfirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.setVisibility(View.GONE);
-                createdView.setVisibility(View.GONE);
-                DBQueries dbq = DBQueries.getInstance();
-                dbq.deleteBill(LoginActivity.email, groupID, bill.getBillID());
-            }
-        });
         return createdView;
     }
 }

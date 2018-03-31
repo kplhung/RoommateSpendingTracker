@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://C:\Users\Kelly\Documents\CS\CIS350\project\350S18-26-RoommateSpendingTracker.iml" filepath="C:\Users\Kelly\Documents\CS\CIS350\project\350S18-26-RoommateSpendingTracker.iml" />
-      <module fileurl="file://C:\Users\Kelly\Documents\CS\CIS350\project\RoommateExpense.iml" filepath="C:\Users\Kelly\Documents\CS\CIS350\project\RoommateExpense.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RoommateExpense.iml" filepath="$PROJECT_DIR$/RoommateExpense.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/mysql-connector-java-5.1.45-bin/mysql-connector-java-5.1.45-bin.iml" filepath="$PROJECT_DIR$/mysql-connector-java-5.1.45-bin/mysql-connector-java-5.1.45-bin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/project.iml" filepath="$PROJECT_DIR$/project.iml" />
     </modules>
   </component>
 </project>
