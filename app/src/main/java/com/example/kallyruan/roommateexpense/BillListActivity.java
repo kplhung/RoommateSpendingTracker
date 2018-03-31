@@ -27,6 +27,10 @@ public class BillListActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bill_list);
+        //hard-code here to show a user icon
+        ImageView icon=findViewById(R.id.user_icon);
+        icon.setImageResource(R.mipmap.usericon_2);
+        
         Intent i = getIntent();
         group_id = i.getStringExtra("group_id");
         String userEmail = LoginActivity.email;
