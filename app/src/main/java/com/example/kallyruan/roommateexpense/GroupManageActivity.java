@@ -1,6 +1,8 @@
 package com.example.kallyruan.roommateexpense;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -64,7 +66,7 @@ public class GroupManageActivity extends Activity{
 
     //this function is to exist group and delete this group information from this user DB.
     //if this user is the last one in the group, then delete group record
-    public void exitGroup(View view){
+    public void exitGroup(){
         DBQueries db = DBQueries.getInstance();
         String userEmail = LoginActivity.email;
         String group = User.getInstance(userEmail).getNthGroup(action_index).getCode();
@@ -79,22 +81,21 @@ public class GroupManageActivity extends Activity{
     }
 
     //this function is to delete group information from all members' DB and the group record as well
-    public void deleteGroup(View view){
+    public void deleteGroup(){
         DBQueries db = DBQueries.getInstance();
-        String userEmail=LoginActivity.email;
+        String userEmail = LoginActivity.email;
         String group = User.getInstance(userEmail).getNthGroup(action_index).getCode();
-        boolean result=db.deleteGroup(group);
+        boolean result = db.deleteGroup(group);
         //check whether action successful
-        if (!result){
+        if (!result) {
             System.out.println("Delete group action failed");
         }
-
-        Intent i = new Intent(this,GroupManageActivity.class);
-        startActivityForResult(i,1);
+        Intent i = new Intent(this, GroupManageActivity.class);
+        startActivityForResult(i, 1);
     }
 
     // this emails users in the group with a reminder to pay
-    public void emailGroup(View view) {
+    public void emailGroup() {
         String userEmail = LoginActivity.email;
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc822");
@@ -113,6 +114,36 @@ public class GroupManageActivity extends Activity{
             // Toast.makeText(MyActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
         }
     }
+
+    //confirm user delete group action
+    public void confirmDeleteAction(View view) {
+        AlertDialog dialog = new AlertDialog.Builder(this).setTitle("Confirm action dialog").setIcon(R.mipmap.usericon_2)
+                .setNegativeButton("Cancel", null).setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do confirmed action
+                        deleteGroup();
+                    }
+                }).setMessage("Are you sure to delete this group from all members?").create();
+        dialog.show();
+    }
+
+    //confirm user exit group action
+    public void confirmExitAction(View view) {
+        AlertDialog dialog = new AlertDialog.Builder(this).setTitle("Confirm action dialog").setIcon(R.mipmap.usericon_2)
+                .setNegativeButton("Cancel", null).setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do confirmed action
+                        exitGroup();
+                    }
+                }).setMessage("Are you sure to exit this group ?").create();
+        dialog.show();
+    }
+
+
 
     public void cancel(View view){
         Intent i = new Intent(this,GroupManageActivity.class);

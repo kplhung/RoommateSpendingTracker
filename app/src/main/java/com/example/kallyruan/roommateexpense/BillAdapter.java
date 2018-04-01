@@ -79,6 +79,4 @@ public class BillAdapter extends BaseAdapter {
         });
         return createdView;
     }
-    public void changeBill(View view){
-    }
 }

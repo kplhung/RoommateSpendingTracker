@@ -5,12 +5,13 @@ package com.example.kallyruan.roommateexpense;
  */
 
 public class Bill {
-    private String name, amount, dueDate, billID;
-    public Bill(String name, String amount, String dueDate, String billID){
+    private String name, amount, dueDate, billID, desc;
+    public Bill(String name, String amount, String dueDate, String billID, String desc){
         this.name = name;
         this.amount = amount;
         this.dueDate = dueDate;
         this.billID = billID;
+        this.desc = desc;
     }
     public void updateDueDate(String newDueDate){
         this.dueDate = newDueDate;
@@ -19,6 +20,8 @@ public class Bill {
     public String getName(){
         return name;
     }
+
+    public String getDesc() { return desc; }
 
     public String getAmount(){
         return amount;

@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -31,9 +33,33 @@ public class AddBillActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent i = getIntent();
+        final Intent i = getIntent();
         this.group_id = i.getStringExtra("group_id");
         setContentView(R.layout.activity_add_bill);
+
+        Button saveButton = (Button) findViewById(R.id.save_bill_btn);
+        loadAddBillItems();
+        if (i.getStringExtra("bill_code") != null){
+            Log.i("new bill", "false");
+            loadExistingBill(i);
+        }
+        else{
+            Log.i("new bill", "true");
+            loadRoommateList();
+        }
+        saveButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                if (i.getStringExtra("bill_code") != null) {
+                    saveExistingBill(v, i);
+                }
+                else{
+                    saveNewBill(v);
+                }
+            }
+        });
+    }
+
+    public void loadAddBillItems(){
         Spinner spinner = (Spinner) findViewById(R.id.timeframe_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> timeframe_adapter = ArrayAdapter.createFromResource(this,
@@ -53,6 +79,8 @@ public class AddBillActivity extends Activity{
 
             }
         });
+    }
+    public void loadRoommateList(){
         ListView listView = (ListView) findViewById(R.id.split_bill_list);
         ArrayList<String> roommates_Ids = instance.groupMembers(group_id);
         ArrayList<User> roommates = new ArrayList<User> ();
@@ -61,7 +89,6 @@ public class AddBillActivity extends Activity{
         }
         this.roommate_adapter = new RoommateAdapter(this, roommates);
         listView.setAdapter(roommate_adapter);
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
@@ -71,12 +98,27 @@ public class AddBillActivity extends Activity{
 
         });
     }
+    public void loadExistingBill(Intent i){
+        EditText bill_name = (EditText) findViewById(R.id.label_input);
+        bill_name.setText(i.getStringExtra("bill_name"));
+        bill_name.setEnabled(false);
+        EditText bill_desc = (EditText) findViewById(R.id.description_input);
+        bill_desc.setText(i.getStringExtra("bill_desc"));
+        bill_desc.setEnabled(false);
 
-    public void saveBill(View view){
+        ((EditText) findViewById(R.id.duedate_input)).setText(i.getStringExtra("bill_date"));
+        ListView listView = (ListView) findViewById(R.id.split_bill_list);
+        ArrayList<String> roommates_Ids = instance.groupMembers(group_id);
+        ArrayList<User> roommates = new ArrayList<User> ();
+        roommates.add(new User(LoginActivity.email));
+        this.roommate_adapter = new RoommateAdapter(this, roommates);
+        listView.setAdapter(roommate_adapter);
+    }
+
+    public void saveNewBill(View view){
         String label = ((TextView) findViewById(R.id.label_input)).getText().toString();
         String desc = ((TextView) findViewById(R.id.description_input)).getText().toString();
         String due = ((TextView) findViewById(R.id.duedate_input)).getText().toString();
-        Log.i("desc", desc);
         if (label == "" || desc == "" || due == ""){
             Context context = getApplicationContext();
             CharSequence text = "Missing a field";
@@ -116,6 +158,28 @@ public class AddBillActivity extends Activity{
                 }
             }
         }
+    }
+    public void saveExistingBill(View view, Intent i){
+        String newDueDate = ((EditText) findViewById(R.id.duedate_input)).getText().toString();
+        try {
+            Double newAmt = Double.parseDouble(((EditText) findViewById(R.id.pay_amt)).getText().toString());
+            if (!i.getStringExtra("bill_date").equals(newDueDate)){
+                instance.changeDueDate(i.getStringExtra("bill_code"), newDueDate);
+            }
+            else if(!i.getStringExtra("bill_amt").equals(newAmt)){
+                instance.changeAmount(i.getStringExtra("bill_code"), newAmt);
+            }
+            Intent intent = new Intent(this, BillListActivity.class);
+            intent.putExtra("group_id", group_id);
+            startActivityForResult(intent, 1);
+            finish();
+        }catch (NumberFormatException e){
+            Context context = getApplicationContext();
+            CharSequence text = "Enter a valid number for amount required to pay";
+            int duration = Toast.LENGTH_SHORT;
 
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
     }
 }
