@@ -229,7 +229,8 @@ public class DBQueries {
         boolean newUser = !userExists(email);
 
         if (newUser) {
-            String query = "INSERT INTO Users VALUES(\"" + email + "\",\"" + password + "\")";
+            String query = "INSERT INTO Users VALUES(\"" + email + "\",\"" + password + "\",\"" +
+                    "\",\"" + "\",\"" + "\",\"" + "\")";
             Statement stmt = null;
 
             try {
