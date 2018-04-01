@@ -26,7 +26,7 @@ public class JoinGroupActivity extends Activity{
         if (code != null){
             Log.i("code", code);
             Log.i("email", LoginActivity.email);
-            Group newGroup = new Group(code, userInstance);
+            Group newGroup = new Group(dbInstance.getCodeGroup(code), userInstance);
             userInstance.addGroup(newGroup);
             int i = dbInstance.addUserToGroup(LoginActivity.email, code);
             Log.i("failed", i+"");
