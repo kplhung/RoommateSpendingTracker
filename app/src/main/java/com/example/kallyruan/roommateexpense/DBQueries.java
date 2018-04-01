@@ -334,6 +334,120 @@ public class DBQueries {
     }
 
     /**
+     * Handles setting the user's nickname
+     * @param user the user
+     * @param nickname the desired nickname
+     * @return whether the update was successful
+     */
+    boolean setNickname(String user, String nickname) {
+        nullEmail(user);
+
+        if (userExists(user)) {
+            String query = "UPDATE Users SET nickname = ? WHERE user_id = ?";
+            ResultSet rs = null;
+            PreparedStatement stmt = null;
+            try {
+                stmt = con.prepareStatement(query);
+                stmt.setString(1, nickname);
+                stmt.setString(2, user);
+                stmt.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Handles getting the user's nickname
+     * @param user the user
+     * @return the desired nickname, null if it hasn't been set
+     */
+    String getNickname(String user) {
+        nullEmail(user);
+
+        String nickname = null;
+
+        if (userExists(user)) {
+            String query = "SElECT nickname FROM Users WHERE user_id = " + user;
+            Statement stmt = null;
+            ResultSet rs = null;
+
+            try {
+                stmt = con.createStatement();
+                rs = stmt.executeQuery(query);
+                rs.next();
+
+                nickname = rs.getString("nickname");
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return nickname;
+    }
+
+    /**
+     * Handles setting the user's icon
+     * @param user the user
+     * @param icon the desired icon
+     * @return whether the update was successful
+     */
+    boolean setIcon(String user, String icon) {
+        nullEmail(user);
+
+        if (userExists(user)) {
+            String query = "UPDATE Users SET icon_id = ? WHERE user_id = ?";
+            ResultSet rs = null;
+            PreparedStatement stmt = null;
+            try {
+                stmt = con.prepareStatement(query);
+                stmt.setString(1, icon);
+                stmt.setString(2, user);
+                stmt.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Handles getting the user's icon
+     * @param user the user
+     * @return the desired icon, null if it hasn't been set
+     */
+    String getIcon(String user) {
+        nullEmail(user);
+
+        String icon = null;
+
+        if (userExists(user)) {
+            String query = "SElECT icon_id FROM Users WHERE user_id = " + user;
+            Statement stmt = null;
+            ResultSet rs = null;
+
+            try {
+                stmt = con.createStatement();
+                rs = stmt.executeQuery(query);
+                rs.next();
+
+                icon = rs.getString("icon_id");
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return icon;
+    }
+
+    /**
      * Finds all the groups that a user is in
      * @param email of the user
      * @return the group_ids of the groups, in a ResultSet
@@ -629,6 +743,89 @@ public class DBQueries {
     }
 
     /**
+     * Checks whether that group invite code is already being used
+     * @param code
+     * @return if the code is in use
+     */
+    boolean codeInUse(String code) {
+        String query = "SELECT * FROM GroupCodes WHERE invite_code = '" + code + "'";
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(query);
+
+            if (!rs.next()) {
+                return false;
+            }
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    /**
+     * Generates, stores, and returns the invite code for joining the group.
+     * @param group_id
+     * @return
+     */
+    String getInviteCode(String group_id) {
+        nullGroup(group_id);
+
+        if (groupExists(group_id)) {
+            String code = generateCode(6);
+            while (codeInUse(code)) {
+                code = generateCode(6);
+            }
+            Calendar c = Calendar.getInstance();
+            c.add(Calendar.DAY_OF_MONTH, 7); //one week from today
+            String expiry = dateFormat.format(c.getTime());
+
+            String query = "INSERT INTO GroupCodes VALUES(\"" + code + "\",\"" + expiry + "\",\""
+                    + group_id + "\")";
+            Statement stmt = null;
+
+            try {
+                stmt = con.createStatement();
+                stmt.executeUpdate(query);
+                return code;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the group_id associated with the invite code, null if it doesn't exist
+     * @param code
+     * @return the associated group_id
+     */
+    String getCodeGroup(String code) {
+        if (codeInUse(code)) {
+            String query = "SELECT group_id FROM GroupCodes WHERE invite_code = '" + code + "'";
+            Statement stmt = null;
+            ResultSet rs = null;
+
+            try {
+                stmt = con.createStatement();
+                rs = stmt.executeQuery(query);
+
+                if (!rs.next()) {
+                    return rs.getString("group_id");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    /**
      * Returns a list of the email addresses of members in the group
      * @param group_id
      * @return list of members
@@ -737,32 +934,59 @@ public class DBQueries {
     /**
      * Adds the specified user to the specified group
      * @param user_id
-     * @param group_id
-     * @return 0 if the addition failed, 1 if the user doesn't exist in the database, 2 if the
-     * addition was successful
+     * @param code
+     * @return 0 if the code was wrong, 1 if the code had expired, 2 if the user doesn't exist in
+     * the database, 3 if the addition was successful
      */
-    int addUserToGroup(String user_id, String group_id) {
+    int addUserToGroup(String user_id, String code) {
         nullEmail(user_id);
-        nullGroup(group_id);
 
         if (userExists(user_id)) {
-            String userGroups = "INSERT INTO UserGroups VALUES (" + user_id + ", '" + group_id + "')";
+            String query = "SELECT * FROM GroupCodes WHERE invite_code = " + code;
+            ResultSet rs = null;
             Statement stmt = null;
 
             try {
                 stmt = con.createStatement();
-                stmt.executeUpdate(userGroups);
-                return 2; //addition successful
-            } catch(SQLException e) {
+                rs = stmt.executeQuery(query);
+
+                if (!rs.next()) {
+                    return 0; //code doesn't exist in the database
+                }
+                String group_id = rs.getString("group_id");
+                String date = rs.getString("expiry_date");
+                Date expiry = dateFormat.parse(date);
+                Date today = new Date();
+
+                if (today.before(expiry)) { //code exists and hasn't expired
+                    //remove the code from GroupCodes now that it's been used
+                    String remove = "DELETE FROM GroupCodes WHERE invite_code = ?";
+                    PreparedStatement s = null;
+                    s = con.prepareStatement(remove);
+                    s.setString(1, code);
+                    s.executeUpdate();
+
+                    //add the user to the group
+                    String userGroups = "INSERT INTO UserGroups VALUES (" + user_id + ", '"
+                            + group_id + "')";
+                    Statement add = null;
+                    add = con.createStatement();
+                    add.executeUpdate(userGroups);
+                    return 3;
+                }
+                //code exists but already expired
+                else {
+                    return 1;
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
+        //user doesn't exist in the database
         else {
-            return 1; //user doesn't exist, invite the user to the app
+            return 2;
         }
-
-        return 0; //addition failed
+        return 0; //failed otherwise
     }
 
     /**
