@@ -63,14 +63,16 @@ public class GroupListAcitivity extends Activity{
         Intent i = new Intent(this,GroupManageActivity.class);
         startActivityForResult(i,1);
     }
-     //load bill list
+
+    /**
+     * Loads the list of bills of the user when a group is clicked
+     * @param view
+     */
     public void loadBillList(View view){
         Intent i = new Intent(this, BillListActivity.class);
-        //temporarily show info for group 1
         String userEmail = LoginActivity.email;
         String group_id = User.getInstance(userEmail).getNthGroup(
                 action_index).getCode();
-        Log.i("group_id gouplist", group_id);
         i.putExtra("group_id", group_id);
         startActivity(i);
     }
