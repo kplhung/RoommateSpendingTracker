@@ -21,10 +21,10 @@ public class Group {
     }
 
     public Group(String id, String name, int participation,String alert){
-        this.code =id;
-        this.name =name;
-        this.participation=participation;
-        this.alert=alert;
+        this.code = id;
+        this.name = name;
+        this.participation = participation;
+        this.alert = alert;
     }
 
     public String getCode(){
