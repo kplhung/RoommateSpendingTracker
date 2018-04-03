@@ -52,6 +52,10 @@ public class MenuActivity extends Activity {
         startActivityForResult(i, 1);
     }
 
+    /*
+    displays the upcoming bills in a list, showing the bill's name, amount due for user, due date,
+    and name of the group the bill is from
+     */
     public void displayUpcomingBills(){
         ListView listView = findViewById(R.id.upcoming_bills_list);
         ArrayList<Bill> bills = getBillsByDate();
@@ -70,7 +74,14 @@ public class MenuActivity extends Activity {
         });
     }
 
-    public ArrayList<Bill> getBillsByDate(){
+    /*
+        Helper function to get an array of bills sorted by due date (chronologically with the one
+        closest to current date listed first)
+        This function assumes that there are no bills in the database from the past, as those should
+        either be deleted after payment is confirmed or a recurrent one in which case the next duedate
+        is listed in the database.
+    */
+    private ArrayList<Bill> getBillsByDate(){
         ArrayList<Bill> allBills = new ArrayList<Bill>();
         ResultSet bill_rs = instance.userBills(LoginActivity.email);
 
