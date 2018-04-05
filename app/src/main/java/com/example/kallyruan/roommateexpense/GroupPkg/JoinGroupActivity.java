@@ -1,11 +1,15 @@
-package com.example.kallyruan.roommateexpense;
+package com.example.kallyruan.roommateexpense.GroupPkg;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+
+import com.example.kallyruan.roommateexpense.DB.DBQueries;
+import com.example.kallyruan.roommateexpense.UserPkg.LoginActivity;
+import com.example.kallyruan.roommateexpense.R;
+import com.example.kallyruan.roommateexpense.UserPkg.User;
 
 /**
  * Created by Lily on 2/22/2018.

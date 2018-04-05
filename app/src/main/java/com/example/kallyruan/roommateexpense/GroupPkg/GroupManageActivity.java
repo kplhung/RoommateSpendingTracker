@@ -1,4 +1,4 @@
-package com.example.kallyruan.roommateexpense;
+package com.example.kallyruan.roommateexpense.GroupPkg;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -11,7 +11,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import com.example.kallyruan.roommateexpense.DB.DBQueries;
+import com.example.kallyruan.roommateexpense.UserPkg.LoginActivity;
+import com.example.kallyruan.roommateexpense.R;
+import com.example.kallyruan.roommateexpense.UserPkg.User;
 
 import java.util.ArrayList;
 

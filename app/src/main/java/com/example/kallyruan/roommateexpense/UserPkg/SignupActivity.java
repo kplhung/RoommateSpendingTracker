@@ -1,4 +1,4 @@
-package com.example.kallyruan.roommateexpense;
+package com.example.kallyruan.roommateexpense.UserPkg;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,10 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import com.example.kallyruan.roommateexpense.DB.DBQueries;
+import com.example.kallyruan.roommateexpense.R;
+import com.example.kallyruan.roommateexpense.UserPkg.LoginActivity;
 
 public class SignupActivity extends AppCompatActivity {
 

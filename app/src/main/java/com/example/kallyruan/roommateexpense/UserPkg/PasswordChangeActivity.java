@@ -1,17 +1,15 @@
-package com.example.kallyruan.roommateexpense;
+package com.example.kallyruan.roommateexpense.UserPkg;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.kallyruan.roommateexpense.DB.DBQueries;
+import com.example.kallyruan.roommateexpense.R;
+import com.example.kallyruan.roommateexpense.UserPkg.LoginActivity;
 
 public class PasswordChangeActivity extends AppCompatActivity {
 

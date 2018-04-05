@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import java.util.Random;
 
-import org.w3c.dom.Text;
+import com.example.kallyruan.roommateexpense.DB.DBQueries;
+import com.example.kallyruan.roommateexpense.UserPkg.LoginActivity;
 
 import java.util.ArrayList;
 
@@ -57,7 +57,7 @@ public class CreateActivity extends Activity {
         sendinvitation(inviteeEmail);
 
 
-        String user_id=LoginActivity.email;
+        String user_id = LoginActivity.email;
         DBQueries db = DBQueries.getInstance();
 
         //add group information to database, if success then show message
