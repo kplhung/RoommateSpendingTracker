@@ -1,7 +1,4 @@
-package com.example.kallyruan.roommateexpense;
-
-import android.content.res.Resources;
-import android.util.Log;
+package com.example.kallyruan.roommateexpense.DB;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -43,7 +40,7 @@ public class DBQueries {
      * Throws an IllegalArgumentException if the email is null
      * @param email
      */
-    void nullEmail(String email) {
+    public void nullEmail(String email) {
         if (email == null) {
             throw new IllegalArgumentException("Cannot have an empty user id");
         }
@@ -53,7 +50,7 @@ public class DBQueries {
      * Throws an IllegalArgumentException if the password is null
      * @param p
      */
-    void nullPassword(String p) {
+    public void nullPassword(String p) {
         if (p == null) {
             throw new IllegalArgumentException("Cannot have an empty password");
         }
@@ -63,7 +60,7 @@ public class DBQueries {
      * Throws an IllegalArgumentException if the group_id is null
      * @param group_id
      */
-    void nullGroup(String group_id) {
+    public void nullGroup(String group_id) {
         if (group_id == null) {
             throw new IllegalArgumentException("Cannot have an empty group id");
         }
@@ -74,7 +71,7 @@ public class DBQueries {
      * correctly formatted
      * @param date
      */
-    void validDueDate(String date) {
+    public void validDueDate(String date) {
         if (date == null) {
             throw new IllegalArgumentException("Must enter a non-empty due date");
         }
@@ -92,7 +89,7 @@ public class DBQueries {
      * Throws an IllegalArgumentException if the group name is null or >20 characters
      * @param name
      */
-    void nullGroupName(String name) {
+    public void nullGroupName(String name) {
         if (name == null) {
             throw new IllegalArgumentException("Chosen group name cannot be empty");
         }
@@ -107,7 +104,7 @@ public class DBQueries {
      * Generates a random 20 character sequence based on the English alphabet and integers 0-9
      * @return the random 20 character string
      */
-    String generateCode(int length) {
+    public String generateCode(int length) {
         StringBuilder testId = new StringBuilder(length);
         for (int i = 0; i < 20; i++) {
             int index = (int) (Math.random() * alphabet.length());
@@ -128,7 +125,7 @@ public class DBQueries {
      * @return 0 if the email doesn't exist in the database, 1 if the password was incorrect,
      * 2 if login was successful
      */
-    int login(String email, String password) {
+    public int login(String email, String password) {
         nullEmail(email);
         nullPassword(password);
 
@@ -163,7 +160,7 @@ public class DBQueries {
      * @param email of the user
      * @return true if exists, false otherwise
      */
-    boolean userExists(String email) {
+    public boolean userExists(String email) {
         nullEmail(email);
 
         String query = "SELECT * FROM Users WHERE user_id = " + email;
@@ -191,7 +188,7 @@ public class DBQueries {
      * @param oldPassword of user
      * @return true if correct password given, false otherwise
      */
-    boolean enteredCorrectPassword(String email, String oldPassword) {
+    public boolean enteredCorrectPassword(String email, String oldPassword) {
         /* email is associated with a given user, based on implementation; i.e.,
            user is guaranteed to exist */
         nullEmail(email);
@@ -222,7 +219,7 @@ public class DBQueries {
      * @param password of the user
      * @return true if sign up was successful, false if the user already has an account
      */
-    boolean signUp(String email, String password) {
+    public boolean signUp(String email, String password) {
         nullEmail(email);
         nullPassword(password);
 
@@ -250,7 +247,7 @@ public class DBQueries {
      * @param newEmail
      * @return whether the udpate was successful
      */
-    boolean changeEmail(String oldEmail, String newEmail) {
+    public boolean changeEmail(String oldEmail, String newEmail) {
         nullEmail(oldEmail);
         nullEmail(newEmail);
 
@@ -308,7 +305,7 @@ public class DBQueries {
      * @return the 6-char code needed to reset the user's password, null if the user doesn't
      * exist or the database otherwise fails to set a code
      */
-    String forgotPassword(String email) {
+    public String forgotPassword(String email) {
         nullEmail(email);
 
         if (userExists(email)) {
@@ -342,7 +339,7 @@ public class DBQueries {
      * @return 2 if the update is allowed, 1 if the code already expired, 0 if if the
      * code is incorrect or the queries failed
      */
-    int allowReset(String email, String code) {
+    public int allowReset(String email, String code) {
         nullEmail(email);
 
         if (userExists(email)) {
@@ -402,7 +399,7 @@ public class DBQueries {
      * @param password the new password
      * @return whether the update was successful
      */
-    boolean resetPassword(String user, String password) {
+    public boolean resetPassword(String user, String password) {
         nullEmail(user);
         nullPassword(password);
 
@@ -430,7 +427,7 @@ public class DBQueries {
      * @param nickname the desired nickname
      * @return whether the update was successful
      */
-    boolean setNickname(String user, String nickname) {
+    public boolean setNickname(String user, String nickname) {
         nullEmail(user);
 
         if (userExists(user)) {
@@ -456,7 +453,7 @@ public class DBQueries {
      * @param user the user
      * @return the desired nickname, null if it hasn't been set
      */
-    String getNickname(String user) {
+    public String getNickname(String user) {
         nullEmail(user);
 
         String nickname = null;
@@ -487,7 +484,7 @@ public class DBQueries {
      * @param icon the desired icon
      * @return whether the update was successful
      */
-    boolean setIcon(String user, String icon) {
+    public boolean setIcon(String user, String icon) {
         nullEmail(user);
 
         if (userExists(user)) {
@@ -513,7 +510,7 @@ public class DBQueries {
      * @param user the user
      * @return the desired icon, null if it hasn't been set
      */
-    String getIcon(String user) {
+    public String getIcon(String user) {
         nullEmail(user);
 
         String icon = null;
@@ -543,7 +540,7 @@ public class DBQueries {
      * @param email of the user
      * @return the group_ids of the groups, in a ResultSet
      */
-    ResultSet userGroups(String email) {
+    public ResultSet userGroups(String email) {
         nullEmail(email);
 
         //DOESN'T CHECK IF THE USER EXISTS, BUT SHOULD BE GUARANTEED BASED ON IMPLEMENTATION
@@ -569,7 +566,7 @@ public class DBQueries {
      * @return a ResultSet including the bill_id, bill_name, amount, due_date, and description
      * for each of the user's bills
      */
-    ResultSet userBills(String email) {
+    public ResultSet userBills(String email) {
         nullEmail(email);
 
         //DOESN'T CHECK IF THE USER EXISTS, BUT SHOULD BE GUARANTEED BASED ON IMPLEMENTATION
@@ -597,7 +594,7 @@ public class DBQueries {
      * @return a ResultSet including the bill_id, bill_name, amount, due_date, and description
      * for each of the user's bills
      */
-    ResultSet userBillsInGroup(String email, String group_id) {
+    public ResultSet userBillsInGroup(String email, String group_id) {
         nullEmail(email);
         nullGroup(group_id);
 
@@ -625,7 +622,7 @@ public class DBQueries {
      * @param email
      * @return whether the deletion was successful
      */
-    boolean deleteAccount(String email) {
+    public boolean deleteAccount(String email) {
         nullEmail(email);
 
         String users = "DELETE FROM Users WHERE user_id = " + email;
@@ -661,7 +658,7 @@ public class DBQueries {
      * @param bill_id unique identifier for the bill
      * @return true if the bill id is already being used, false otherwise
      */
-    boolean billExists(String bill_id) {
+    public boolean billExists(String bill_id) {
         String query = "SELECT * FROM Bills WHERE bill_id = '" + bill_id + "'";
         Statement stmt = null;
         ResultSet rs = null;
@@ -691,7 +688,7 @@ public class DBQueries {
      * @param desc
      * @return if the bill addition was successful
      */
-    boolean addBill(String user, String group_id, String name, double amt, String date, String desc) {
+    public boolean addBill(String user, String group_id, String name, double amt, String date, String desc) {
         nullEmail(user);
         nullGroup(group_id);
         validDueDate(date);
@@ -728,7 +725,7 @@ public class DBQueries {
      * @param bill_id
      * @return whether the delete was successful
      */
-    boolean deleteBill(String user_id, String group_id, String bill_id) {
+    public boolean deleteBill(String user_id, String group_id, String bill_id) {
         nullEmail(user_id);
         nullGroup(group_id);
 
@@ -762,7 +759,7 @@ public class DBQueries {
      * @param due_date
      * @return whether the update was successful
      */
-    boolean changeDueDate(String bill_id, String due_date) {
+    public boolean changeDueDate(String bill_id, String due_date) {
         validDueDate(due_date);
 
         //DOESN'T CHECK IF THE BILL EXISTS, BUT SHOULD BE GUARANTEED BASED ON IMPLEMENTATION
@@ -787,7 +784,7 @@ public class DBQueries {
      * @param amt
      * @return whether the update was successful
      */
-    boolean changeAmount(String bill_id, double amt) {
+    public boolean changeAmount(String bill_id, double amt) {
         //DOESN'T CHECK IF THE BILL EXISTS, BUT SHOULD BE GUARANTEED BASED ON IMPLEMENTATION
 
         String bills = "UPDATE Bills SET amount = " + amt + " WHERE bill_id = '" + bill_id + "'";
@@ -809,7 +806,7 @@ public class DBQueries {
      * @param bill_id
      * @return the associated group_id, null if it doesn't exist
      */
-    String getGroupIdForBill(String bill_id) {
+    public String getGroupIdForBill(String bill_id) {
         if (billExists(bill_id)) {
             try {
                 String group = "SELECT * FROM GroupBills WHERE bill_id = '" + bill_id + "'";
@@ -836,7 +833,7 @@ public class DBQueries {
      * @param group_id
      * @return if the group_id is taken
      */
-    boolean groupExists(String group_id) {
+    public boolean groupExists(String group_id) {
         String query = "SELECT * FROM Groups WHERE group_id = '" + group_id + "'";
         Statement stmt = null;
         ResultSet rs = null;
@@ -861,7 +858,7 @@ public class DBQueries {
      * @param code
      * @return if the code is in use
      */
-    boolean codeInUse(String code) {
+    public boolean codeInUse(String code) {
         String query = "SELECT * FROM GroupCodes WHERE invite_code = '" + code + "'";
         Statement stmt = null;
         ResultSet rs = null;
@@ -886,7 +883,7 @@ public class DBQueries {
      * @param group_id
      * @return
      */
-    String getInviteCode(String group_id) {
+    public String getInviteCode(String group_id) {
         nullGroup(group_id);
 
         if (groupExists(group_id)) {
@@ -919,7 +916,7 @@ public class DBQueries {
      * @param code
      * @return the associated group_id
      */
-    String getCodeGroup(String code) {
+    public String getCodeGroup(String code) {
         if (codeInUse(code)) {
             String query = "SELECT group_id FROM GroupCodes WHERE invite_code = '" + code + "'";
             Statement stmt = null;
@@ -944,7 +941,7 @@ public class DBQueries {
      * @param group_id
      * @return list of members
      */
-    ArrayList<String> getGroupMembers(String group_id) {
+    public ArrayList<String> getGroupMembers(String group_id) {
         ArrayList<String> members = new ArrayList<String>();
         String query = "SELECT user_id FROM UserGroups WHERE group_id = '" + group_id + "'";
         Statement stmt = null;
@@ -967,7 +964,7 @@ public class DBQueries {
      * @param group_id
      * @return group_name
      */
-    String getGroupName(String group_id) {
+    public String getGroupName(String group_id) {
         String query = "SELECT * FROM Groups WHERE group_id = '" + group_id + "'";
         Statement stmt = null;
         ResultSet rs = null;
@@ -992,7 +989,7 @@ public class DBQueries {
      * @return a ResultSet including the bill_id, bill_name, amount, due_date, and description
      * for each of the group's bills
      */
-    ResultSet groupBills(String group_id) {
+    public ResultSet groupBills(String group_id) {
         nullGroup(group_id);
 
         //DOESN'T CHECK IF THE GROUP EXISTS, BUT SHOULD BE GUARANTEED BASED ON IMPLEMENTATION
@@ -1020,7 +1017,7 @@ public class DBQueries {
      * @param group_name
      * @return if the update was successful
      */
-    boolean createGroup(String user_id, String group_name) {
+    public boolean createGroup(String user_id, String group_name) {
         nullEmail(user_id);
         nullGroupName(group_name);
 
@@ -1052,7 +1049,7 @@ public class DBQueries {
      * @return 0 if the code was wrong, 1 if the code had expired, 2 if the user doesn't exist in
      * the database, 3 if the addition was successful
      */
-    int addUserToGroup(String user_id, String code) {
+    public int addUserToGroup(String user_id, String code) {
         nullEmail(user_id);
 
         if (userExists(user_id)) {
@@ -1109,7 +1106,7 @@ public class DBQueries {
      * @param group_id
      * @return if the removal was successful
      */
-    boolean leaveGroup(String user_id, String group_id) {
+    public boolean leaveGroup(String user_id, String group_id) {
         nullEmail(user_id);
         nullGroup(group_id);
 
@@ -1153,7 +1150,7 @@ public class DBQueries {
      * @param group_id of the group
      * @return whether the delete was successful
      */
-    boolean deleteGroup(String group_id) {
+    public boolean deleteGroup(String group_id) {
         nullGroup(group_id);
 
         String groups = "DELETE FROM Groups WHERE group_id = ?";
@@ -1198,7 +1195,7 @@ public class DBQueries {
      * @param group_id
      * @return the number of users in the group
      */
-    int groupParticipation(String group_id) {
+    public int groupParticipation(String group_id) {
         nullGroup(group_id);
 
         String query = "SELECT COUNT(DISTINCT user_id) FROM UserGroups WHERE group_id = '" +

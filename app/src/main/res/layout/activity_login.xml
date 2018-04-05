@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.kallyruan.roommateexpense.LoginActivity"
+    tools:context="com.example.kallyruan.roommateexpense.UserPkg.LoginActivity"
     android:background="#caf0f7"
     tools:layout_editor_absoluteY="81dp">
 

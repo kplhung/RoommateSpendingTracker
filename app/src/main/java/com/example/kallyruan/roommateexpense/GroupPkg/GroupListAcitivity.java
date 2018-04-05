@@ -1,19 +1,20 @@
-package com.example.kallyruan.roommateexpense;
+package com.example.kallyruan.roommateexpense.GroupPkg;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.view.View;
-import android.database.SQLException;
-import android.widget.Toast;
 import android.widget.ImageView;
 
-import java.sql.ResultSet;
+import com.example.kallyruan.roommateexpense.BillPkg.BillListActivity;
+import com.example.kallyruan.roommateexpense.UserPkg.LoginActivity;
+import com.example.kallyruan.roommateexpense.MenuActivity;
+import com.example.kallyruan.roommateexpense.R;
+import com.example.kallyruan.roommateexpense.UserPkg.User;
+
 import java.util.ArrayList;
 
 

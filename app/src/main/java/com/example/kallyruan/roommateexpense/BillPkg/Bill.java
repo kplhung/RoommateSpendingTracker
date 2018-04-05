@@ -1,4 +1,4 @@
-package com.example.kallyruan.roommateexpense;
+package com.example.kallyruan.roommateexpense.BillPkg;
 
 /**
  * Created by Lily on 2/17/2018.

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.kallyruan.roommateexpense.UserPkg.LoginActivity;
+
 /* KH: This is the welcome page, where the user is able to press the 'Enter' button to get
  * to the login page.
  */

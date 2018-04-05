@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.example.kallyruan.roommateexpense.UserPkg.User;
 
 import java.util.ArrayList;
 

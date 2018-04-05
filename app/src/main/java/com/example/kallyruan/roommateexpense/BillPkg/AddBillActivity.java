@@ -1,7 +1,6 @@
-package com.example.kallyruan.roommateexpense;
+package com.example.kallyruan.roommateexpense.BillPkg;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,8 +15,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import com.example.kallyruan.roommateexpense.DB.DBQueries;
+import com.example.kallyruan.roommateexpense.UserPkg.LoginActivity;
+import com.example.kallyruan.roommateexpense.R;
+import com.example.kallyruan.roommateexpense.RoommateAdapter;
+import com.example.kallyruan.roommateexpense.UserPkg.User;
+
 import java.util.ArrayList;
 
 
@@ -93,7 +96,8 @@ public class AddBillActivity extends Activity{
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
                 int pos = position + 1;
-                Toast.makeText(AddBillActivity.this, Integer.toString(pos) + " Clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddBillActivity.this, Integer.toString(pos) + " Clicked",
+                        Toast.LENGTH_SHORT).show();
             }
 
         });

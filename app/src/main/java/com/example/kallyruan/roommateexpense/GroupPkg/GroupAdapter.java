@@ -1,13 +1,15 @@
-package com.example.kallyruan.roommateexpense;
+package com.example.kallyruan.roommateexpense.GroupPkg;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.kallyruan.roommateexpense.GroupPkg.Group;
+import com.example.kallyruan.roommateexpense.R;
 
 import java.util.ArrayList;
 

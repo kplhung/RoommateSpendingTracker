@@ -1,13 +1,16 @@
-package com.example.kallyruan.roommateexpense;
+package com.example.kallyruan.roommateexpense.BillPkg;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.kallyruan.roommateexpense.DB.DBQueries;
+import com.example.kallyruan.roommateexpense.UserPkg.LoginActivity;
+import com.example.kallyruan.roommateexpense.R;
 
 import java.util.ArrayList;
 

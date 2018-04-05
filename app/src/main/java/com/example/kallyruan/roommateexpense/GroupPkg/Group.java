@@ -1,6 +1,7 @@
-package com.example.kallyruan.roommateexpense;
+package com.example.kallyruan.roommateexpense.GroupPkg;
 
-import java.sql.SQLException;
+import com.example.kallyruan.roommateexpense.UserPkg.User;
+
 import java.util.ArrayList;
 
 /**

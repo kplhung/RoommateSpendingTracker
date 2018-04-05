@@ -1,8 +1,12 @@
-package com.example.kallyruan.roommateexpense;
+package com.example.kallyruan.roommateexpense.UserPkg;
 
 import java.util.ArrayList;
 import java.sql.ResultSet;
 import android.database.SQLException;
+
+import com.example.kallyruan.roommateexpense.DB.DBQueries;
+import com.example.kallyruan.roommateexpense.GroupPkg.Group;
+
 /**
  * Created by Lily on 2/22/2018.
  */

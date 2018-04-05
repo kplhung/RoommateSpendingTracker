@@ -1,4 +1,4 @@
-package com.example.kallyruan.roommateexpense; /**
+package com.example.kallyruan.roommateexpense.DB; /**
  * Created by Kelly on 2/22/2018.
  * This class returns a connection object used to connect to a MySQL database.
  */
