@@ -4,6 +4,7 @@ package com.example.kallyruan.roommateexpense; /**
  */
 
 import java.sql.*;
+import android.content.res.Resources;
 
 public class DBConnect {
 
