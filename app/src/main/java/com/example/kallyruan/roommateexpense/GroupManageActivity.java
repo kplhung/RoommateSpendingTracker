@@ -100,7 +100,7 @@ public class GroupManageActivity extends Activity{
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc822");
         DBQueries dbq = DBQueries.getInstance();
-        ArrayList<String> members = dbq.groupMembers(User.getInstance(userEmail).getNthGroup(
+        ArrayList<String> members = dbq.getGroupMembers(User.getInstance(userEmail).getNthGroup(
                 action_index).getCode());
         String[] emailAddresses = new String[members.size()];
         members.toArray(emailAddresses);

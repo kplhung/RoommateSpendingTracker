@@ -1,5 +1,6 @@
 package com.example.kallyruan.roommateexpense;
 
+import android.content.res.Resources;
 import android.util.Log;
 
 import java.sql.Connection;
@@ -11,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import android.content.ContentValues;
 
 /**
  * Contains functions for all database queries supported in the app
@@ -238,6 +238,63 @@ public class DBQueries {
                 stmt.executeUpdate(query);
                 return true;
             } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Handles changing a user's email address
+     * @param oldEmail
+     * @param newEmail
+     * @return whether the udpate was successful
+     */
+    boolean changeEmail(String oldEmail, String newEmail) {
+        nullEmail(oldEmail);
+        nullEmail(newEmail);
+
+        if (userExists(oldEmail)) {
+            //collect old information
+            String oldInfo = "SELECT * FROM Users WHERE user_id = " + oldEmail;
+            Statement stmt = null;
+            ResultSet rs = null;
+
+            try {
+                stmt = con.createStatement();
+                rs = stmt.executeQuery(oldInfo);
+                String pw = rs.getString("password");
+                String nickname = rs.getString("nickname");
+                String icon_id = rs.getString("icon_id");
+                String reset_code = rs.getString("reset_code");
+                String expiry_date = rs.getString("expiry_date");
+
+                //add the new email as a new user with all the old information
+                String addNewEmail = "INSERT INTO Users VALUES(\"" + newEmail +"\",\"" + pw +
+                        "\",\"" + nickname + "\",\"" + icon_id + "\",\"" + reset_code + "\",\"" +
+                        expiry_date + "\")";
+                stmt.executeUpdate(addNewEmail);
+
+                //update the bills
+                String bills = "UPDATE Bills SET user_id = ? WHERE user_id = ?";
+                PreparedStatement pstmt = con.prepareStatement(bills);
+                pstmt.setString(1, newEmail);
+                pstmt.setString(2, oldEmail);
+                pstmt.executeUpdate();
+
+                //update the groups
+                String groups = "UPDATE UserGroups SET user_id = ? WHERE user_id = ?";
+                pstmt = con.prepareStatement(groups);
+                pstmt.setString(1, newEmail);
+                pstmt.setString(2, oldEmail);
+                pstmt.executeUpdate();
+
+                //remove the old email from Users
+                String remove = "DELETE FROM Users WHERE user_id = " + oldEmail;
+                stmt.executeUpdate(remove);
+
+                return true;
+            } catch(SQLException e) {
                 e.printStackTrace();
             }
         }
@@ -748,6 +805,29 @@ public class DBQueries {
     }
 
     /**
+     * Handles finding the group_id associated with a given bill_id
+     * @param bill_id
+     * @return the associated group_id, null if it doesn't exist
+     */
+    String getGroupIdForBill(String bill_id) {
+        if (billExists(bill_id)) {
+            try {
+                String group = "SELECT * FROM GroupBills WHERE bill_id = '" + bill_id + "'";
+                ResultSet rs = null;
+                Statement stmt = con.createStatement();
+                rs = stmt.executeQuery(group);
+
+                if (rs.next()) {
+                    return rs.getString("group_id");
+                }
+            } catch(SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    /**
      * GROUP QUERIES
      */
 
@@ -864,7 +944,7 @@ public class DBQueries {
      * @param group_id
      * @return list of members
      */
-    ArrayList<String> groupMembers(String group_id) {
+    ArrayList<String> getGroupMembers(String group_id) {
         ArrayList<String> members = new ArrayList<String>();
         String query = "SELECT user_id FROM UserGroups WHERE group_id = '" + group_id + "'";
         Statement stmt = null;
@@ -887,7 +967,7 @@ public class DBQueries {
      * @param group_id
      * @return group_name
      */
-    String groupName(String group_id) {
+    String getGroupName(String group_id) {
         String query = "SELECT * FROM Groups WHERE group_id = '" + group_id + "'";
         Statement stmt = null;
         ResultSet rs = null;

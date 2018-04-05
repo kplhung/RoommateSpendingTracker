@@ -82,7 +82,7 @@ public class AddBillActivity extends Activity{
     }
     public void loadRoommateList(){
         ListView listView = (ListView) findViewById(R.id.split_bill_list);
-        ArrayList<String> roommates_Ids = instance.groupMembers(group_id);
+        ArrayList<String> roommates_Ids = instance.getGroupMembers(group_id);
         ArrayList<User> roommates = new ArrayList<User> ();
         for (String user: roommates_Ids){
             roommates.add(new User(user));
@@ -108,7 +108,7 @@ public class AddBillActivity extends Activity{
 
         ((EditText) findViewById(R.id.duedate_input)).setText(i.getStringExtra("bill_date"));
         ListView listView = (ListView) findViewById(R.id.split_bill_list);
-        ArrayList<String> roommates_Ids = instance.groupMembers(group_id);
+        ArrayList<String> roommates_Ids = instance.getGroupMembers(group_id);
         ArrayList<User> roommates = new ArrayList<User> ();
         roommates.add(new User(LoginActivity.email));
         this.roommate_adapter = new RoommateAdapter(this, roommates);

@@ -34,7 +34,7 @@ public class User {
                 try {
                     while (rs.next()) {
                         String code = rs.getString("group_id");
-                        String name = db.groupName(code);
+                        String name = db.getGroupName(code);
                         int participation = db.groupParticipation(code);
                         String alert = "Not implemented yet";
                         allgroups.add(new Group(code, name, participation, alert));

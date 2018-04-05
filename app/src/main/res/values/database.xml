@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="code_alphabet" type="string">ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890</string>
+    <string name="date_format">dd-MM-yyyy</string>
+    <string name="hostname">cis350project.crthvh2wxus6.us-east-2.rds.amazonaws.com</string>
+    <string name="driver">com.mysql.jdbc.Driver</string>
+    <string name="port">3306</string>
+    <string name="db_name">CIS350APP</string>
+    <string name="db_user">roommatespending</string>
+    <string name="db_password">tracker350</string>
+</resources>
