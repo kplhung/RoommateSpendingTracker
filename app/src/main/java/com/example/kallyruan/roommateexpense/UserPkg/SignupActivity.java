@@ -45,18 +45,18 @@ public class SignupActivity extends AppCompatActivity {
 
                 String iconImage= Integer.toString(user_icon);
                 String nickname = usernickname.getText().toString();
-                System.out.println("iconImage = " + iconImage);
-                System.out.println("nickname = " + nickname);
+                
+                System.out.println("SignupAciticty iconImage = " + iconImage);
                 boolean iconSuccess=db.setIcon(email,iconImage);
                 boolean nicknameSuccess=db.setNickname(email,nickname);
 
                 //Here test whether successfully add icon and nickname infor to user db
                 if(!iconSuccess){
-                    System.out.println("failed to add icon "+ email +" "+ iconImage);
+                    System.out.println("SignupAciticty, failed to add icon "+ email +" "+ iconImage);
                 }
 
                 if(!nicknameSuccess){
-                    System.out.println("failed to add nickname "+ email +" "+ nickname);
+                    System.out.println("SignupAciticty, failed to add nickname "+ email +" "+ nickname);
                 }
 
 
