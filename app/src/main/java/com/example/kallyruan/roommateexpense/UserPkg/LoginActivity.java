@@ -30,6 +30,9 @@ public class LoginActivity extends AppCompatActivity {
 
         final Button loginButton = findViewById(R.id.loginButton);
 
+        Button forgotPasswordButton = findViewById(R.id.forgotPasswordButton);
+
+        // handles logging into the app
         loginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 email = login.getText().toString();
@@ -66,6 +69,14 @@ public class LoginActivity extends AppCompatActivity {
                     i.putExtra("username", email);
                     startActivity(i);
                 }
+            }
+        });
+
+        // routes user to activity to start process of resetting password
+        forgotPasswordButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), ForgotPasswordActivity.class);
+                startActivity(i);
             }
         });
     }
