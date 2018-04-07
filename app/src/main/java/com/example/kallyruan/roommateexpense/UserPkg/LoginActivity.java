@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                email = "'" + login.getText().toString() + "'";
+                email = login.getText().toString();
                 String password = pw.getText().toString();
 
                 DBQueries db = DBQueries.getInstance();
