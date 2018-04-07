@@ -12,9 +12,12 @@
         android:id="@+id/loginSticker"
         android:layout_width="102dp"
         android:layout_height="34dp"
+        android:layout_marginLeft="48dp"
         android:layout_marginStart="48dp"
         android:layout_marginTop="30dp"
+        android:clickable="true"
         android:gravity="center"
+        android:onClick="setIcon1"
         android:text="Username"
         android:textSize="18dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -111,108 +114,126 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nicknameSticker" />
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-        app:srcCompat="@mipmap/usericon_8"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
+    <GridView
+        android:id="@+id/user_icon_gridView"
+        android:layout_width="370dp"
+        android:layout_height="200dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:columnWidth="80dp"
+        android:gravity="center"
+        android:horizontalSpacing="8dp"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/signUpButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@+id/notice"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="242dp" />
+        app:layout_constraintVertical_bias="0.655" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-        app:srcCompat="@mipmap/usericon_9"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView1"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/notice"
-        tools:layout_editor_absoluteX="116dp"
-        tools:layout_editor_absoluteY="244dp" />
+    <!---
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="78dp"
+            android:layout_height="78dp"
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/notice"
-        app:srcCompat="@mipmap/usericon_3"
-        tools:layout_editor_absoluteX="201dp"
-        tools:layout_editor_absoluteY="244dp" />
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/notice"
+            app:srcCompat="@mipmap/usericon_8" />
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/notice"
-        app:srcCompat="@mipmap/usericon_2"
-        tools:layout_editor_absoluteX="297dp"
-        tools:layout_editor_absoluteY="250dp" />
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="78dp"
+            android:layout_height="78dp"
+            app:srcCompat="@mipmap/usericon_9"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            app:layout_constraintStart_toEndOf="@+id/imageView1"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/notice"
+            tools:layout_editor_absoluteX="116dp"
+            tools:layout_editor_absoluteY="244dp" />
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/imageView1"
-        app:srcCompat="@mipmap/usericon_7"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="330dp" />
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="78dp"
+            android:layout_height="78dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/notice"
+            app:srcCompat="@mipmap/usericon_3"
+            tools:layout_editor_absoluteX="201dp"
+            tools:layout_editor_absoluteY="244dp" />
 
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView5"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:srcCompat="@mipmap/usericon_6"
-        tools:layout_editor_absoluteX="116dp"
-        tools:layout_editor_absoluteY="330dp" />
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="78dp"
+            android:layout_height="78dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/notice"
+            app:srcCompat="@mipmap/usericon_2"
+            tools:layout_editor_absoluteX="297dp"
+            tools:layout_editor_absoluteY="250dp" />
 
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView6"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:srcCompat="@mipmap/usericon_4"
-        tools:layout_editor_absoluteX="201dp"
-        tools:layout_editor_absoluteY="330dp" />
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="78dp"
+            android:layout_height="78dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/imageView1"
+            app:srcCompat="@mipmap/usericon_7"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="330dp" />
 
-    <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView7"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4"
-        app:srcCompat="@mipmap/usericon_1"
-        tools:layout_editor_absoluteX="283dp"
-        tools:layout_editor_absoluteY="330dp" />
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="78dp"
+            android:layout_height="78dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            app:layout_constraintStart_toEndOf="@+id/imageView5"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:srcCompat="@mipmap/usericon_6"
+            tools:layout_editor_absoluteX="116dp"
+            tools:layout_editor_absoluteY="330dp" />
 
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="78dp"
+            android:layout_height="78dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            app:layout_constraintStart_toEndOf="@+id/imageView6"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/imageView3"
+            app:srcCompat="@mipmap/usericon_4"
+            tools:layout_editor_absoluteX="201dp"
+            tools:layout_editor_absoluteY="330dp" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="78dp"
+            android:layout_height="78dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            app:layout_constraintStart_toEndOf="@+id/imageView7"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4"
+            app:srcCompat="@mipmap/usericon_1"
+            tools:layout_editor_absoluteX="283dp"
+            tools:layout_editor_absoluteY="330dp" />
+    -->
 </android.support.constraint.ConstraintLayout>

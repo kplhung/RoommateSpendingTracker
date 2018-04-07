@@ -8,8 +8,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.kallyruan.roommateexpense.BillPkg.BillListActivity;
+import com.example.kallyruan.roommateexpense.DB.DBQueries;
 import com.example.kallyruan.roommateexpense.UserPkg.LoginActivity;
 import com.example.kallyruan.roommateexpense.MenuActivity;
 import com.example.kallyruan.roommateexpense.R;
@@ -32,9 +34,7 @@ public class GroupListAcitivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.existing_group);
-        ImageView icon=findViewById(R.id.user_icon);
-        //hard-code here to show one icon
-        icon.setImageResource(R.mipmap.usericon_2);
+        showUserInfo();
         showGroupList();
 
         ListView view_name = (ListView) findViewById(R.id.listView_id);
@@ -76,6 +76,59 @@ public class GroupListAcitivity extends Activity{
                 action_index).getCode();
         i.putExtra("group_id", group_id);
         startActivity(i);
+    }
+
+    /**
+     *this method is to get user icon and nickname from database and show it in the interface
+     **/
+    public void showUserInfo() {
+        DBQueries instance = DBQueries.getInstance();
+
+        //get nickname and set to Textview content
+        String nickname = instance.getNickname(LoginActivity.email);
+        TextView userNickname = findViewById(R.id.user_nickname);
+        userNickname.setText(nickname);
+
+        //get icon and set to corresponding imageView
+        String icon = instance.getIcon(LoginActivity.email);
+        int iconIndex;
+        if(icon!=null) {
+            iconIndex = Integer.parseInt(icon);
+        }else{
+            iconIndex = -1;
+            System.out.println("No icon image recorded. Put default image instead.");
+        }
+
+        ImageView image = findViewById(R.id.user_icon);
+        switch(iconIndex){
+            case 0:
+                image.setImageResource(R.mipmap.usericon_8);
+                break;
+            case 1:
+                image.setImageResource(R.mipmap.usericon_9);
+                break;
+            case 2:
+                image.setImageResource(R.mipmap.usericon_3);
+                break;
+            case 3:
+                image.setImageResource(R.mipmap.usericon_2);
+                break;
+            case 4:
+                image.setImageResource(R.mipmap.usericon_7);
+                break;
+            case 5:
+                image.setImageResource(R.mipmap.usericon_6);
+                break;
+            case 6:
+                image.setImageResource(R.mipmap.usericon_4);
+                break;
+            case 7:
+                image.setImageResource(R.mipmap.usericon_1);
+                break;
+            default:
+                image.setImageResource(R.mipmap.usericon_5);
+                break;
+        }
     }
 
 }

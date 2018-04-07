@@ -18,8 +18,8 @@ import java.util.Date;
 public class DBQueries {
     private static DBQueries ourInstance = new DBQueries();
     private final Connection con;
-    private final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+    private final String alphabet = DBConstants.code_alphabet;
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat(DBConstants.date_format);
 
     public static DBQueries getInstance() {
         if (ourInstance == null) {
@@ -101,12 +101,12 @@ public class DBQueries {
 
     /**
      * Used for generating both group_id's and bill_id's
-     * Generates a random 20 character sequence based on the English alphabet and integers 0-9
-     * @return the random 20 character string
+     * Generates a random "length" character sequence based on the English alphabet and integers 0-9
+     * @return the random "length" character string
      */
     public String generateCode(int length) {
         StringBuilder testId = new StringBuilder(length);
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < length; i++) {
             int index = (int) (Math.random() * alphabet.length());
             testId.append(alphabet.charAt(index));
         }
@@ -132,13 +132,14 @@ public class DBQueries {
         boolean exists = userExists(email);
 
         if (exists) {
-            String query = "SELECT password FROM Users WHERE user_id = " + email;
+            String query = "SELECT password FROM Users WHERE user_id = ?";
             ResultSet rs = null;
-            Statement stmt = null;
+            PreparedStatement stmt = null;
 
             try {
-                stmt = con.createStatement();
-                rs = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query);
+                stmt.setString(1, email);
+                rs = stmt.executeQuery();
                 rs.next();
                 String realPassword = rs.getString("password");
 
@@ -163,13 +164,14 @@ public class DBQueries {
     public boolean userExists(String email) {
         nullEmail(email);
 
-        String query = "SELECT * FROM Users WHERE user_id = " + email;
-        Statement stmt = null;
+        String query = "SELECT * FROM Users WHERE user_id = ?";
+        PreparedStatement stmt = null;
         ResultSet rs = null;
 
         try {
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(query);
+            stmt = con.prepareStatement(query);
+            stmt.setString(1, email);
+            rs = stmt.executeQuery();
 
             if (!rs.next()) {
                 return false;
@@ -194,13 +196,14 @@ public class DBQueries {
         nullEmail(email);
         nullPassword(oldPassword);
 
-        String query = "SELECT password FROM Users WHERE user_id = " + email;
-        Statement stmt = null;
+        String query = "SELECT password FROM Users WHERE user_id = ?";
+        PreparedStatement stmt = null;
         ResultSet rs = null;
 
         try {
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(query);
+            stmt = con.prepareStatement(query);
+            stmt.setString(1, email);
+            rs = stmt.executeQuery();
             rs.next();
 
             if (oldPassword.equals(rs.getString("password"))) {
@@ -253,13 +256,14 @@ public class DBQueries {
 
         if (userExists(oldEmail)) {
             //collect old information
-            String oldInfo = "SELECT * FROM Users WHERE user_id = " + oldEmail;
-            Statement stmt = null;
+            String oldInfo = "SELECT * FROM Users WHERE user_id = ?";
+            PreparedStatement stmt = null;
             ResultSet rs = null;
 
             try {
-                stmt = con.createStatement();
-                rs = stmt.executeQuery(oldInfo);
+                stmt = con.prepareStatement(oldInfo);
+                stmt.setString(1, oldEmail);
+                rs = stmt.executeQuery();
                 String pw = rs.getString("password");
                 String nickname = rs.getString("nickname");
                 String icon_id = rs.getString("icon_id");
@@ -267,7 +271,7 @@ public class DBQueries {
                 String expiry_date = rs.getString("expiry_date");
 
                 //add the new email as a new user with all the old information
-                String addNewEmail = "INSERT INTO Users VALUES(\"" + newEmail +"\",\"" + pw +
+                String addNewEmail = "INSERT INTO Users VALUES(\"" + newEmail + "\",\"" + pw +
                         "\",\"" + nickname + "\",\"" + icon_id + "\",\"" + reset_code + "\",\"" +
                         expiry_date + "\")";
                 stmt.executeUpdate(addNewEmail);
@@ -287,8 +291,10 @@ public class DBQueries {
                 pstmt.executeUpdate();
 
                 //remove the old email from Users
-                String remove = "DELETE FROM Users WHERE user_id = " + oldEmail;
-                stmt.executeUpdate(remove);
+                String remove = "DELETE FROM Users WHERE user_id = ?";
+                pstmt = con.prepareStatement(remove);
+                pstmt.setString(1, oldEmail);
+                stmt.executeUpdate();
 
                 return true;
             } catch(SQLException e) {
@@ -343,18 +349,21 @@ public class DBQueries {
         nullEmail(email);
 
         if (userExists(email)) {
-            String reset_code = "SELECT reset_code FROM Users WHERE user_id = " + email;
-            String expiry_date = "SELECT expiry_date FROM Users WHERE user_id = " + email;
+            String reset_code = "SELECT reset_code FROM Users WHERE user_id = ?";
+            String expiry_date = "SELECT expiry_date FROM Users WHERE user_id = ?";
             ResultSet rs = null;
-            Statement stmt = null;
+            PreparedStatement stmt = null;
 
             try {
-                stmt = con.createStatement();
-                rs = stmt.executeQuery(reset_code);
+                stmt = con.prepareStatement(reset_code);
+                stmt.setString(1, email);
+                rs = stmt.executeQuery();
                 rs.next();
                 String storedCode = rs.getString("reset_code");
 
-                rs = stmt.executeQuery(expiry_date);
+                stmt = con.prepareStatement(expiry_date);
+                stmt.setString(1, email);
+                rs = stmt.executeQuery();
                 rs.next();
                 String date = rs.getString("expiry_date");
                 Date expiry = dateFormat.parse(date);
@@ -439,7 +448,7 @@ public class DBQueries {
                 stmt.setString(1, nickname);
                 stmt.setString(2, user);
                 stmt.executeUpdate();
-
+                return true;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -459,13 +468,14 @@ public class DBQueries {
         String nickname = null;
 
         if (userExists(user)) {
-            String query = "SElECT nickname FROM Users WHERE user_id = " + user;
-            Statement stmt = null;
+            String query = "SELECT nickname FROM Users WHERE user_id = ?";
+            PreparedStatement stmt = null;
             ResultSet rs = null;
 
             try {
-                stmt = con.createStatement();
-                rs = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query);
+                stmt.setString(1, user);
+                rs = stmt.executeQuery();
                 rs.next();
 
                 nickname = rs.getString("nickname");
@@ -496,6 +506,7 @@ public class DBQueries {
                 stmt.setString(1, icon);
                 stmt.setString(2, user);
                 stmt.executeUpdate();
+                return true;
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -516,13 +527,14 @@ public class DBQueries {
         String icon = null;
 
         if (userExists(user)) {
-            String query = "SElECT icon_id FROM Users WHERE user_id = " + user;
-            Statement stmt = null;
+            String query = "SELECT icon_id FROM Users WHERE user_id = ?";
+            PreparedStatement stmt = null;
             ResultSet rs = null;
 
             try {
-                stmt = con.createStatement();
-                rs = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query);
+                stmt.setString(1, user);
+                rs = stmt.executeQuery();
                 rs.next();
 
                 icon = rs.getString("icon_id");
@@ -545,13 +557,14 @@ public class DBQueries {
 
         //DOESN'T CHECK IF THE USER EXISTS, BUT SHOULD BE GUARANTEED BASED ON IMPLEMENTATION
 
-        String query = "SELECT group_id FROM UserGroups WHERE user_id = " + email;
-        Statement stmt = null;
+        String query = "SELECT group_id FROM UserGroups WHERE user_id = ?";
+        PreparedStatement stmt = null;
         ResultSet rs = null;
 
         try {
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(query);
+            stmt = con.prepareStatement(query);
+            stmt.setString(1, email);
+            rs = stmt.executeQuery();
             return rs;
         } catch(SQLException e) {
             e.printStackTrace();
@@ -572,13 +585,14 @@ public class DBQueries {
         //DOESN'T CHECK IF THE USER EXISTS, BUT SHOULD BE GUARANTEED BASED ON IMPLEMENTATION
 
         String query = "SELECT bill_id, bill_name, amount, due_date, description FROM Bills " +
-                "WHERE user_id = " + email;
-        Statement stmt = null;
+                "WHERE user_id = ?";
+        PreparedStatement stmt = null;
         ResultSet rs = null;
 
         try {
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(query);
+            stmt = con.prepareStatement(query);
+            stmt.setString(1, email);
+            rs = stmt.executeQuery();
             return rs;
         } catch(SQLException e) {
             e.printStackTrace();
@@ -602,14 +616,16 @@ public class DBQueries {
         //BASED ON IMPLEMENTATION
 
         String query = "SELECT B.bill_id, B.bill_name, B.amount, B.due_date, B.description FROM (Bills AS " +
-                "B INNER JOIN (SELECT bill_id FROM GroupBills WHERE group_id = '" + group_id + "') " +
-                "AS G ON B.bill_id = G.bill_id) WHERE user_id = " + email;
-        Statement stmt = null;
+                "B INNER JOIN (SELECT bill_id FROM GroupBills WHERE group_id = ?) " +
+                "AS G ON B.bill_id = G.bill_id) WHERE user_id = ?";
+        PreparedStatement stmt = null;
         ResultSet rs = null;
 
         try {
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(query);
+            stmt = con.prepareStatement(query);
+            stmt.setString(1, group_id);
+            stmt.setString(2, email);
+            rs = stmt.executeQuery();
             return rs;
         } catch(SQLException e) {
             e.printStackTrace();
@@ -625,8 +641,8 @@ public class DBQueries {
     public boolean deleteAccount(String email) {
         nullEmail(email);
 
-        String users = "DELETE FROM Users WHERE user_id = " + email;
-        Statement stmt = null;
+        String users = "DELETE FROM Users WHERE user_id = ?";
+        PreparedStatement stmt = null;
 
         String group_id = null;
 
@@ -639,8 +655,9 @@ public class DBQueries {
             }
 
             //remove the user from Users
-            stmt = con.createStatement();
-            stmt.executeUpdate(users);
+            stmt = con.prepareStatement(users);
+            stmt.setString(1, email);
+            stmt.executeUpdate();
             return true;
         } catch(SQLException e) {
             e.printStackTrace();
@@ -696,13 +713,13 @@ public class DBQueries {
         //DOESN'T CHECK IF THE USER OR GROUP EXISTS -- CAN ADD THIS, BUT SHOULD BE GUARANTEED
         //BASED ON IMPLEMENTATION
 
-        String newBillId = generateCode(20);
+        String newBillId = generateCode(10);
         while (billExists(newBillId)) {
-            newBillId = generateCode(20);
+            newBillId = generateCode(10);
         }
         String bills = "INSERT INTO Bills VALUES (\"" + newBillId + "\", \"" + name + "\", \"" +
                 user + "\", \"" + amt + "\", \"" + date + "\", \"" + desc + "\")";
-        String groupBills = "INSERT INTO GroupBills VALUES('" + group_id + "', '" + newBillId + "')";
+        String groupBills = "INSERT INTO GroupBills VALUES(\"" + group_id + "\", \"" + newBillId + "\")";
         Statement stmt = null;
 
         try {
@@ -733,7 +750,7 @@ public class DBQueries {
         //IMPLEMENTATION
 
         String groupBills = "DELETE FROM GroupBills WHERE group_id = ? AND bill_id = ?";
-        String bills = "DELETE FROM Bills WHERE bill_id = ? AND user_id = " + user_id;
+        String bills = "DELETE FROM Bills WHERE bill_id = ? AND user_id = ?";
         PreparedStatement stmt = null;
 
         try {
@@ -744,6 +761,7 @@ public class DBQueries {
 
             stmt = con.prepareStatement(bills);
             stmt.setString(1, bill_id);
+            stmt.setString(2, user_id);
             stmt.executeUpdate();
             return true;
         } catch(SQLException e) {
@@ -1021,13 +1039,13 @@ public class DBQueries {
         nullEmail(user_id);
         nullGroupName(group_name);
 
-        String group_id = generateCode(20);
+        String group_id = generateCode(10);
         while (groupExists(group_id)) {
-            group_id = generateCode(20);
+            group_id = generateCode(10);
         }
 
-        String groups = "INSERT INTO Groups VALUES ('" + group_id + "', '" + group_name + "')";
-        String userGroups = "INSERT INTO UserGroups VALUES (" + user_id + ", '" + group_id + "')";
+        String groups = "INSERT INTO Groups VALUES (\"" + group_id + "\", \"" + group_name + "\")";
+        String userGroups = "INSERT INTO UserGroups VALUES (\"" + user_id + "\", \"" + group_id + "\")";
         Statement stmt = null;
 
         try {
@@ -1053,7 +1071,7 @@ public class DBQueries {
         nullEmail(user_id);
 
         if (userExists(user_id)) {
-            String query = "SELECT * FROM GroupCodes WHERE invite_code = " + code;
+            String query = "SELECT * FROM GroupCodes WHERE invite_code = '" + code + "'";
             ResultSet rs = null;
             Statement stmt = null;
 
@@ -1078,8 +1096,8 @@ public class DBQueries {
                     s.executeUpdate();
 
                     //add the user to the group
-                    String userGroups = "INSERT INTO UserGroups VALUES (" + user_id + ", '"
-                            + group_id + "')";
+                    String userGroups = "INSERT INTO UserGroups VALUES (\"" + user_id + "\", \""
+                            + group_id + "\")";
                     Statement add = null;
                     add = con.createStatement();
                     add.executeUpdate(userGroups);
@@ -1113,8 +1131,8 @@ public class DBQueries {
         String bill_id = null;
 
         String groupBills = "DELETE FROM GroupBills WHERE group_id = ? AND bill_id = ?";
-        String bills = "DELETE FROM Bills WHERE bill_id = ? AND user_id = " + user_id;
-        String userGroups = "DELETE FROM UserGroups WHERE user_id = " + user_id + " AND group_id = ?";
+        String bills = "DELETE FROM Bills WHERE bill_id = ? AND user_id = ?";
+        String userGroups = "DELETE FROM UserGroups WHERE user_id = ? AND group_id = ?";
         PreparedStatement s = null;
 
         ResultSet usersBills = userBillsInGroup(user_id, group_id);
@@ -1129,10 +1147,12 @@ public class DBQueries {
 
                 s = con.prepareStatement(bills);
                 s.setString(1, bill_id);
+                s.setString(2, user_id);
                 s.executeUpdate();
             }
             s = con.prepareStatement(userGroups);
-            s.setString(1, group_id);
+            s.setString(1, user_id);
+            s.setString(2, group_id);
             s.executeUpdate();
 
             if (groupParticipation(group_id) == 0)

@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kallyruan.roommateexpense.BillPkg.Bill;
@@ -32,6 +34,7 @@ public class MenuActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        showUserInfo();
         displayUpcomingBills();
     }
 
@@ -111,5 +114,58 @@ public class MenuActivity extends Activity {
             }
         });
         return allBills;
+    }
+
+    /**
+     * this method is to get user icon and nickname from database and show it in the interface
+     **/
+    public void showUserInfo(){
+
+        //get nickname and set to Textview content
+        String nickname = instance.getNickname(LoginActivity.email);
+        TextView userNickname = findViewById(R.id.user_nickname);
+        userNickname.setText(nickname);
+
+        //get icon and set to corresponding imageView
+        String icon = instance.getIcon(LoginActivity.email);
+        System.out.println("MenuActivity.showUserInfo() icon info from db = " + icon);
+        int iconIndex;
+        if(icon!=null) {
+            iconIndex = Integer.parseInt(icon);
+        }else{
+            iconIndex = -1;
+            System.out.println("No icon image recorded. Put default image instead.");
+        }
+
+        ImageView image = findViewById(R.id.user_icon);
+        switch(iconIndex){
+            case 0:
+                image.setImageResource(R.mipmap.usericon_8);
+                break;
+            case 1:
+                image.setImageResource(R.mipmap.usericon_9);
+                break;
+            case 2:
+                image.setImageResource(R.mipmap.usericon_3);
+                break;
+            case 3:
+                image.setImageResource(R.mipmap.usericon_2);
+                break;
+            case 4:
+                image.setImageResource(R.mipmap.usericon_7);
+                break;
+            case 5:
+                image.setImageResource(R.mipmap.usericon_6);
+                break;
+            case 6:
+                image.setImageResource(R.mipmap.usericon_4);
+                break;
+            case 7:
+                image.setImageResource(R.mipmap.usericon_1);
+                break;
+            default:
+                image.setImageResource(R.mipmap.usericon_5);
+                break;
+        }
     }
 }
