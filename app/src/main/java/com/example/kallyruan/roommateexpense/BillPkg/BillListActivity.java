@@ -90,26 +90,24 @@ public class BillListActivity extends Activity {
     }
 
     /**
-     * this method is to get user icon and nickname from database and show it in the interface
+     *this method is to get user icon and nickname from database and show it in the interface
      **/
-    public void showUserInfo(){
-        //problem with connecting db, hardcode now
-        TextView userNickname = findViewById(R.id.user_nickname);
-        userNickname.setText("Hard-code");
-        ImageView image = findViewById(R.id.user_icon);
-        image.setImageResource(R.mipmap.usericon_5);
-
+    public void showUserInfo() {
         //get nickname and set to Textview content
-        /*
         String nickname = instance.getNickname(LoginActivity.email);
-        TextView userNickname = findViewById(R.id.nicknameField);
+        TextView userNickname = findViewById(R.id.user_nickname);
         userNickname.setText(nickname);
 
-
         //get icon and set to corresponding imageView
-
         String icon = instance.getIcon(LoginActivity.email);
-        int iconIndex=Integer.parseInt(icon);
+        int iconIndex;
+        if(icon!=null) {
+            iconIndex = Integer.parseInt(icon);
+        }else{
+            iconIndex = -1;
+            System.out.println("No icon image recorded. Put default image instead.");
+        }
+
         ImageView image = findViewById(R.id.user_icon);
         switch(iconIndex){
             case 0:
@@ -140,6 +138,5 @@ public class BillListActivity extends Activity {
                 image.setImageResource(R.mipmap.usericon_5);
                 break;
         }
-        */
     }
 }
