@@ -11,12 +11,12 @@ public class DBConnect {
     static Connection getConnection() {
         Connection con = null;
         try {
-            String hostname = "cis350project.crthvh2wxus6.us-east-2.rds.amazonaws.com";
-            Class.forName("com.mysql.jdbc.Driver");
-            String port = "3306";
-            String dbName = "CIS350APP";
-            String userName = "roommatespending";
-            String password = "tracker350";
+            String hostname = DBConstants.host_name;
+            Class.forName(DBConstants.driver);
+            String port = DBConstants.port;
+            String dbName = DBConstants.db_name;
+            String userName = DBConstants.db_user;
+            String password = DBConstants.db_password;
             String url = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName + "?user=" +
                     userName + "&password=" + password;
             con = DriverManager.getConnection(url);
