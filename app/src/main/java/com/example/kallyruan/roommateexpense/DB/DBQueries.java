@@ -18,8 +18,8 @@ import java.util.Date;
 public class DBQueries {
     private static DBQueries ourInstance = new DBQueries();
     private final Connection con;
-    private final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+    private final String alphabet = DBConstants.code_alphabet;
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat(DBConstants.date_format);
 
     public static DBQueries getInstance() {
         if (ourInstance == null) {
