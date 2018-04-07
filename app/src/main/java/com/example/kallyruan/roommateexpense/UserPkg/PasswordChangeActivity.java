@@ -1,6 +1,8 @@
 package com.example.kallyruan.roommateexpense.UserPkg;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +24,7 @@ public class PasswordChangeActivity extends AppCompatActivity {
         final EditText oldPasswordField = (EditText) findViewById(R.id.old_password_field);
 
         // user enters new password into this EditText
-        EditText newPasswordField = (EditText) findViewById(R.id.new_password_field);
+        final EditText newPasswordField = (EditText) findViewById(R.id.new_password_field);
 
         Button changePWButton = (Button) findViewById(R.id.change_password);
 
@@ -34,7 +36,16 @@ public class PasswordChangeActivity extends AppCompatActivity {
 
                 DBQueries dbq = DBQueries.getInstance();
                 if (dbq.enteredCorrectPassword(username, oldPassword)) {
-                    // TODO: entered correct password; reset password accordingly
+                    dbq.resetPassword(username, newPasswordField.getText().toString());
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Success! Please re-login using your new password.", Toast.LENGTH_SHORT);
+                    toast.show();
+                    Handler h = new Handler();
+                    h.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {startActivity(new Intent(getApplicationContext(),
+                                LoginActivity.class));}
+                    }, 500);
                 } else {
                     // entered incorrect password; show Toast indicating this
                     Toast toast = Toast.makeText(getApplicationContext(),
@@ -42,7 +53,6 @@ public class PasswordChangeActivity extends AppCompatActivity {
                     // redirect to sign up page
                     toast.show();
                 }
-
             }
 
         });
