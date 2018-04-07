@@ -62,7 +62,7 @@ public class CreateActivity extends Activity {
 
         //add group information to database, if success then show message
         boolean result=db.createGroup(user_id,groupName);
-        if(result==true){
+        if(result){
             //show successful created message
             TextView message = (TextView) findViewById(R.id.message);
             message.setVisibility(View.VISIBLE);
