@@ -468,7 +468,7 @@ public class DBQueries {
         String nickname = null;
 
         if (userExists(user)) {
-            String query = "SElECT nickname FROM Users WHERE user_id = ?";
+            String query = "SELECT nickname FROM Users WHERE user_id = ?";
             PreparedStatement stmt = null;
             ResultSet rs = null;
 
@@ -527,12 +527,12 @@ public class DBQueries {
         String icon = null;
 
         if (userExists(user)) {
-            String query = "SElECT icon_id FROM Users WHERE user_id = ?";
+            String query = "SELECT icon_id FROM Users WHERE user_id = ?";
             PreparedStatement stmt = null;
             ResultSet rs = null;
 
             try {
-                stmt = con.prepareStatement(user);
+                stmt = con.prepareStatement(query);
                 stmt.setString(1, user);
                 rs = stmt.executeQuery();
                 rs.next();
