@@ -1,5 +1,7 @@
 package com.example.kallyruan.roommateexpense.DB;
 
+import android.util.Log;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -207,6 +209,7 @@ public class DBQueries {
             rs.next();
 
             if (oldPassword.equals(rs.getString("password"))) {
+                Log.v("Correct password", oldPassword); //TODO: remove this
                 return true;
             }
             return false;
