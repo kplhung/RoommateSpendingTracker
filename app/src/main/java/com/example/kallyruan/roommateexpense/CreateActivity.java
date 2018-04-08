@@ -27,7 +27,9 @@ public class CreateActivity extends Activity {
         setContentView(R.layout.create_group);
     }
 
-    //send invitation and undate recent group list
+    /*
+    ** this function is to get new group and invitee to create a new group in DB
+    */
     public void createGroup(View view){
 
         String groupName;
@@ -56,7 +58,6 @@ public class CreateActivity extends Activity {
 
         sendinvitation(inviteeEmail);
 
-
         String user_id = LoginActivity.email;
         DBQueries db = DBQueries.getInstance();
 
@@ -72,16 +73,25 @@ public class CreateActivity extends Activity {
 
     }
 
-    //send invitation email to given invitee email addresses
+    /*
+    ** This method is to send invitation email to given invitee email addresses
+    ** @parameter: arrayList of invitee email address
+    */
     public void  sendinvitation(ArrayList<String> inviteeEmail){
 
     }
-
+    
+    /*
+    ** This method is to back to menu page
+    */
     public void backToMenu(View view) {
         Intent i = new Intent(this,MenuActivity.class);
         startActivityForResult(i,1);
     }
-
+    
+    /*
+    ** This method is to check whether user input email address
+    */
     public void checkEmail(EditText invitee){
         String email=invitee.getText().toString();
         if (!email.equals(PROMOTEDINFO)){
