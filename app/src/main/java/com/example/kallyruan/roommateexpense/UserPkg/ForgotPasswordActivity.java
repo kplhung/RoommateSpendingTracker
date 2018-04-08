@@ -2,6 +2,7 @@ package com.example.kallyruan.roommateexpense.UserPkg;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -52,14 +53,20 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
                     }
-
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "Thanks! If this email is associated with an account, then we've " +
-                                    "sent you an email with a reset code to set a new password." +
-                                    "Go to your inbox to get it! Re-directing you to set a new " +
-                                    "password.", Toast.LENGTH_SHORT);
-                    toast.show();
                 }
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Thanks! If this email is associated with an account, then we've " +
+                                "sent you an email with a reset code to set a new password." +
+                                "Go to your inbox to get it! Re-directing you to set a new " +
+                                "password.", Toast.LENGTH_SHORT);
+                toast.show();
+
+                Handler h = new Handler();
+                h.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {startActivity(new Intent(getApplicationContext(),
+                            ResetPasswordActivity.class));}
+                }, 500);
             }
         }));
     }

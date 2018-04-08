@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
                 String password = pw.getText().toString();
 
                 DBQueries db = DBQueries.getInstance();
+
                 int rs = db.login(email, password);
 
                 Handler h = new Handler();
