@@ -34,6 +34,9 @@ public class BillAdapter extends BaseAdapter {
         this.userName = userName;
     }
 
+    /**
+     * @return number of bills
+     */
     @Override
     public int getCount() {
         return bills.size();
@@ -49,15 +52,19 @@ public class BillAdapter extends BaseAdapter {
         return 0;
     }
 
+    /**
+     * @param position index of group for which view is desired
+     * @param view
+     * @param viewGroup
+     * @return View for a group
+     */
     @Override
     public View getView(int position, final View view, ViewGroup viewGroup) {
         LayoutInflater inflater = mActivity.getLayoutInflater();
         final View createdView;
 
         if(view == null){
-
             createdView = inflater.inflate(R.layout.bills_list_row, null);
-
             billName = (TextView) createdView.findViewById(R.id.bill_name);
             billAmt = (TextView) createdView.findViewById(R.id.bill_amount);
             billDate = (TextView) createdView.findViewById(R.id.bill_date);

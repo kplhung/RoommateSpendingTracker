@@ -1,27 +1,39 @@
 package com.example.kallyruan.roommateexpense.BillPkg;
 
 /**
+ * POJO that keeps track of individual Bill information
  * Created by Lily on 2/17/2018.
  */
 
 public class Bill {
     private String name, amount, dueDate, billID, desc;
-    public Bill(String name, String amount, String dueDate, String billID, String desc){
+
+    public Bill(String name, String amount, String dueDate, String billID, String desc) {
         this.name = name;
         this.amount = amount;
         this.dueDate = dueDate;
         this.billID = billID;
         this.desc = desc;
     }
+
+    /**
+     * Updates due date for a given bill
+     * @param newDueDate to replace old due date
+     */
     public void updateDueDate(String newDueDate){
         this.dueDate = newDueDate;
     }
 
+    /*
+     * Getter methods for this POJO
+     */
     public String getName(){
         return name;
     }
 
-    public String getDesc() { return desc; }
+    public String getDesc() {
+        return desc;
+    }
 
     public String getAmount(){
         return amount;

@@ -1,9 +1,6 @@
 package com.example.kallyruan.roommateexpense.BillPkg;
 
 import com.example.kallyruan.roommateexpense.DB.DBQueries;
-/**
- * Created by Lily on 3/31/2018.
- */
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -12,11 +9,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.kallyruan.roommateexpense.BillPkg.Bill;
 import com.example.kallyruan.roommateexpense.R;
 
 import java.util.ArrayList;
 
+/**
+ * Created by Lily on 3/31/2018.
+ */
 public class UpcomingBillAdapter extends BaseAdapter {
     private Activity mActivity;
     private DBQueries instance;
@@ -32,11 +31,17 @@ public class UpcomingBillAdapter extends BaseAdapter {
         this.instance = DBQueries.getInstance();
     }
 
+    /**
+     * @return number of bills for group
+     */
     @Override
     public int getCount() {
         return bills.size();
     }
 
+    /*
+     * Getter methods
+     */
     @Override
     public Object getItem(int i) {
         return null;

@@ -27,6 +27,7 @@ public class BillListActivity extends Activity {
     private int pos;
     private DBQueries instance = DBQueries.getInstance();
     private ArrayList<Bill> bills;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +37,8 @@ public class BillListActivity extends Activity {
         Intent i = getIntent();
         group_id = i.getStringExtra("group_id");
         String userEmail = LoginActivity.email;
+
+        // get list of bills
         ListView listView = (ListView) findViewById(R.id.bills_list);
         bills = getBills();
         BillAdapter adapter = new BillAdapter(this, bills, group_id, userEmail);
@@ -53,6 +56,9 @@ public class BillListActivity extends Activity {
         });
     }
 
+    /**
+     * @return ArrayList of Bills for a given group
+     */
     public ArrayList<Bill> getBills(){
         ResultSet bill_rs = instance.userBillsInGroup(LoginActivity.email, group_id);
         ArrayList<Bill> allBills = new ArrayList<Bill>();
@@ -66,17 +72,26 @@ public class BillListActivity extends Activity {
                 Bill bill = new Bill(name, amt, due_date, id, desc);
                 allBills.add(bill);
             }
-        } catch(SQLException e){
+        } catch(SQLException e) {
             e.printStackTrace();
         }
         return allBills;
     }
 
+    /**
+     * Navigates to AddBillActivity in order to add a bill
+     * @param view
+     */
     public void addBill(View view){
         Intent i = new Intent(this, AddBillActivity.class);
         i.putExtra("group_id", this.group_id);
         startActivityForResult(i,1);
     }
+
+    /**
+     * Navigates to AddBillActivity in order to edit a bill's info
+     * @param view
+     */
     public void editBill(View view){
         Intent i = new Intent(this, AddBillActivity.class);
         i.putExtra("group_id", this.group_id);
@@ -90,20 +105,20 @@ public class BillListActivity extends Activity {
     }
 
     /**
-     *this method is to get user icon and nickname from database and show it in the interface
+     * Gets user icon and nickname from database to show in UI
      **/
     public void showUserInfo() {
-        //get nickname and set to Textview content
+        // get nickname and set to TextView content
         String nickname = instance.getNickname(LoginActivity.email);
         TextView userNickname = findViewById(R.id.user_nickname);
         userNickname.setText(nickname);
 
-        //get icon and set to corresponding imageView
+        // get icon and set to corresponding imageView
         String icon = instance.getIcon(LoginActivity.email);
         int iconIndex;
-        if(icon!=null) {
+        if(icon != null) {
             iconIndex = Integer.parseInt(icon);
-        }else{
+        } else {
             iconIndex = -1;
             System.out.println("No icon image recorded. Put default image instead.");
         }
