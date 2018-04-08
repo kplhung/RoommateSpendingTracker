@@ -131,9 +131,9 @@ public class MenuActivity extends Activity {
         String icon = instance.getIcon(LoginActivity.email);
         System.out.println("MenuActivity.showUserInfo() icon info from db = " + icon);
         int iconIndex;
-        if(icon!=null) {
+        try {
             iconIndex = Integer.parseInt(icon);
-        }else{
+        } catch (Exception e) {
             iconIndex = -1;
             System.out.println("No icon image recorded. Put default image instead.");
         }

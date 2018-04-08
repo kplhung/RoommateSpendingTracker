@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
                 Handler h = new Handler();
                 // case 1: username does not match an existing one
                 if (rs == 0) {
+                    Log.v("Case 1", "in here");
                     Toast toast = Toast.makeText(getApplicationContext(),
                             "User does not exist; redirecting you to sign up page!",
                             Toast.LENGTH_SHORT);
@@ -67,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (rs == 1) {
                     Toast toast;
                     // case 2: password is incorrect
+                    Log.v("Case 2", "in here");
                     // update number of errors
                     if (!numErrors.containsKey(email)) {
                         numErrors.put(email, 1);
