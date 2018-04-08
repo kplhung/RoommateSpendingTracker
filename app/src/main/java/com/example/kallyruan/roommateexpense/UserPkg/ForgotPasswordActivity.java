@@ -49,7 +49,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                         sender.sendMail("Reset Password", "Here is the code to reset " +
                                         "your password: " + resetCode,
                                 "roommatespendingtracker@gmail.com", emailAddress);
-
                     } catch (Exception e) {
                         Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
                     }
@@ -57,8 +56,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     Toast toast = Toast.makeText(getApplicationContext(),
                             "Thanks! If this email is associated with an account, then we've " +
                                     "sent you an email with a reset code to set a new password." +
-                                    "Go to your inbox to get it!",
-                            Toast.LENGTH_SHORT);
+                                    "Go to your inbox to get it! Re-directing you to set a new " +
+                                    "password.", Toast.LENGTH_SHORT);
                     toast.show();
                 }
             }
