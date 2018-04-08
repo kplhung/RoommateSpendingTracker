@@ -76,8 +76,6 @@ public class LoginActivity extends AppCompatActivity {
                             DBQueries dbq = DBQueries.getInstance();
                             String emailAddress = email;
 
-
-
                             if (dbq.userExists(email)) {
                                 String resetCode = dbq.forgotPassword(email);
                                 //lock the user out
