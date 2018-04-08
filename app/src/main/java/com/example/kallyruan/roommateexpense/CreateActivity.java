@@ -56,8 +56,6 @@ public class CreateActivity extends Activity {
         EditText invitee3 = (EditText) findViewById(R.id.invitee3);
         checkEmail(invitee3);
 
-        sendinvitation(inviteeEmail);
-
         String user_id = LoginActivity.email;
         DBQueries db = DBQueries.getInstance();
 
@@ -70,14 +68,6 @@ public class CreateActivity extends Activity {
         }else{
             System.out.println("something wrong with add group to db");
         }
-
-    }
-
-    /*
-    ** This method is to send invitation email to given invitee email addresses
-    ** @parameter: arrayList of invitee email address
-    */
-    public void  sendinvitation( ArrayList<String> inviteeEmail ){
 
     }
     
