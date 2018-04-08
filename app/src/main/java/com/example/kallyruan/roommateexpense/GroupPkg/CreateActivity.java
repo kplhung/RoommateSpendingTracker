@@ -21,6 +21,7 @@ import java.util.ArrayList;
  */
 
 public class CreateActivity extends Activity {
+
     final String PROMOTEDINFO = "Type invitee email address";
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +29,9 @@ public class CreateActivity extends Activity {
         setContentView(R.layout.create_group);
     }
 
-    /*
-    ** Creates new group and sends invites
-    */
+    /**
+     * Creates new group and sends invites
+     */
     public void createGroup(View view){
         // get groupName
         EditText name = (EditText) findViewById(R.id.groupName);
@@ -111,7 +112,7 @@ public class CreateActivity extends Activity {
      */
     public ArrayList<String> checkEmail(ArrayList<String> list, EditText invitee){
         String email = invitee.getText().toString();
-        if (!email.equals(PROMOTEDINFO) ){
+        if (!email.equals("Invitee email address") ){
             list.add(email);
         }
         return list;
