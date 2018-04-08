@@ -32,7 +32,7 @@ public class CreateActivity extends Activity {
     }
 
     /*
-    ** this function is to get new group and invitee to create a new group in DB
+    ** Gets new group and invitee to create a new group in DB
     */
     public void createGroup(View view){
         //get groupName
@@ -64,6 +64,13 @@ public class CreateActivity extends Activity {
         }
     }
 
+    /**
+     * Sends invitation emails to join group to specified users
+     * @param list of invitees
+     * @param user who is sending invites
+     * @param group_id ID of group that invitees are being invited to
+     * @param name of group
+     */
     public void sendInviteEmails(ArrayList<String> list, String user, String group_id, String name) {
         DBQueries db = DBQueries.getInstance();
         for (int i = 0; i < list.size(); i++) {
@@ -87,16 +94,19 @@ public class CreateActivity extends Activity {
     }
     
     /*
-    ** This method is to back to menu page
+    ** Navigates user back to menu page
     */
     public void backToMenu(View view) {
         Intent i = new Intent(this , MenuActivity.class);
         startActivityForResult(i , 1);
     }
-    
-    /*
-    ** This method is to check whether user input email address
-    */
+
+    /**
+     * Checks if user inputted an email address
+     * @param list of invitees
+     * @param invitee to be invited
+     * @return ArrayList of invitees
+     */
     public ArrayList<String> checkEmail(ArrayList<String> list, EditText invitee){
         String email = invitee.getText().toString();
         if (!email.equals("Invitee email address") ){
