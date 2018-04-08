@@ -24,7 +24,7 @@ import java.util.List;
 
 public class CreateActivity extends Activity {
 
-    final String PROMOTEDINFO ="Type invitee email address";
+    final String PROMOTEDINFO ="Invitee email address";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,7 +99,7 @@ public class CreateActivity extends Activity {
     */
     public ArrayList<String> checkEmail(ArrayList<String> list, EditText invitee){
         String email = invitee.getText().toString();
-        if (!email.equals(PROMOTEDINFO) ){
+        if (!email.equals("Invitee email address") ){
             list.add(email);
         }
         return list;
