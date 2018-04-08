@@ -14,6 +14,7 @@ import com.example.kallyruan.roommateexpense.R;
 import java.util.ArrayList;
 
 /**
+ * Adapter for Group class
  * Created by kallyruan on 11/3/18.
  */
 

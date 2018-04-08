@@ -28,7 +28,7 @@ public class JoinGroupActivity extends Activity{
 
     /**
      * Allows user to join group by entering a code
-     * Uses DBQueries instance to add the user to the group.
+     * Uses DBQueries instance to add the user to the group
      * @param view
      */
     public void joinGroup(View view){
@@ -37,15 +37,16 @@ public class JoinGroupActivity extends Activity{
             Group newGroup = new Group(dbInstance.getGroupforCode(code), userInstance);
             userInstance.addGroup(newGroup);
             int i = dbInstance.addUserToGroup(LoginActivity.email, code);
-            if (i == 0) { //wrong code
+            if (i == 0) {
+                //wrong code
                 Toast.makeText(getApplicationContext(), "Incorrect Code",
                         Toast.LENGTH_LONG).show();
-            }
-            else if (i == 1) { //code had expired
+            } else if (i == 1) {
+                //code had expired
                 Toast.makeText(getApplicationContext(), "Code Already Expired",
                         Toast.LENGTH_LONG).show();
-            }
-            else { //success
+            } else {
+                //success
                 Toast.makeText(getApplicationContext(), "Success!",
                         Toast.LENGTH_LONG).show();
             }
@@ -61,5 +62,4 @@ public class JoinGroupActivity extends Activity{
         startActivityForResult(i,1);
         finish();
     }
-
 }

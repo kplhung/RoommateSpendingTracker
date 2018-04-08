@@ -14,17 +14,14 @@ import com.example.kallyruan.roommateexpense.MenuActivity;
 import com.example.kallyruan.roommateexpense.R;
 import com.example.kallyruan.roommateexpense.UserPkg.LoginActivity;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by kallyruan on 16/2/18.
  */
 
 public class CreateActivity extends Activity {
-
-    final String PROMOTEDINFO ="Type invitee email address";
+    final String PROMOTEDINFO = "Type invitee email address";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,13 +29,14 @@ public class CreateActivity extends Activity {
     }
 
     /*
-    ** Gets new group and invitee to create a new group in DB
+    ** Creates new group and sends invites
     */
     public void createGroup(View view){
-        //get groupName
+        // get groupName
         EditText name = (EditText) findViewById(R.id.groupName);
         String groupName = name.getText().toString();
 
+        // get invitee email addresses (up to three)
         ArrayList<String> invitees = new ArrayList<String>();
         EditText invitee1 = (EditText) findViewById(R.id.invitee1);
         invitees = checkEmail(invitees, invitee1);
@@ -48,19 +46,20 @@ public class CreateActivity extends Activity {
         invitees = checkEmail(invitees, invitee3);
 
         String user_id = LoginActivity.email;
+
         DBQueries db = DBQueries.getInstance();
 
-        //add group information to database, if success then show message
+        //add group information to database
         String group_id = db.createGroup(user_id, groupName);
 
         if(group_id != null){
-            //send invite emails & codes
+            //send invitees email & codes
             sendInviteEmails(invitees, user_id, group_id, groupName);
-            //show successful created message
+            //show success message
             TextView message = (TextView) findViewById(R.id.message);
             message.setVisibility(View.VISIBLE);
         } else {
-            System.out.println("something wrong with add group to db");
+            System.out.println("Group not successfully created.");
         }
     }
 
@@ -73,12 +72,15 @@ public class CreateActivity extends Activity {
      */
     public void sendInviteEmails(ArrayList<String> list, String user, String group_id, String name) {
         DBQueries db = DBQueries.getInstance();
+
+        // loop over invitees to send emails
         for (int i = 0; i < list.size(); i++) {
             String invitee = list.get(i);
             String code = "";
             if (invitee != null && !invitee.equals(PROMOTEDINFO)) {
                 code = db.getInviteCode(group_id);
             }
+
             try {
                 GMailSender sender = new GMailSender(
                         "roommatespendingtracker@gmail.com",
