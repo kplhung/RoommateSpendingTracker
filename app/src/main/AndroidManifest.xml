@@ -37,7 +37,7 @@
         <activity android:name=".UserPkg.LoginActivity" />
         <activity android:name=".UserPkg.SignupActivity" />
         <activity android:name=".GroupPkg.JoinGroupActivity" />
-        <activity android:name=".CreateActivity" />
+        <activity android:name=".GroupPkg.CreateActivity" />
         <activity android:name=".GroupPkg.GroupManageActivity" />
         <activity android:name=".BillPkg.AddBillActivity" />
         <activity

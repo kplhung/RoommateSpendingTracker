@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.kallyruan.roommateexpense.BillPkg.Bill;
 import com.example.kallyruan.roommateexpense.BillPkg.UpcomingBillAdapter;
 import com.example.kallyruan.roommateexpense.DB.DBQueries;
+import com.example.kallyruan.roommateexpense.GroupPkg.CreateActivity;
 import com.example.kallyruan.roommateexpense.GroupPkg.GroupListAcitivity;
 import com.example.kallyruan.roommateexpense.GroupPkg.JoinGroupActivity;
 import com.example.kallyruan.roommateexpense.UserPkg.LoginActivity;
@@ -130,7 +131,7 @@ public class MenuActivity extends Activity {
         String icon = instance.getIcon(LoginActivity.email);
         System.out.println("MenuActivity.showUserInfo() icon info from db = " + icon);
         int iconIndex;
-        if(icon!=null && !icon.equals("")) {
+        if(icon!=null) {
             iconIndex = Integer.parseInt(icon);
         }else{
             iconIndex = -1;

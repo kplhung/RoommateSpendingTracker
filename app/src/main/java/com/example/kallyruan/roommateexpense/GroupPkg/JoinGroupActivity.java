@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.kallyruan.roommateexpense.DB.DBQueries;
 import com.example.kallyruan.roommateexpense.UserPkg.LoginActivity;
@@ -33,9 +34,21 @@ public class JoinGroupActivity extends Activity{
     public void joinGroup(View view){
         String code = ((EditText) findViewById(R.id.enterCodeField)).getText().toString();
         if (code != null){
-            Group newGroup = new Group(dbInstance.getCodeGroup(code), userInstance);
+            Group newGroup = new Group(dbInstance.getGroupforCode(code), userInstance);
             userInstance.addGroup(newGroup);
             int i = dbInstance.addUserToGroup(LoginActivity.email, code);
+            if (i == 0) { //wrong code
+                Toast.makeText(getApplicationContext(), "Incorrect Code",
+                        Toast.LENGTH_LONG).show();
+            }
+            else if (i == 1) { //code had expired
+                Toast.makeText(getApplicationContext(), "Code Already Expired",
+                        Toast.LENGTH_LONG).show();
+            }
+            else { //success
+                Toast.makeText(getApplicationContext(), "Success!",
+                        Toast.LENGTH_LONG).show();
+            }
             seeGroups();
         }
     }

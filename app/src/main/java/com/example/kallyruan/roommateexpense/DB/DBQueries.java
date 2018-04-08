@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Contains functions for all database queries supported in the app
@@ -937,7 +938,7 @@ public class DBQueries {
      * @param code
      * @return the associated group_id
      */
-    public String getCodeGroup(String code) {
+    public String getGroupforCode(String code) {
         if (codeInUse(code)) {
             String query = "SELECT group_id FROM GroupCodes WHERE invite_code = '" + code + "'";
             Statement stmt = null;
@@ -1036,9 +1037,9 @@ public class DBQueries {
      * user-specified name of the group
      * @param user_id
      * @param group_name
-     * @return if the update was successful
+     * @return the group_id if successful, null otherwise
      */
-    public boolean createGroup(String user_id, String group_name) {
+    public String createGroup(String user_id, String group_name) {
         nullEmail(user_id);
         nullGroupName(group_name);
 
@@ -1055,12 +1056,13 @@ public class DBQueries {
             stmt = con.createStatement();
             stmt.executeUpdate(groups);
             stmt.executeUpdate(userGroups);
-            return true;
+
+            return group_id;
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return false;
+        return null;
     }
 
     /**
