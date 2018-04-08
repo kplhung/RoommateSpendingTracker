@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.kallyruan.roommateexpense.DB.DBQueries;
-import com.example.kallyruan.roommateexpense.GMailSender;
+import com.example.kallyruan.roommateexpense.EmailPkg.GMailSender;
 import com.example.kallyruan.roommateexpense.MenuActivity;
 import com.example.kallyruan.roommateexpense.R;
 

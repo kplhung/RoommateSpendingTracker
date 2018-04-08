@@ -1,4 +1,4 @@
-package com.example.kallyruan.roommateexpense;
+package com.example.kallyruan.roommateexpense.EmailPkg;
 
 import javax.activation.DataHandler;
 
