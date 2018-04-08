@@ -2,6 +2,14 @@ package com.example.kallyruan.roommateexpense.EmailPkg;
 import java.security.AccessController;
 import java.security.Provider;
 
+/**
+ * This class is for security permissions so SSL content
+ * can be handled
+ *
+ * This class is adapted from Ravi Sharma's tutorial on OodlesTechnologies:
+ * http://www.oodlestechnologies.com/blogs/Send-Mail-in-Android-without-Using-Intent
+ */
+
 public final class JSSEProvider extends Provider {
 
     public JSSEProvider() {
