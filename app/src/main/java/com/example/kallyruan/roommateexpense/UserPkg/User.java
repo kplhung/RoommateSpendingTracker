@@ -24,9 +24,9 @@ public class User {
 
     public User(String username, ArrayList<Group> groups,String nickname,String userIcon){
         this.username = username;
-        this.groups=groups;
-        this.nickname=nickname;
-        this.userIcon=userIcon;
+        this.groups = groups;
+        this.nickname = nickname;
+        this.userIcon = userIcon;
     }
 
     //this function is to get all user group and user information, then return
@@ -34,8 +34,8 @@ public class User {
             //get user information from database
             ArrayList<Group> allgroups = new ArrayList<Group>();
             String userEmail = LoginActivity.email;
-            String userIcon=null;
-            String nickname=null;
+            String userIcon = null;
+            String nickname = null;
             // try to connect dababase
             try {
                 DBQueries db = DBQueries.getInstance();
@@ -54,8 +54,8 @@ public class User {
                 }
 
                 //get userIcon and nickname
-                nickname=db.getNickname(username);
-                userIcon=db.getIcon(username);
+                nickname = db.getNickname(username);
+                userIcon = db.getIcon(username);
 
             }catch(SQLException e) {
                     e.printStackTrace();
@@ -77,7 +77,7 @@ public class User {
     // this function is to return the selected group with index n
     public Group getNthGroup(int index){
         int total = groups.size();
-        if(index>=0 && index< total) {
+        if(index >= 0 && index < total) {
             return groups.get(index);
         }else{
             System.out.println("group index out of range.");
