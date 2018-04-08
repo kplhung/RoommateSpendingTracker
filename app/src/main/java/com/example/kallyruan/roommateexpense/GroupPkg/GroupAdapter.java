@@ -52,10 +52,10 @@ public class GroupAdapter extends BaseAdapter {
 
         if(view == null){
             createdView = inflater.inflate(R.layout.group_list_row, null);
-            delete=(Button) createdView.findViewById(R.id.Manage);
+            delete = (Button) createdView.findViewById(R.id.Manage);
             groupName = (TextView) createdView.findViewById(R.id.groupName);
             participation = (TextView) createdView.findViewById(R.id.groupParticipation);
-            alert=(TextView) createdView.findViewById(R.id.alert);
+            alert = (TextView) createdView.findViewById(R.id.alert);
         } else {
             createdView = view;
         }
