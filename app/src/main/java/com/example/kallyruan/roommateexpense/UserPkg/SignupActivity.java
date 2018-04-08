@@ -43,12 +43,12 @@ public class SignupActivity extends AppCompatActivity {
                 boolean success = db.signUp(email, password);
 
 
-                String iconImage= Integer.toString(user_icon);
+                String iconImage = Integer.toString(user_icon);
                 String nickname = usernickname.getText().toString();
                 
                 System.out.println("SignupAciticty iconImage = " + iconImage);
-                boolean iconSuccess=db.setIcon(email,iconImage);
-                boolean nicknameSuccess=db.setNickname(email,nickname);
+                boolean iconSuccess = db.setIcon(email,iconImage);
+                boolean nicknameSuccess = db.setNickname(email,nickname);
 
                 //Here test whether successfully add icon and nickname infor to user db
                 if(!iconSuccess){
@@ -93,7 +93,7 @@ public class SignupActivity extends AppCompatActivity {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int location, long l) {
-                user_icon=location;
+                user_icon = location;
             }
         });
     }
