@@ -1,5 +1,6 @@
 package com.example.kallyruan.roommateexpense.BillPkg;
 
+import com.example.kallyruan.roommateexpense.DB.DBQueries;
 /**
  * Created by Lily on 3/31/2018.
  */
@@ -62,11 +63,11 @@ public class UpcomingBillAdapter extends BaseAdapter {
         }
 
         final Bill bill = bills.get(position);
-//        String groupID = instance.groupName(instance.groupID(bill.getBillID()));
+        String groupID = instance.getGroupName(instance.getGroupIdForBill(bill.getBillID()));
         billName.setText(bill.getName());
         billAmt.setText(bill.getAmount());
         billDate.setText(bill.getDueDate());
-//        billGroup.setText(groupID);
+        billGroup.setText(groupID);
 
         return createdView;
     }
