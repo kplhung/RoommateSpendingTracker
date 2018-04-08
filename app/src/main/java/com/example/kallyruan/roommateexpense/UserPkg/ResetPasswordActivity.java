@@ -61,6 +61,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                     toast = Toast.makeText(getApplicationContext(),
                             "The entered reset code is incorrect.", Toast.LENGTH_LONG);
                 }
+
             }
         }));
 

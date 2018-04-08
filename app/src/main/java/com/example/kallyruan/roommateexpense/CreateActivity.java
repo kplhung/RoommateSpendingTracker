@@ -65,10 +65,9 @@ public class CreateActivity extends Activity {
             //show successful created message
             TextView message = (TextView) findViewById(R.id.message);
             message.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             System.out.println("something wrong with add group to db");
         }
-
     }
     
     /*

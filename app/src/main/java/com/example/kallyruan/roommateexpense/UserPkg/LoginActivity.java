@@ -11,8 +11,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.kallyruan.roommateexpense.DB.DBQueries;
+import com.example.kallyruan.roommateexpense.GMailSender;
 import com.example.kallyruan.roommateexpense.MenuActivity;
 import com.example.kallyruan.roommateexpense.R;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     public static String email;
@@ -31,6 +35,9 @@ public class LoginActivity extends AppCompatActivity {
         final Button loginButton = findViewById(R.id.loginButton);
 
         Button forgotPasswordButton = findViewById(R.id.forgotPasswordButton);
+
+        // keep track of number of times wrong password has been put in for same email
+        final Map<String, Integer> numErrors = new HashMap<String, Integer>();
 
         // handles logging into the app
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -58,13 +65,60 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }, 500);
                 } else if (rs == 1) {
+                    Toast toast;
                     // case 2: password is incorrect
-                    Toast toast = Toast.makeText(getApplicationContext(),
+                    // update number of errors
+                    if (!numErrors.containsKey(email)) {
+                        numErrors.put(email, 1);
+                    } else {
+                        int tmp = numErrors.get(email);
+                        if (tmp >= 2) {
+                            DBQueries dbq = DBQueries.getInstance();
+                            String emailAddress = email;
+
+
+
+                            if (dbq.userExists(email)) {
+                                String resetCode = dbq.forgotPassword(email);
+                                //lock the user out
+                                dbq.resetPassword(email, resetCode);
+
+                                // send reset code
+                                try {
+                                    GMailSender sender = new GMailSender(
+                                            "roommatespendingtracker@gmail.com",
+                                            "cis350s18");
+                                    sender.sendMail("Reset Password", "Here is the code to reset " +
+                                                    "your password: " + resetCode,
+                                            "roommatespendingtracker@gmail.com", emailAddress);
+                                } catch (Exception e) {
+                                    Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
+                                }
+                            }
+
+                            // this is the third mistake; force password reset
+                            toast = Toast.makeText(getApplicationContext(),
+                                    "Too many incorrect password attempts. Reset code send to " +
+                                    "email", Toast.LENGTH_LONG);
+                            toast.show();
+
+                            Handler resetHandler = new Handler();
+                            resetHandler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {startActivity(new Intent(getApplicationContext(),
+                                        ResetPasswordActivity.class));}
+                            }, 500);
+
+
+
+                        }
+                        numErrors.put(email, tmp + 1);
+                    }
+                    toast = Toast.makeText(getApplicationContext(),
                             "Password is incorrect.", Toast.LENGTH_SHORT);
                     // redirect to sign up page
                     toast.show();
-                }
-                else {
+                } else {
                     // case 3: username and password are correct; bring to menu
                     Intent i = new Intent(getApplicationContext(), MenuActivity.class);
                     i.putExtra("username", email);
