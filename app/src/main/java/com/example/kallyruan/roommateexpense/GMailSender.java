@@ -23,7 +23,6 @@ import java.io.OutputStream;
 import java.security.Security;
 import java.util.Properties;
 
-
 public class GMailSender extends javax.mail.Authenticator {
     private String mailhost = "smtp.gmail.com";
     private String user;
@@ -91,7 +90,6 @@ public class GMailSender extends javax.mail.Authenticator {
     }
 
     public void addAttachment(String filename) throws Exception {
-
         BodyPart messageBodyPart = new MimeBodyPart();
         DataSource source = new FileDataSource(filename);
         messageBodyPart.setDataHandler(new DataHandler(source));
@@ -102,7 +100,6 @@ public class GMailSender extends javax.mail.Authenticator {
     public class ByteArrayDataSource implements DataSource {
         private byte[] data;
         private String type;
-
         public ByteArrayDataSource(byte[] data, String type) {
             super();
             this.data = data;
