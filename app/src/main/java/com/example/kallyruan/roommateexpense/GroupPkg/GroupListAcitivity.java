@@ -19,7 +19,6 @@ import com.example.kallyruan.roommateexpense.UserPkg.User;
 
 import java.util.ArrayList;
 
-
 /**
  * Created by kallyruan on 13/2/18.
  */
@@ -45,9 +44,11 @@ public class GroupListAcitivity extends Activity{
                 loadBillList(view);
             }
         });
-
     }
 
+    /**
+     * Shows list of groups user is in
+     */
     public void showGroupList() {
         ListView listView = (ListView) findViewById(R.id.listView_id);
         ArrayList<Group> list = User.getInstance(LoginActivity.email).getGroups();
@@ -55,18 +56,26 @@ public class GroupListAcitivity extends Activity{
         listView.setAdapter(adapter);
     }
 
+    /**
+     * Navigates user back to main menu
+     * @param view
+     */
     public void backToMenu(View view){
         Intent i = new Intent(this,MenuActivity.class);
         startActivityForResult(i,1);
     }
 
+    /**
+     * Navigates user to manage group page
+     * @param view
+     */
     public void manageGroupAction(View view){
         Intent i = new Intent(this,GroupManageActivity.class);
         startActivityForResult(i,1);
     }
 
     /**
-     * Loads the list of bills of the user when a group is clicked
+     * Loads list of bills of the user when group is clicked
      * @param view
      */
     public void loadBillList(View view){
@@ -79,21 +88,22 @@ public class GroupListAcitivity extends Activity{
     }
 
     /**
-     *this method is to get user icon and nickname from database and show it in the interface
+     * Get user icon and nickname from database and show it in UI
      **/
     public void showUserInfo() {
         DBQueries instance = DBQueries.getInstance();
 
-        //get nickname and set to Textview content
+        //get nickname and set to TextView content
         String nickname = instance.getNickname(LoginActivity.email);
         TextView userNickname = findViewById(R.id.user_nickname);
         userNickname.setText(nickname);
 
-        //get icon and set to corresponding imageView
+        // get icon and set to corresponding imageView
         String icon = instance.getIcon(LoginActivity.email);
         int iconIndex;
         try {
             iconIndex = Integer.parseInt(icon);
+
         } catch (Exception e) {
             iconIndex = -1;
             System.out.println("No icon image recorded. Put default image instead.");
@@ -130,5 +140,4 @@ public class GroupListAcitivity extends Activity{
                 break;
         }
     }
-
 }

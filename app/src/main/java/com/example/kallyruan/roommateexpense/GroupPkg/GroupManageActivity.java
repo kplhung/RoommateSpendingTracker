@@ -27,11 +27,12 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
+ * This class allows the user to manage their groups: delete group, exit group, or remind group
+ * members of upcoming bills
  * Created by kallyruan on 9/3/18.
  */
 
 public class GroupManageActivity extends Activity{
-
     ArrayAdapter<String> adapter_name;
     GroupAdapter adapter;
     int action_index;
@@ -54,6 +55,9 @@ public class GroupManageActivity extends Activity{
 
     }
 
+    /**
+     * Shows list of groups that user is part of
+     */
     public void showGroupList() {
         ListView listView = (ListView) findViewById(R.id.listView_manage);
         ArrayList<Group> list = User.getInstance(LoginActivity.email).getGroups();
@@ -61,6 +65,9 @@ public class GroupManageActivity extends Activity{
         listView.setAdapter(adapter);
     }
 
+    /**
+     * Shows list of possible actions user can take w.r.t. a group
+     */
     public void showActionOption(){
         Button exitGroup = (Button) findViewById(R.id.exitGroup);
         exitGroup.setVisibility(View.VISIBLE);
@@ -75,8 +82,10 @@ public class GroupManageActivity extends Activity{
         emailGroup.setVisibility(View.VISIBLE);
     }
 
-    //this function is to exist group and delete this group information from this user DB.
-    //if this user is the last one in the group, then delete group record
+    /**
+     * Exits user from group - disassociates group from user in the DB.
+     * If user is last member of group, group is deleted.
+     */
     public void exitGroup(){
         DBQueries db = DBQueries.getInstance();
         String userEmail = LoginActivity.email;
@@ -91,28 +100,36 @@ public class GroupManageActivity extends Activity{
         startActivityForResult(i,1);
     }
 
-    //this function is to delete group information from all members' DB and the group record as well
+    /**
+     * Deletes group from all group members' info; group record deleted
+     */
     public void deleteGroup(){
         DBQueries db = DBQueries.getInstance();
         String userEmail = LoginActivity.email;
         String group = User.getInstance(userEmail).getNthGroup(action_index).getCode();
         boolean result = db.deleteGroup(group);
-        //check whether action successful
+
+        // check whether action was successful
         if (!result) {
             System.out.println("Delete group action failed");
         }
+
+        // refreshes page
         Intent i = new Intent(this, GroupManageActivity.class);
         startActivityForResult(i, 1);
     }
 
     /*
-     ** this method is to emails users in the group with a reminder to pay
+     ** Emails all members of a group with a reminder to pay. Opens up GMail app with members'
+     * email addresses and body message already populated
      */
     public void emailGroup() {
         String userEmail = LoginActivity.email;
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc822");
         DBQueries dbq = DBQueries.getInstance();
+
+        // get list of group members
         ArrayList<String> members = dbq.getGroupMembers(User.getInstance(userEmail).getNthGroup(
                 action_index).getCode());
         String[] emailAddresses = new String[members.size()];
@@ -120,16 +137,16 @@ public class GroupManageActivity extends Activity{
         i.putExtra(Intent.EXTRA_EMAIL, emailAddresses);
         i.putExtra(Intent.EXTRA_SUBJECT, "Reminder to pay bills");
         i.putExtra(Intent.EXTRA_TEXT, "Hello! Please remember to pay your bills!");
+
+        // send email
         try {
             startActivity(Intent.createChooser(i, "Send mail..."));
-        } catch (android.content.ActivityNotFoundException ex) {
-            Log.v("unsuccessful", "bad");
-            // Toast.makeText(MyActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
-        }
+        } catch (android.content.ActivityNotFoundException ex) { }
     }
 
-    /*
-     ** this method is to pop up a dialog to let user confirm delete the whole group action
+    /**
+     * Pops up dialog to make user confirm group deletion
+     * @param view
      */
     public void confirmDeleteAction(View view) {
         AlertDialog dialog = new AlertDialog.Builder(this).setTitle("Confirm action dialog")
@@ -142,16 +159,18 @@ public class GroupManageActivity extends Activity{
                         sendMembersBills();
                         deleteGroup();
                     }
-                }).setMessage("Are you sure to delete this group from all members?").create();
+                }).setMessage("Are you sure you want to delete this group for all members?").create();
         dialog.show();
     }
 
     /*
-     ** this method is to pop up a dialog to let user confirm exit group action
+     ** Pops up dialog to let user confirm exit group action
      */
     public void confirmExitAction(View view) {
-        AlertDialog dialog = new AlertDialog.Builder(this).setTitle("Confirm action dialog").setIcon(R.mipmap.usericon_2)
-                .setNegativeButton("Cancel", null).setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+        AlertDialog dialog = new AlertDialog.Builder(this).setTitle("Confirm action " +
+                "dialog").setIcon(R.mipmap.usericon_2)
+                .setNegativeButton("Cancel", null).setPositiveButton("Confirm",
+                        new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -163,25 +182,33 @@ public class GroupManageActivity extends Activity{
         dialog.show();
     }
 
-
+    /**
+     * Refreshes page
+     * @param view
+     */
     public void cancel(View view){
         Intent i = new Intent(this,GroupManageActivity.class);
         startActivityForResult(i,1);
     }
 
+    /**
+     * Navigates user back to page listing their groups
+     * @param view
+     */
     public void backToExistingGroupList(View view){
         Intent i = new Intent(this,GroupListAcitivity.class);
         startActivityForResult(i,1);
     }
-    /*
-     ** this method is to send the leaving group user all unpaid bills information
+
+    /**
+     * Send members of group email regarding unpaid bills
      */
     public void sendMembersBills(){
         //get selected group code
         String userEmail = LoginActivity.email;
         String group = User.getInstance(userEmail).getNthGroup(action_index).getCode();
 
-        //get email addresses of all members in this group
+        // get email addresses of all members in this group
         DBQueries instance = DBQueries.getInstance();
         ArrayList<String> members = instance.getGroupMembers(group);
 
@@ -194,42 +221,43 @@ public class GroupManageActivity extends Activity{
                 GMailSender sender = new GMailSender(
                         "roommatespendingtracker@gmail.com",
                         "cis350s18");
-                sender.sendMail("Attention: Unpaid bills", "Here are the bills you need to pay\n\n " +
-                                content,
+                sender.sendMail("Attention: Unpaid bills", "Here are the bills you " +
+                                "need to pay\n\n " + content,
                         "roommatespendingtracker@gmail.com", members.get(i));
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
             }
         }
-
     }
 
-    /*
-     ** this method is to send the leaving group user all unpaid bills information
+    /**
+     * Sends group member who is leaving unpaid bill info
      */
     public void sendSingleUserBills(){
-        //get selected group code
+        // get selected group code
         String userEmail = LoginActivity.email;
         String group = User.getInstance(userEmail).getNthGroup(action_index).getCode();
-        //get group unpaid bills
+
+        // get group unpaid bills
         String content = emailContent(group);
-        //send to leaving users
+
+        // send to leaving users
         try {
             GMailSender sender = new GMailSender(
                     "roommatespendingtracker@gmail.com",
                     "cis350s18");
-            sender.sendMail("Attention: Unpaid bills", "Here are the bills you need to pay\n\n " +
-                            content,
+            sender.sendMail("Attention: Unpaid bills", "Here are the bills you need " +
+                            "to pay\n\n " + content,
                     "roommatespendingtracker@gmail.com", LoginActivity.email);
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
         }
     }
 
-    /*
-     ** this method is to return all bills information in the group
-     ** @ parameter: groupcode
-     ** @ return: group bills info as String
+    /**
+     * Gets all bill info for a given group
+     * @param groupcode
+     * @return bill info as a string
      */
     public String emailContent(String groupcode){
         // load all unpaid bills info as email content
@@ -244,13 +272,13 @@ public class GroupManageActivity extends Activity{
         return content;
     }
 
-    /*
-        Helper function to get an array of bills sorted by due date (chronologically with the one
-        closest to current date listed first)
-        This function assumes that there are no bills in the database from the past, as those should
-        either be deleted after payment is confirmed or a recurrent one in which case the next duedate
-        is listed in the database.
-    */
+    /**
+     * Helper method: array of bills sorted by due date chronologically
+     * Assumes there are no bills in the DB from the past, as those should either be deleted after
+     * payment is confirmed
+     * @param groupcode
+     * @return ArrayList of bills for group
+     */
     private ArrayList<Bill> getBillsByDate(String groupcode){
         DBQueries instance = DBQueries.getInstance();
         ArrayList<Bill> allBills = new ArrayList<Bill>();

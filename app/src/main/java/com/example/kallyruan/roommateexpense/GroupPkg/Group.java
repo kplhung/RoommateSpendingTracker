@@ -5,6 +5,7 @@ import com.example.kallyruan.roommateexpense.UserPkg.User;
 import java.util.ArrayList;
 
 /**
+ * POJO to store Group info
  * Created by Lily on 2/22/2018.
  */
 
@@ -28,10 +29,16 @@ public class Group {
         this.alert = alert;
     }
 
+    /**
+     * Getter methods
+     */
     public String getCode(){
         return code;
     }
-    public int getParticipation(){return participation;}
+
+    public int getParticipation(){
+        return participation;
+    }
 
     public String getName(){return name;}
 
@@ -39,9 +46,14 @@ public class Group {
         return users;
     }
 
+    /**
+     * Adds user to group
+     * @param user to be added
+     */
     public void addUser(User user){
         this.users.add(user);
     }
+
     public String getAlert(){
         return alert;
     }
