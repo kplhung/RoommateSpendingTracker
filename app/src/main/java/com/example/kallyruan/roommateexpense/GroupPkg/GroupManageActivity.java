@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.example.kallyruan.roommateexpense.BillPkg.Bill;
 import com.example.kallyruan.roommateexpense.DB.DBQueries;
-import com.example.kallyruan.roommateexpense.GMailSender;
+import com.example.kallyruan.roommateexpense.EmailPkg.GMailSender;
 import com.example.kallyruan.roommateexpense.UserPkg.LoginActivity;
 import com.example.kallyruan.roommateexpense.R;
 import com.example.kallyruan.roommateexpense.UserPkg.User;
