@@ -41,7 +41,7 @@ public class GroupListAcitivity extends Activity{
         view_name.setItemsCanFocus(false);
         view_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
-                action_index=position;
+                action_index = position;
                 loadBillList(view);
             }
         });
@@ -92,7 +92,7 @@ public class GroupListAcitivity extends Activity{
         //get icon and set to corresponding imageView
         String icon = instance.getIcon(LoginActivity.email);
         int iconIndex;
-        if(icon!=null) {
+        if(icon != null) {
             iconIndex = Integer.parseInt(icon);
         }else{
             iconIndex = -1;
