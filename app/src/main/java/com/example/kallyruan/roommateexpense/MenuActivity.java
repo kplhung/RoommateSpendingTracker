@@ -130,7 +130,7 @@ public class MenuActivity extends Activity {
         String icon = instance.getIcon(LoginActivity.email);
         System.out.println("MenuActivity.showUserInfo() icon info from db = " + icon);
         int iconIndex;
-        if(icon!=null) {
+        if(icon!=null && !icon.equals("")) {
             iconIndex = Integer.parseInt(icon);
         }else{
             iconIndex = -1;

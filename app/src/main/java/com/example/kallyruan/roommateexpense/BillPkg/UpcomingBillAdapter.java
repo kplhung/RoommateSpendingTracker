@@ -1,5 +1,6 @@
 package com.example.kallyruan.roommateexpense.BillPkg;
 
+import com.example.kallyruan.roommateexpense.DB.DBQueries;
 /**
  * Created by Lily on 3/31/2018.
  */
@@ -18,14 +19,17 @@ import java.util.ArrayList;
 
 public class UpcomingBillAdapter extends BaseAdapter {
     private Activity mActivity;
+    private DBQueries instance;
     private ArrayList<Bill> bills;
     private TextView billName;
     private TextView billAmt;
     private TextView billDate;
+    private TextView billGroup;
 
     public UpcomingBillAdapter(Activity activity, ArrayList<Bill> bills){
         this.mActivity = activity;
         this.bills = bills;
+        this.instance = DBQueries.getInstance();
     }
 
     @Override
@@ -49,20 +53,21 @@ public class UpcomingBillAdapter extends BaseAdapter {
         final View createdView;
 
         if(view == null){
-
             createdView = inflater.inflate(R.layout.upcoming_bills_list_row, null);
-
             billName = (TextView) createdView.findViewById(R.id.bill_name);
             billAmt = (TextView) createdView.findViewById(R.id.bill_amount);
             billDate = (TextView) createdView.findViewById(R.id.bill_date);
+            billGroup = (TextView) createdView.findViewById(R.id.group);
         } else {
             createdView = view;
         }
 
         final Bill bill = bills.get(position);
+        String groupID = instance.getGroupName(instance.getGroupIdForBill(bill.getBillID()));
         billName.setText(bill.getName());
         billAmt.setText(bill.getAmount());
         billDate.setText(bill.getDueDate());
+        billGroup.setText(groupID);
 
         return createdView;
     }
