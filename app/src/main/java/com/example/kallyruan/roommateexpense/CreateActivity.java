@@ -38,7 +38,7 @@ public class CreateActivity extends Activity {
         String email;
         //get groupName
         EditText name = (EditText) findViewById(R.id.groupName);
-        groupName= name.getText().toString();
+        groupName = name.getText().toString();
 
         // the following codes are a bit too repetitive but i haven't figured out how to improve it...
         EditText invitee1 = (EditText) findViewById(R.id.invitee1);
@@ -49,11 +49,11 @@ public class CreateActivity extends Activity {
         }
 
         //Check whether have invitee email
-        EditText invitee= (EditText) findViewById(R.id.invitee1);
+        EditText invitee = (EditText) findViewById(R.id.invitee1);
         checkEmail(invitee);
-        EditText invitee2= (EditText) findViewById(R.id.invitee2);
+        EditText invitee2 = (EditText) findViewById(R.id.invitee2);
         checkEmail(invitee2);
-        EditText invitee3= (EditText) findViewById(R.id.invitee3);
+        EditText invitee3 = (EditText) findViewById(R.id.invitee3);
         checkEmail(invitee3);
 
         sendinvitation(inviteeEmail);
@@ -62,7 +62,7 @@ public class CreateActivity extends Activity {
         DBQueries db = DBQueries.getInstance();
 
         //add group information to database, if success then show message
-        boolean result=db.createGroup(user_id,groupName);
+        boolean result = db.createGroup(user_id,groupName);
         if(result){
             //show successful created message
             TextView message = (TextView) findViewById(R.id.message);
@@ -77,7 +77,7 @@ public class CreateActivity extends Activity {
     ** This method is to send invitation email to given invitee email addresses
     ** @parameter: arrayList of invitee email address
     */
-    public void  sendinvitation(ArrayList<String> inviteeEmail){
+    public void  sendinvitation( ArrayList<String> inviteeEmail ){
 
     }
     
@@ -85,16 +85,16 @@ public class CreateActivity extends Activity {
     ** This method is to back to menu page
     */
     public void backToMenu(View view) {
-        Intent i = new Intent(this,MenuActivity.class);
-        startActivityForResult(i,1);
+        Intent i = new Intent(this , MenuActivity.class);
+        startActivityForResult(i , 1);
     }
     
     /*
     ** This method is to check whether user input email address
     */
     public void checkEmail(EditText invitee){
-        String email=invitee.getText().toString();
-        if (!email.equals(PROMOTEDINFO)){
+        String email = invitee.getText().toString();
+        if ( !email.equals(PROMOTEDINFO) ){
             inviteeEmail.add(email);
         }
     }
