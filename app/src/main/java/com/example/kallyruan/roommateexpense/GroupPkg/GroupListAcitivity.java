@@ -101,9 +101,10 @@ public class GroupListAcitivity extends Activity{
         // get icon and set to corresponding imageView
         String icon = instance.getIcon(LoginActivity.email);
         int iconIndex;
-        if(icon != null) {
+        try {
             iconIndex = Integer.parseInt(icon);
-        } else {
+
+        } catch (Exception e) {
             iconIndex = -1;
             System.out.println("No icon image recorded. Put default image instead.");
         }
