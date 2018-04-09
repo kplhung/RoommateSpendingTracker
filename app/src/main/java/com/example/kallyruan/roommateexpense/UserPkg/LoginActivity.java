@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +18,12 @@ import com.example.kallyruan.roommateexpense.R;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Activity for user login (user enters email and pw); also allows user to begin process for
+ * resetting password (forgot password)
+ */
 public class LoginActivity extends AppCompatActivity {
+    // email of user, stored statically
     public static String email;
 
     @Override
@@ -27,14 +31,16 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // field where user inputs their email to login
         final EditText login = findViewById(R.id.emailField);
         login.setTextColor(Color.BLACK);
 
+        // field where user inputs their password for authentication
         final EditText pw = findViewById(R.id.passwordField);
         pw.setTextColor(Color.BLACK);
 
+        // buttons to login or to state that password is forgotten
         final Button loginButton = findViewById(R.id.loginButton);
-
         Button forgotPasswordButton = findViewById(R.id.forgotPasswordButton);
 
         // keep track of number of times wrong password has been put in for same email
@@ -47,18 +53,18 @@ public class LoginActivity extends AppCompatActivity {
                 String password = pw.getText().toString();
 
                 DBQueries db = DBQueries.getInstance();
-
                 int rs = db.login(email, password);
 
                 Handler h = new Handler();
+
                 // case 1: username does not match an existing one
                 if (rs == 0) {
-                    Log.v("Case 1", "in here");
                     Toast toast = Toast.makeText(getApplicationContext(),
                             "User does not exist; redirecting you to sign up page!",
                             Toast.LENGTH_SHORT);
-                    // redirect to sign up page
                     toast.show();
+
+                    // redirect to sign up page
                     h.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -67,20 +73,24 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }, 500);
                 } else if (rs == 1) {
-                    Toast toast;
                     // case 2: password is incorrect
-                    Log.v("Case 2", "in here");
+                    Toast toast;
+
                     // update number of errors
                     if (!numErrors.containsKey(email)) {
+                        // this is user's first mistake
                         numErrors.put(email, 1);
                     } else {
                         int tmp = numErrors.get(email);
+
+                        // force user to reset password
                         if (tmp >= 2) {
                             DBQueries dbq = DBQueries.getInstance();
                             String emailAddress = email;
 
                             if (dbq.userExists(email)) {
                                 String resetCode = dbq.forgotPassword(email);
+
                                 //lock the user out
                                 dbq.resetPassword(email, resetCode);
 
@@ -89,32 +99,33 @@ public class LoginActivity extends AppCompatActivity {
                                     GMailSender sender = new GMailSender(
                                             "roommatespendingtracker@gmail.com",
                                             "cis350s18");
-                                    sender.sendMail("Reset Password", "Here is the code to reset " +
-                                                    "your password: " + resetCode,
+                                    sender.sendMail("Reset Password", "Here is the " +
+                                                    "code to reset your password: " + resetCode,
                                             "roommatespendingtracker@gmail.com", emailAddress);
                                 } catch (Exception e) {
-                                    Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(),"Error",
+                                            Toast.LENGTH_LONG).show();
+
                                 }
                             }
 
-                            // this is the third mistake; force password reset
+                            // inform user that they have to reset pw
                             toast = Toast.makeText(getApplicationContext(),
                                     "Too many incorrect password attempts. Reset code send to " +
                                     "email", Toast.LENGTH_LONG);
                             toast.show();
 
+                            // redirect to reset password
                             Handler resetHandler = new Handler();
                             resetHandler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {startActivity(new Intent(getApplicationContext(),
                                         ResetPasswordActivity.class));}
                             }, 500);
-
-
-
                         }
                         numErrors.put(email, tmp + 1);
                     }
+
                     toast = Toast.makeText(getApplicationContext(),
                             "Password is incorrect.", Toast.LENGTH_SHORT);
                     // redirect to sign up page
