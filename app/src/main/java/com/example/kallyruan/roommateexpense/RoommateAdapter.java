@@ -23,6 +23,7 @@ public class RoommateAdapter extends BaseAdapter {
         this.mActivity = activity;
         this.roommates = roommates;
     }
+
     @Override
     public int getCount() {
         return roommates.size();

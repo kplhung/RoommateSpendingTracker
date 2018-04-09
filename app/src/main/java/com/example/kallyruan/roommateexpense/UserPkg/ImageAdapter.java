@@ -14,7 +14,6 @@ import com.example.kallyruan.roommateexpense.R;
 /**
  * Created by kallyruan on 7/4/18.
  */
-
     public class ImageAdapter extends BaseAdapter {
         private Context mContext;
 
@@ -40,14 +39,6 @@ import com.example.kallyruan.roommateexpense.R;
             if (convertView == null) {
                 // if it's not recycled, initialize some attributes
                 imageView = new ImageView(mContext);
-
-                //imageView.setLayoutParams(new ViewGroup.LayoutParams(85, 85));
-                /*
-                ViewGroup.LayoutParams lp = imageView.getLayoutParams();
-                lp.width = 85;
-                lp.height = 85;
-                imageView.requestLayout();
-*/
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 imageView.setPadding(8, 8, 8, 8);
             } else {

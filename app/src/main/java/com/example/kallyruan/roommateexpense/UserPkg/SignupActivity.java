@@ -25,40 +25,33 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
         showIconImage();
 
+        // user enters desired username here
         final EditText username = findViewById(R.id.emailField);
         username.setTextColor(Color.BLACK);
 
+        // user enters desired password here
         final android.widget.EditText pw = findViewById(R.id.passwordField);
         pw.setTextColor(Color.BLACK);
 
-        final Button signUpButton = findViewById(R.id.signUpButton);
-
+        // user enters desired nickname here
         final EditText usernickname = findViewById(R.id.nicknameField);
 
+        // user presses this to sign up
+        final Button signUpButton = findViewById(R.id.signUpButton);
         signUpButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String email = username.getText().toString();
                 String password = pw.getText().toString();
+
+                // sign up user (in DB)
                 DBQueries db = DBQueries.getInstance();
                 boolean success = db.signUp(email, password);
 
-
+                // set nickname and icon
                 String iconImage = Integer.toString(user_icon);
                 String nickname = usernickname.getText().toString();
-                
-                System.out.println("SignupAciticty iconImage = " + iconImage);
                 boolean iconSuccess = db.setIcon(email,iconImage);
                 boolean nicknameSuccess = db.setNickname(email,nickname);
-
-                //Here test whether successfully add icon and nickname infor to user db
-                if(!iconSuccess){
-                    System.out.println("SignupAciticty, failed to add icon "+ email +" "+ iconImage);
-                }
-
-                if(!nicknameSuccess){
-                    System.out.println("SignupAciticty, failed to add nickname "+ email +" "+ nickname);
-                }
-
 
                 Handler h = new Handler();
                 if (success && iconSuccess && nicknameSuccess) {
@@ -81,11 +74,11 @@ public class SignupActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
-    /* this method is to show icon images in a grid view*/
+    /**
+     * Shows user icon in grid view
+     */
     public void showIconImage(){
         GridView gridview = (GridView) findViewById(R.id.user_icon_gridView);
         gridview.setAdapter(new ImageAdapter(this));
@@ -98,4 +91,3 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 }
-

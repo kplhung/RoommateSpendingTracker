@@ -31,6 +31,7 @@ import java.util.Comparator;
 
 public class MenuActivity extends Activity {
     private DBQueries instance = DBQueries.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +40,10 @@ public class MenuActivity extends Activity {
         displayUpcomingBills();
     }
 
+    /**
+     * Re-routes user to see their list of groups
+     * @param view
+     */
     public void myGroup(View view){
         Intent i = getIntent();
         String username = i.getStringExtra("username");
@@ -46,25 +51,37 @@ public class MenuActivity extends Activity {
         j.putExtra("username", username);
         startActivityForResult(j,1);
     }
-    
+
+    /**
+     * Allows user to create group; re-routes user to this activity
+     * @param view
+     */
     public void createGroup(View view){
         Intent i = new Intent(this,CreateActivity.class);
         startActivityForResult(i,1);
     }
 
+    /**
+     * Re-routes user to activity that allows user to join a group by entering a code
+     * @param view
+     */
     public void joinGroup(View view){
         Intent i = new Intent(this,JoinGroupActivity.class);
         startActivityForResult(i, 1);
     }
 
+    /**
+     * Re-routes user to activity that allows user to change their password
+     * @param view
+     */
     public void changePassword(View view) {
         Intent i = new Intent(this, PasswordChangeActivity.class);
         startActivityForResult(i, 1);
     }
 
-    /*
-    displays the upcoming bills in a list, showing the bill's name, amount due for user, due date,
-    and name of the group the bill is from
+    /**
+     * Displays upcoming bills in a list, showing bill's name, amount due for user, due date,
+     * and name of group the bill is from
      */
     public void displayUpcomingBills(){
         ListView listView = findViewById(R.id.upcoming_bills_list);
@@ -84,13 +101,13 @@ public class MenuActivity extends Activity {
         });
     }
 
-    /*
-        Helper function to get an array of bills sorted by due date (chronologically with the one
-        closest to current date listed first)
-        This function assumes that there are no bills in the database from the past, as those should
-        either be deleted after payment is confirmed or a recurrent one in which case the next duedate
-        is listed in the database.
-    */
+    /**
+     * Gets array of bills, sorted chronologically by date
+     *
+     * Note that this method assumes that there are no bills in the DB from the past, as those
+     * would have been deleted after payment confirmation
+     * @return ArrayList of bills
+     */
     private ArrayList<Bill> getBillsByDate(){
         ArrayList<Bill> allBills = new ArrayList<Bill>();
         ResultSet bill_rs = instance.userBills(LoginActivity.email);
@@ -105,7 +122,7 @@ public class MenuActivity extends Activity {
                 Bill bill = new Bill(name, amt, due_date, id, desc);
                 allBills.add(bill);
             }
-        } catch(SQLException e){
+        } catch(SQLException e) {
             e.printStackTrace();
         }
         Collections.sort(allBills, new Comparator<Bill>() {
@@ -118,16 +135,15 @@ public class MenuActivity extends Activity {
     }
 
     /**
-     * this method is to get user icon and nickname from database and show it in the interface
+     * Shows user icon and nickname
      **/
     public void showUserInfo(){
-
-        //get nickname and set to Textview content
+        // get nickname and set to TextView content
         String nickname = instance.getNickname(LoginActivity.email);
         TextView userNickname = findViewById(R.id.user_nickname);
         userNickname.setText(nickname);
 
-        //get icon and set to corresponding imageView
+        // get icon and set to corresponding imageView
         String icon = instance.getIcon(LoginActivity.email);
         System.out.println("MenuActivity.showUserInfo() icon info from db = " + icon);
         int iconIndex;

@@ -13,14 +13,16 @@ import com.example.kallyruan.roommateexpense.DB.DBQueries;
 import com.example.kallyruan.roommateexpense.EmailPkg.GMailSender;
 import com.example.kallyruan.roommateexpense.R;
 
+/**
+ * Allows user to enter email address where a password reset code will be sent
+ */
 public class ForgotPasswordActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // setContentView(R.layout.activity_forgot_password);
-
         setContentView(R.layout.activity_forgot_password);
+
         // user enters their email here
         final EditText enteredEmail = findViewById(R.id.emailAddressField);
 
@@ -33,7 +35,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 DBQueries dbq = DBQueries.getInstance();
                 String emailAddress = enteredEmail.getText().toString();
 
-                // check to see if email address is associated with a user
+                /* check to see if email address is associated with a user
+                   sends email if email exists in DB */
                 if (dbq.userExists(emailAddress)) {
                     String resetCode = dbq.forgotPassword(emailAddress);
 
@@ -48,6 +51,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
                     }
                 }
+
+                // show message
                 Toast toast = Toast.makeText(getApplicationContext(),
                         "Thanks! If this email is associated with an account, then we've " +
                                 "sent you an email with a reset code to set a new password." +
@@ -55,6 +60,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                 "password.", Toast.LENGTH_SHORT);
                 toast.show();
 
+                // send user to page where they can type in their reset code and reset their pw
                 Handler h = new Handler();
                 h.postDelayed(new Runnable() {
                     @Override

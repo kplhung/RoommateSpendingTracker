@@ -8,6 +8,7 @@ import com.example.kallyruan.roommateexpense.DB.DBQueries;
 import com.example.kallyruan.roommateexpense.GroupPkg.Group;
 
 /**
+ * POJO for storing user information
  * Created by Lily on 2/22/2018.
  */
 
@@ -29,17 +30,23 @@ public class User {
         this.userIcon = userIcon;
     }
 
-    //this function is to get all user group and user information, then return
+    /**
+     * Returns user info for given user
+     * @param username for which info is sough
+     * @return User object
+     */
     public static User getInstance(String username){
-            //get user information from database
+            // get user info from database
             ArrayList<Group> allgroups = new ArrayList<Group>();
             String userEmail = LoginActivity.email;
             String userIcon = null;
             String nickname = null;
-            // try to connect dababase
+
+            // connect to dababase
             try {
                 DBQueries db = DBQueries.getInstance();
                 ResultSet rs = db.userGroups(userEmail);
+
                 // get all group information and add to ArrayList<Group>
                 try {
                     while (rs.next()) {
@@ -57,12 +64,15 @@ public class User {
                 nickname = db.getNickname(username);
                 userIcon = db.getIcon(username);
 
-            }catch(SQLException e) {
+            } catch(SQLException e) {
                     e.printStackTrace();
             }
             return new User(username,allgroups,nickname,userIcon);
     }
 
+    /*
+     * Getter methods for this POJO
+     */
     public String getUsername(){
         return username;
     }
@@ -71,16 +81,25 @@ public class User {
 
     public void addGroup(Group group) { this.groups.add(group); }
 
-    public String getNickname(){ return nickname; }
-    public String getUserIcon(){ return userIcon; }
+    public String getNickname(){
+        return nickname;
+    }
 
-    // this function is to return the selected group with index n
+    public String getUserIcon(){
+        return userIcon;
+    }
+
+    /**
+     * Returns specified Group
+     * @param index of desired group
+     * @return Group - the group at the given index
+     */
     public Group getNthGroup(int index){
         int total = groups.size();
         if(index >= 0 && index < total) {
             return groups.get(index);
-        }else{
-            System.out.println("group index out of range.");
+        } else {
+            System.out.println("Group index out of range.");
         }
         return null;
     }
