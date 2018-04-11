@@ -34,7 +34,7 @@ public class JoinGroupActivity extends Activity{
     public void joinGroup(View view){
         String code = ((EditText) findViewById(R.id.enterCodeField)).getText().toString();
         if (code != null){
-            Group newGroup = new Group(dbInstance.getGroupforCode(code), userInstance);
+            Group newGroup = new Group(dbInstance.getGroupForCode(code), userInstance);
             userInstance.addGroup(newGroup);
             int i = dbInstance.addUserToGroup(LoginActivity.email, code);
             if (i == 0) {
