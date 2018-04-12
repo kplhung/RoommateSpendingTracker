@@ -9,4 +9,5 @@
     <string name="please_enter_your_old_password">Please enter your old password.</string>
     <string name="title_activity_forgot_password">ForgotPasswordActivity</string>
     <string name="title_activity_reset_password">ResetPasswordActivity</string>
+    <string name="title_activity_payment_history">PaymentHistoryActivity</string>
 </resources>
