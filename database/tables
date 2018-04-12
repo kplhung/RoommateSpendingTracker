@@ -9,3 +9,7 @@ CREATE TABLE UserGroups (user_id VARCHAR(255), group_id VARCHAR(20), FOREIGN KEY
 CREATE TABLE GroupBills (group_id VARCHAR(20), bill_id VARCHAR(20), FOREIGN KEY (group_id) REFERENCES Groups (group_id), FOREIGN KEY (bill_id) REFERENCES Bills (bill_id))
 
 CREATE TABLE GroupCodes (invite_code CHAR(6), expiry_date CHAR(10), group_id VARCHAR(10), FOREIGN KEY (group_id) REFERENCES Groups (group_id), PRIMARY KEY(invite_code))
+
+CREATE TABLE OldBills (bill_id VARCHAR(10), bill_name VARCHAR(20), group_name VARCHAR(20), amount DOUBLE, description VARCHAR(255), date_paid CHAR(10), PRIMARY KEY (bill_id))
+
+CREATE TABLE OldUserBills (user_id VARHCAR(255), bill_id VARCHAR(10), FOREIGN KEY (user_id) REFERENCES Users (user_id), FOREIGN KEY (bill_id) REFERENCES OldBills (bill_id))
