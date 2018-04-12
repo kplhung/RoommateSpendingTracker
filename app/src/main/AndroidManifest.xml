@@ -51,6 +51,10 @@
         <activity
             android:name=".UserPkg.ResetPasswordActivity"
             android:label="@string/title_activity_reset_password"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".UserPkg.PaymentHistoryActivity"
+            android:label="@string/title_activity_payment_history"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
