@@ -18,6 +18,7 @@ import com.example.kallyruan.roommateexpense.GroupPkg.GroupListAcitivity;
 import com.example.kallyruan.roommateexpense.GroupPkg.JoinGroupActivity;
 import com.example.kallyruan.roommateexpense.UserPkg.LoginActivity;
 import com.example.kallyruan.roommateexpense.UserPkg.PasswordChangeActivity;
+import com.example.kallyruan.roommateexpense.UserPkg.ProfileActivity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -70,12 +71,12 @@ public class MenuActivity extends Activity {
         startActivityForResult(i, 1);
     }
 
+
     /**
-     * Re-routes user to activity that allows user to change their password
-     * @param view
+     *
      */
-    public void changePassword(View view) {
-        Intent i = new Intent(this, PasswordChangeActivity.class);
+    public void manageProfile(View view){
+        Intent i = new Intent(this, ProfileActivity.class);
         startActivityForResult(i, 1);
     }
 
@@ -145,7 +146,6 @@ public class MenuActivity extends Activity {
 
         // get icon and set to corresponding imageView
         String icon = instance.getIcon(LoginActivity.email);
-        System.out.println("MenuActivity.showUserInfo() icon info from db = " + icon);
         int iconIndex;
         try {
             iconIndex = Integer.parseInt(icon);
@@ -185,5 +185,4 @@ public class MenuActivity extends Activity {
                 break;
         }
     }
-    
 }
