@@ -40,6 +40,10 @@
         <activity android:name=".GroupPkg.CreateActivity" />
         <activity android:name=".GroupPkg.GroupManageActivity" />
         <activity android:name=".BillPkg.AddBillActivity" />
+        <activity android:name=".UserPkg.ProfileActivity" />
+        <activity android:name=".UserPkg.IconChangeActivity" />
+        <activity android:name=".UserPkg.EmailChangeActivity"/>
+        <activity android:name=".UserPkg.NicknameChangeActivity"/>
         <activity
             android:name=".UserPkg.PasswordChangeActivity"
             android:label="@string/title_activity_password_change"
@@ -55,7 +59,9 @@
         <activity
             android:name=".UserPkg.PaymentHistoryActivity"
             android:label="@string/title_activity_payment_history"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
     </application>
 
 </manifest>
