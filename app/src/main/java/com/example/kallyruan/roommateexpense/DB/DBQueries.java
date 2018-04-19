@@ -276,6 +276,7 @@ public class DBQueries {
                 stmt = con.prepareStatement(oldInfo);
                 stmt.setString(1, oldEmail);
                 rs = stmt.executeQuery();
+                rs.next();
                 String pw = rs.getString("password");
                 String nickname = rs.getString("nickname");
                 String icon_id = rs.getString("icon_id");
