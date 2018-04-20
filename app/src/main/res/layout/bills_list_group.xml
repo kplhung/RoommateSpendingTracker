@@ -29,12 +29,12 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Edit/Delete"
+        android:text="Edit"
         android:onClick="editBill"/>
 
     <Button
         android:id="@+id/bill_confirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Confirm payment"/>
+        android:text="Paid"/>
 </LinearLayout>

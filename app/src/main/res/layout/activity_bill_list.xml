@@ -49,14 +49,14 @@
             android:text="Confirm payment"
             android:layout_weight="1"/>
     </LinearLayout>
-    <ListView
+    <ExpandableListView
         android:id="@+id/bills_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         app:layout_constraintTop_toBottomOf="@id/bill_list_header">
-    </ListView>
+    </ExpandableListView>
     <Button
         android:id="@+id/add_bill_btn"
         android:layout_width="wrap_content"
