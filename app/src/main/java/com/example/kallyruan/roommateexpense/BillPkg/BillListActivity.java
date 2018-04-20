@@ -3,6 +3,7 @@ package com.example.kallyruan.roommateexpense.BillPkg;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
@@ -47,40 +48,40 @@ public class BillListActivity extends Activity {
         BillAdapter adapter = new BillAdapter(this, bills, group_id, userEmail);
         listView.setAdapter(adapter);
         // Listview Group click listener
-        listView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v,
-                                        int groupPosition, long id) {
-                 Toast.makeText(getApplicationContext(),
-                 "Group Clicked " + bills.get(groupPosition).getName(),
-                 Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
+//        listView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+//
+//            @Override
+//            public boolean onGroupClick(ExpandableListView parent, View v,
+//                                        int groupPosition, long id) {
+//                 Toast.makeText(getApplicationContext(),
+//                 "Group Clicked " + bills.get(groupPosition).getName(),
+//                 Toast.LENGTH_SHORT).show();
+//                return false;
+//            }
+//        });
 
         // Listview Group expanded listener
-        listView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                Toast.makeText(getApplicationContext(),
-                        bills.get(groupPosition).getName() + " Expanded",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+//        listView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+//
+//            @Override
+//            public void onGroupExpand(int groupPosition) {
+//                Toast.makeText(getApplicationContext(),
+//                        bills.get(groupPosition).getName() + " Expanded",
+//                        Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         // Listview Group collasped listener
-        listView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(getApplicationContext(),
-                        bills.get(groupPosition).getName() + " Collapsed",
-                        Toast.LENGTH_SHORT).show();
-
-            }
-        });
+//        listView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+//
+//            @Override
+//            public void onGroupCollapse(int groupPosition) {
+//                Toast.makeText(getApplicationContext(),
+//                        bills.get(groupPosition).getName() + " Collapsed",
+//                        Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
 //        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
 //        {
 //            @Override
@@ -110,10 +111,14 @@ public class BillListActivity extends Activity {
                 String desc = bill_rs.getString("description");
                 ArrayList<String[]> other_payers = new ArrayList<String[]> ();
                 for (String member: groupMembers){
-                    ResultSet memberBill_rs = instance.userBillsInGroup(member, group_id);
-                    while(memberBill_rs.next()){
-                        String other_amt = memberBill_rs.getString("amount");
-                        other_payers.add(new String[] {member, other_amt});
+                    if(!LoginActivity.email.equals(member)) {
+                        ResultSet memberBill_rs = instance.userBillsInGroup(member, group_id);
+                        while (memberBill_rs.next()) {
+                            if(memberBill_rs.getString("bill_name").equals(name)) {
+                                String other_amt = memberBill_rs.getString("amount");
+                                other_payers.add(new String[]{member, other_amt});
+                            }
+                        }
                     }
                 }
                 Bill bill = new Bill(name, amt, due_date, id, desc, other_payers);

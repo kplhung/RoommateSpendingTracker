@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <TextView
-        android:id="@+id/bill_list_payer_name"
-        android:layout_width="fill_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal" >
+    <LinearLayout
+        android:id="@+id/bill_other_payers"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" />
+        android:orientation="horizontal"
+        android:layout_below="@id/bill_list_title">
 
-    <TextView
-        android:id="@+id/bill_list_payer_amt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/bill_list_payer_name"/>
+        <TextView
+            android:id="@+id/bill_list_payer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_weight="1"
+            android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" />
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/bill_list_payer_amt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_toRightOf="@id/bill_list_payer_name"/>
+    </LinearLayout>
+
+</RelativeLayout>

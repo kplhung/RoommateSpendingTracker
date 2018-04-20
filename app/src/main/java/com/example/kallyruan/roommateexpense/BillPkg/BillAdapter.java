@@ -1,6 +1,8 @@
 package com.example.kallyruan.roommateexpense.BillPkg;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +73,7 @@ public class BillAdapter extends BaseExpandableListAdapter {
                              boolean isLastChild, View view, ViewGroup parent) {
         LayoutInflater inflater = mActivity.getLayoutInflater();
         final View createdView;
+        Log.i("child pos", childPosition+"");
 
         if(view == null){
             createdView = inflater.inflate(R.layout.bill_list_child, null);
@@ -84,7 +87,8 @@ public class BillAdapter extends BaseExpandableListAdapter {
 
         String[] payer = bill.getOtherPayers().get(childPosition);
         bill_payer.setText(payer[0]);
-        bill_payer_amt.setText(payer[1]);
+        Log.i("amt", payer[1] + "");
+        bill_payer_amt.setText(payer[1]+"");
 
         return createdView;
     }
@@ -96,7 +100,7 @@ public class BillAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int i) {
-        return instance.getGroupMembers(instance.getGroupIdForBill(bills.get(i).getBillID())).size();
+        return bills.get(i).getOtherPayers().size();
     }
 
     @Override
@@ -105,8 +109,8 @@ public class BillAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public Object getChild(int i, int i1) {
-        return instance.getGroupMembers(bills.get(i).getBillID()).get(i1);
+    public Object getChild(int i, int il) {
+        return bills.get(i).getOtherPayers().get(il);
     }
 
     @Override
@@ -143,6 +147,9 @@ public class BillAdapter extends BaseExpandableListAdapter {
         billName.setText(bill.getName());
         billAmt.setText(bill.getAmount());
         billDate.setText(bill.getDueDate());
+        Button editButton = (Button) createdView.findViewById(R.id.bill_edit);
+        editButton.setFocusable(false);
+        billConfirmButton.setFocusable(false);
 
         billConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
