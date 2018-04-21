@@ -734,7 +734,8 @@ public class DBQueries {
         }
         String bills = "INSERT INTO Bills VALUES (\"" + newBillId + "\", \"" + name + "\", \"" +
                 user + "\", \"" + amt + "\", \"" + date + "\", \"" + desc + "\")";
-        String groupBills = "INSERT INTO GroupBills VALUES(\"" + group_id + "\", \"" + newBillId + "\")";
+        String groupBills = "INSERT INTO GroupBills VALUES(\"" + group_id + "\", \"" + newBillId +
+                "\")";
         Statement stmt = null;
 
         try {
@@ -770,19 +771,23 @@ public class DBQueries {
         PreparedStatement stmt = null;
 
         try {
-            //add the bill to the user's old bills
+            // add the bill to the user's old bills
             String group_name = getGroupName(group_id);
             stmt = con.prepareStatement(billInfo);
             stmt.setString(1, bill_id);
             ResultSet info = stmt.executeQuery();
             String description = "";
             double amount = 0.0;
+            String billName = "";
+
             //there's a bill matching that id
             if (info.next()) {
+                billName = info.getString("bill_name");
                 description = info.getString("description");
                 amount = info.getDouble("amount");
             }
-            addOldBill(bill_id, user_id, group_name, amount, description);
+            Log.v("tried to do this", "" + addOldBill(bill_id, billName, user_id,
+                    group_name, amount, description));
 
             stmt = con.prepareStatement(groupBills);
             stmt.setString(1, group_id);
@@ -942,7 +947,7 @@ public class DBQueries {
      * @param description
      * @return whether the insertion was successful
      */
-    boolean addOldBill(String bill_id, String user_id, String group_name, double amount,
+    boolean addOldBill(String bill_id, String bill_name, String user_id, String group_name, double amount,
                        String description){
         //the bill_id must be unique
         while (oldBillExists(bill_id)) {
@@ -951,9 +956,11 @@ public class DBQueries {
         Calendar c = Calendar.getInstance();
         String date = dateFormat.format(c.getTime()); //the bill was paid today
 
-        String oldBills = "INSERT INTO Bills VALUES (\"" + bill_id + "\", \"" + group_name +
-                "\", \"" + amount + "\", \"" + description + "\", \"" + date + "\")";
-        String oldUserBills = "INSERT INTO Bills VALUES (\"" + user_id + "\", \"" + bill_id + "\")";
+        String oldBills = "INSERT INTO OldBills VALUES (\"" + bill_id + "\", \"" + bill_name +
+                "\", \"" + group_name + "\", \"" + amount + "\", \"" + description + "\", \"" +
+                date + "\")";
+        String oldUserBills = "INSERT INTO OldUserBills VALUES (\"" + user_id + "\", \"" +
+                bill_id + "\")";
         Statement stmt = null;
 
         try {

@@ -154,11 +154,14 @@ public class BillAdapter extends BaseExpandableListAdapter {
         billConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String billID = bill.getBillID();
+                String userID = LoginActivity.email;
+
                 v.setVisibility(View.GONE);
                 createdView.setVisibility(View.GONE);
                 DBQueries dbq = DBQueries.getInstance();
-                dbq.deleteBill(LoginActivity.email, groupID, bill.getBillID());
-            }
+                dbq.deleteBill(userID, groupID, billID);
+        }
         });
         return createdView;
     }
