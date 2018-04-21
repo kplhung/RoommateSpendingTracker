@@ -1,89 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#caf0f7"
-    tools:context="com.example.kallyruan.roommateexpense.UserPkg.LoginActivity"
-    tools:layout_editor_absoluteY="81dp">
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="#caf0f7"
+tools:context="com.example.kallyruan.roommateexpense.UserPkg.LoginActivity"
+tools:layout_editor_absoluteY="81dp">
 
-    <TextView
-        android:id="@+id/loginSticker"
-        android:layout_width="98dp"
-        android:layout_height="39dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="128dp"
-        android:gravity="center"
-        android:text="Username"
-        android:textSize="18dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<TextView
+    android:id="@+id/loginSticker"
+    android:layout_width="98dp"
+    android:layout_height="39dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginStart="24dp"
+    android:layout_marginTop="128dp"
+    android:gravity="center"
+    android:text="Username"
+    android:textSize="18dp"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/passwordSticker"
-        android:layout_width="98dp"
-        android:layout_height="39dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="208dp"
-        android:gravity="center"
-        android:text="Password"
-        android:textSize="18dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<TextView
+    android:id="@+id/passwordSticker"
+    android:layout_width="98dp"
+    android:layout_height="39dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginStart="28dp"
+    android:layout_marginTop="208dp"
+    android:gravity="center"
+    android:text="Password"
+    android:textSize="18dp"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/emailField"
-        android:layout_width="207dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="13dp"
-        android:layout_marginLeft="84dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="106dp"
-        android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/passwordField"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<EditText
+    android:id="@+id/emailField"
+    android:layout_width="207dp"
+    android:layout_height="40dp"
+    android:layout_marginBottom="13dp"
+    android:layout_marginLeft="84dp"
+    android:layout_marginStart="100dp"
+    android:layout_marginTop="106dp"
+    android:inputType="text"
+    app:layout_constraintBottom_toTopOf="@+id/passwordField"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/passwordField"
-        android:layout_width="209dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="168dp"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="150dp"
-        android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/forgotPasswordButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<EditText
+    android:id="@+id/passwordField"
+    android:layout_width="209dp"
+    android:layout_height="0dp"
+    android:layout_marginBottom="168dp"
+    android:layout_marginLeft="148dp"
+    android:layout_marginStart="148dp"
+    android:layout_marginTop="150dp"
+    android:inputType="text"
+    app:layout_constraintBottom_toTopOf="@+id/forgotPasswordButton"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/loginButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="Login"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+<Button
+    android:id="@+id/loginButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="32dp"
+    android:text="Login"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/forgotPasswordButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="103dp"
-        android:text="Forgot Password"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.535"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordField" />
+<Button
+    android:id="@+id/forgotPasswordButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="103dp"
+    android:text="Forgot Password"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.535"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/passwordField" />
 </android.support.constraint.ConstraintLayout>
