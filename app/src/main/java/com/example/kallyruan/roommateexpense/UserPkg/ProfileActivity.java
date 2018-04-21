@@ -8,18 +8,30 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kallyruan.roommateexpense.DB.DBQueries;
+import com.example.kallyruan.roommateexpense.MainActivity;
 import com.example.kallyruan.roommateexpense.MenuActivity;
 import com.example.kallyruan.roommateexpense.R;
 
 public class ProfileActivity extends Activity {
-
+    private DBQueries instance = DBQueries.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manage_profile);
+        showUserInfo();
+        //set up clickListener for signOut
+        android.support.v7.widget.AppCompatImageView view = findViewById(R.id.signOutButton);
+        view.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                signOut();
+            }
+        });
     }
 
     /**
@@ -118,6 +130,64 @@ public class ProfileActivity extends Activity {
      */
     public void backToMenu(View view){
         Intent i = new Intent(this, MenuActivity.class);
+        startActivityForResult(i, 1);
+    }
+
+    /**
+     * Shows user icon and nickname
+     **/
+    public void showUserInfo(){
+        // get nickname and set to TextView content
+        String nickname = instance.getNickname(LoginActivity.email);
+        TextView email = findViewById(R.id.user_email);
+        email.setText(LoginActivity.email);
+        TextView userNickname = findViewById(R.id.user_nickname);
+        userNickname.setText(nickname);
+
+        // get icon and set to corresponding imageView
+        String icon = instance.getIcon(LoginActivity.email);
+        int iconIndex;
+        try {
+            iconIndex = Integer.parseInt(icon);
+        } catch (Exception e) {
+            iconIndex = -1;
+            System.out.println("No icon image recorded. Put default image instead.");
+        }
+
+        ImageView image = findViewById(R.id.user_icon);
+        switch(iconIndex){
+            case 0:
+                image.setImageResource(R.mipmap.usericon_8);
+                break;
+            case 1:
+                image.setImageResource(R.mipmap.usericon_9);
+                break;
+            case 2:
+                image.setImageResource(R.mipmap.usericon_3);
+                break;
+            case 3:
+                image.setImageResource(R.mipmap.usericon_2);
+                break;
+            case 4:
+                image.setImageResource(R.mipmap.usericon_7);
+                break;
+            case 5:
+                image.setImageResource(R.mipmap.usericon_6);
+                break;
+            case 6:
+                image.setImageResource(R.mipmap.usericon_4);
+                break;
+            case 7:
+                image.setImageResource(R.mipmap.usericon_1);
+                break;
+            default:
+                image.setImageResource(R.mipmap.usericon_5);
+                break;
+        }
+    }
+
+    public void signOut(){
+        Intent i = new Intent(this, MainActivity.class);
         startActivityForResult(i, 1);
     }
 

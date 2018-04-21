@@ -20,6 +20,8 @@ import com.example.kallyruan.roommateexpense.UserPkg.LoginActivity;
 import com.example.kallyruan.roommateexpense.UserPkg.PasswordChangeActivity;
 import com.example.kallyruan.roommateexpense.UserPkg.ProfileActivity;
 
+import org.w3c.dom.Text;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -39,6 +41,14 @@ public class MenuActivity extends Activity {
         setContentView(R.layout.activity_menu);
         showUserInfo();
         displayUpcomingBills();
+        //set up clickListener for signOut
+        android.support.v7.widget.AppCompatImageView view = findViewById(R.id.signOutButton);
+        view.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                signOut();
+            }
+        });
     }
 
     /**
@@ -139,7 +149,7 @@ public class MenuActivity extends Activity {
      * Shows user icon and nickname
      **/
     public void showUserInfo(){
-        // get nickname and set to TextView content
+        // get nickname, email and set to TextView content
         String nickname = instance.getNickname(LoginActivity.email);
         TextView userNickname = findViewById(R.id.user_nickname);
         userNickname.setText(nickname);
@@ -184,5 +194,10 @@ public class MenuActivity extends Activity {
                 image.setImageResource(R.mipmap.usericon_5);
                 break;
         }
+    }
+
+    public void signOut(){
+        Intent i = new Intent(this, MainActivity.class);
+        startActivityForResult(i, 1);
     }
 }

@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kallyruan.roommateexpense.DB.DBQueries;
@@ -18,6 +20,7 @@ public class EmailChangeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_email);
+        showUserInfo();
     }
 
     /**
@@ -117,5 +120,58 @@ public class EmailChangeActivity extends Activity {
         startActivityForResult(i, 1);
     }
 
+    /**
+     * Shows user icon and nickname
+     **/
+    public void showUserInfo(){
+        DBQueries instance = DBQueries.getInstance();
+        // get nickname and set to TextView content
+        String nickname = instance.getNickname(LoginActivity.email);
+        TextView email = findViewById(R.id.user_email);
+        email.setText(LoginActivity.email);
+        TextView userNickname = findViewById(R.id.user_nickname);
+        userNickname.setText(nickname);
+
+        // get icon and set to corresponding imageView
+        String icon = instance.getIcon(LoginActivity.email);
+        int iconIndex;
+        try {
+            iconIndex = Integer.parseInt(icon);
+        } catch (Exception e) {
+            iconIndex = -1;
+            System.out.println("No icon image recorded. Put default image instead.");
+        }
+
+        ImageView image = findViewById(R.id.user_icon);
+        switch(iconIndex){
+            case 0:
+                image.setImageResource(R.mipmap.usericon_8);
+                break;
+            case 1:
+                image.setImageResource(R.mipmap.usericon_9);
+                break;
+            case 2:
+                image.setImageResource(R.mipmap.usericon_3);
+                break;
+            case 3:
+                image.setImageResource(R.mipmap.usericon_2);
+                break;
+            case 4:
+                image.setImageResource(R.mipmap.usericon_7);
+                break;
+            case 5:
+                image.setImageResource(R.mipmap.usericon_6);
+                break;
+            case 6:
+                image.setImageResource(R.mipmap.usericon_4);
+                break;
+            case 7:
+                image.setImageResource(R.mipmap.usericon_1);
+                break;
+            default:
+                image.setImageResource(R.mipmap.usericon_5);
+                break;
+        }
+    }
 
 }

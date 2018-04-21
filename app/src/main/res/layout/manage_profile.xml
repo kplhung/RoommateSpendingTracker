@@ -6,52 +6,117 @@
     android:layout_height="match_parent"
     tools:layout_editor_absoluteY="81dp">
 
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:background="#d3d3d3d3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/user_icon"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Logged in as"
+            android:textSize="16dp"
+            android:layout_marginLeft="105dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="@+id/frame"
+            app:layout_constraintTop_toTopOf="@+id/frame" />
+
+        <TextView
+            android:id="@+id/user_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textStyle="bold|italic"
+            android:layout_marginLeft="110dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintStart_toStartOf="@+id/frame"
+            app:layout_constraintTop_toTopOf="@+id/frame"/>
+
+        <TextView
+            android:id="@+id/user_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="110dp"
+            android:layout_marginTop="65dp"
+            app:layout_constraintStart_toStartOf="@+id/frame"
+            app:layout_constraintTop_toTopOf="@+id/frame" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/signOutButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="330dp"
+            android:layout_marginStart="330dp"
+            android:layout_marginTop="5dp"
+            android:background="#ffff"
+            android:clickable="true"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="@+id/frame"
+            app:layout_constraintTop_toTopOf="@+id/frame"
+            app:srcCompat="@android:drawable/ic_delete" />
+
+    </FrameLayout>
+
     <Button
         android:id="@+id/delete_account"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="18dp"
-        android:layout_marginStart="18dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/my_button_bg"
         android:onClick="confirmDeleteAction"
         android:text="Delete account"
-        app:layout_constraintStart_toStartOf="@+id/paymentHistory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/paymentHistory" />
 
     <Button
         android:id="@+id/paymentHistory"
-        android:layout_width="211dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/my_button_bg"
         android:onClick="paymentHistory"
         android:text="Check Payment History"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/change_email" />
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Manage My Profile"
-        android:textSize="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/change_email"
-        android:layout_width="211dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/my_button_bg"
         android:onClick="changeEmail"
         android:text="Change Email address"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/change_password" />
 
     <Button
         android:id="@+id/change_password"
-        android:layout_width="211dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/my_button_bg"
         android:onClick="changePassword"
         android:text="Change Password"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,20 +125,23 @@
 
     <Button
         android:id="@+id/change_nickname"
-        android:layout_width="211dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/my_button_bg"
         android:onClick="changeNickname"
         android:text="Change Nickname"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text" />
+        app:layout_constraintTop_toBottomOf="@+id/frame" />
 
     <Button
         android:id="@+id/change_icon"
-        android:layout_width="211dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:background="@drawable/my_button_bg"
         android:onClick="changeIcon"
         android:text="Change Icon"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,15 +150,17 @@
 
     <Button
         android:id="@+id/back"
-        android:layout_width="167dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/my_button_bg"
         android:onClick="backToMenu"
         android:text="Back to Menu"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/delete_account" />
+
+
 
 
 </android.support.constraint.ConstraintLayout>
