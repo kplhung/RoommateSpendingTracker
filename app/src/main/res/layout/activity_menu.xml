@@ -79,8 +79,8 @@
         android:id="@+id/menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="130dp"
-        android:layout_marginStart="130dp"
+        android:layout_marginLeft="140dp"
+        android:layout_marginStart="140dp"
         android:layout_marginTop="7dp"
         android:inputType="textPersonName"
         android:text="MENU"
@@ -97,9 +97,10 @@
         android:background="@drawable/my_button_bg"
         android:clickable="true"
         android:onClick="myGroup"
-        android:text="Check my groups"
+        android:text="My Groups"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/menu" />
+        app:layout_constraintTop_toBottomOf="@+id/menu"
+        android:textAlignment="center"/>
 
     <Button
         android:id="@+id/joinButton"
@@ -108,8 +109,9 @@
         android:layout_marginTop="7dp"
         android:background="@drawable/my_button_bg"
         android:onClick="joinGroup"
-        android:text="Join a group"
-        app:layout_constraintTop_toBottomOf="@+id/groupButton" />
+        android:text="Join Group"
+        app:layout_constraintTop_toBottomOf="@+id/groupButton"
+        android:textAlignment="center"/>
 
     <Button
         android:id="@+id/createButton"
@@ -119,8 +121,9 @@
         android:background="@drawable/my_button_bg"
         android:clickable="true"
         android:onClick="createGroup"
-        android:text="Create a new group"
-        app:layout_constraintTop_toBottomOf="@+id/joinButton" />
+        android:text="Create Group"
+        app:layout_constraintTop_toBottomOf="@+id/joinButton"
+        android:textAlignment="center"/>
 
     <Button
         android:id="@+id/Manage_Profile"
@@ -129,11 +132,12 @@
         android:layout_marginTop="7dp"
         android:background="@drawable/my_button_bg"
         android:onClick="manageProfile"
-        android:text="Manage My Profile"
+        android:text="Manage Profile"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createButton" />
+        app:layout_constraintTop_toBottomOf="@+id/createButton"
+        android:textAlignment="center"/>
 
     <LinearLayout
         android:id="@+id/upcoming_bills_list_header"

@@ -149,9 +149,9 @@ public class GroupManageActivity extends Activity{
      * @param view
      */
     public void confirmDeleteAction(View view) {
-        AlertDialog dialog = new AlertDialog.Builder(this).setTitle("Confirm action dialog")
+        AlertDialog dialog = new AlertDialog.Builder(this).setTitle("Confirmation")
                 .setIcon(R.mipmap.usericon_2).setNegativeButton("Cancel", null).
-                        setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                        setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -159,7 +159,7 @@ public class GroupManageActivity extends Activity{
                         sendMembersBills();
                         deleteGroup();
                     }
-                }).setMessage("Are you sure you want to delete this group for all members?").create();
+                }).setMessage("Do you want to delete this group for all members?").create();
         dialog.show();
     }
 
@@ -167,9 +167,9 @@ public class GroupManageActivity extends Activity{
      ** Pops up dialog to let user confirm exit group action
      */
     public void confirmExitAction(View view) {
-        AlertDialog dialog = new AlertDialog.Builder(this).setTitle("Confirm action " +
-                "dialog").setIcon(R.mipmap.usericon_2)
-                .setNegativeButton("Cancel", null).setPositiveButton("Confirm",
+        AlertDialog dialog = new AlertDialog.Builder(this).setTitle("Confirmation")
+                .setIcon(R.mipmap.usericon_2).setNegativeButton("Cancel", null)
+                .setPositiveButton("Exit",
                         new DialogInterface.OnClickListener() {
 
                     @Override
@@ -178,7 +178,7 @@ public class GroupManageActivity extends Activity{
                         sendSingleUserBills();
                         exitGroup();
                     }
-                }).setMessage("Are you sure to exit this group ?").create();
+                }).setMessage("Do you to exit this group?").create();
         dialog.show();
     }
 
