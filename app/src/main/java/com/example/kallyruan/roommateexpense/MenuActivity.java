@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kallyruan.roommateexpense.BillPkg.Bill;
+import com.example.kallyruan.roommateexpense.BillPkg.BillListActivity;
 import com.example.kallyruan.roommateexpense.BillPkg.UpcomingBillAdapter;
 import com.example.kallyruan.roommateexpense.DB.DBQueries;
 import com.example.kallyruan.roommateexpense.GroupPkg.CreateActivity;
@@ -34,6 +35,7 @@ import java.util.Comparator;
 
 public class MenuActivity extends Activity {
     private DBQueries instance = DBQueries.getInstance();
+    private Activity mActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,6 @@ public class MenuActivity extends Activity {
         setContentView(R.layout.activity_menu);
         showUserInfo();
         displayUpcomingBills();
-        //set up clickListener for signOut
         android.support.v7.widget.AppCompatImageView view = findViewById(R.id.signOutButton);
         view.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -49,6 +50,7 @@ public class MenuActivity extends Activity {
                 signOut();
             }
         });
+        this.mActivity = this;
     }
 
     /**
@@ -96,7 +98,7 @@ public class MenuActivity extends Activity {
      */
     public void displayUpcomingBills(){
         ListView listView = findViewById(R.id.upcoming_bills_list);
-        ArrayList<Bill> bills = getBillsByDate();
+        final ArrayList<Bill> bills = getBillsByDate();
         UpcomingBillAdapter adapter = new UpcomingBillAdapter(this, bills);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -105,8 +107,9 @@ public class MenuActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id)
             {
                 int pos = position + 1;
-                Toast.makeText(MenuActivity.this, Integer.toString(pos)+" Clicked",
-                        Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(mActivity, BillListActivity.class);
+                i.putExtra("group_id", instance.getGroupIdForBill(bills.get(position).getBillID()));
+                startActivity(i);
             }
 
         });

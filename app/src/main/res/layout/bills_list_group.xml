@@ -10,31 +10,37 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:paddingLeft="5dp"
+        android:layout_gravity="center_vertical"
+        android:maxLines="1"/>
 
     <TextView
         android:id="@+id/bill_amount"
         android:layout_height="wrap_content"
         android:layout_width="0dp"
         android:layout_weight="1"
-        />
+        android:textAlignment="center"/>
 
     <TextView
         android:id="@+id/bill_date"
         android:layout_height="wrap_content"
         android:layout_width="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:textAlignment="center"/>
 
     <Button
         android:id="@+id/bill_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Edit"
-        android:onClick="editBill"/>
+        android:onClick="editBill"
+        android:background="@drawable/my_button_bg"/>
 
     <Button
         android:id="@+id/bill_confirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Paid"/>
+        android:text="Paid"
+        android:background="@drawable/my_button_bg"/>
 </LinearLayout>

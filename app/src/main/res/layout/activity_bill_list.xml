@@ -12,9 +12,6 @@
         android:layout_marginTop="10dp"
         android:layout_alignParentTop="true"/>
 
-    <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent"/>-->
-
     <TextView
         android:id="@+id/user_nickname"
         android:layout_width="wrap_content"
@@ -24,18 +21,14 @@
         android:text="UserNickname"
         android:textSize="20dp"
         android:layout_below="@id/user_icon"/>
-        <!--app:layout_constraintStart_toEndOf="@id/user_icon"-->
-        <!--app:layout_constraintTop_toTopOf="parent"-->
-        <!--tools:layout_editor_absoluteX="87dp" -->
     <TextView
         android:id="@+id/bill_list_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="70dp"
-        android:textSize="18sp"
+        android:layout_marginTop="7dp"
+        android:textSize="20dp"
         android:text="My Bills"
+        android:textAlignment="center"
         android:layout_below="@id/user_nickname"/>
 
     <LinearLayout
@@ -43,47 +36,65 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:paddingTop="20dp"
         android:layout_below="@id/bill_list_title">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Label"
+            android:text="LABEL"
+            android:textSize="15dp"
             android:layout_weight="1"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Amount (USD)"
+            android:text="AMT (USD)"
+            android:textSize="15dp"
             android:layout_weight="1"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Due Date"
+            android:text="DUE"
+            android:textSize="15dp"
             android:layout_weight="1"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Edit"
+            android:text="EDIT"
+            android:textSize="15dp"
             android:layout_weight="1"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Confirm"
+            android:text="CONFIRM"
+            android:textSize="15dp"
             android:layout_weight="1"/>
     </LinearLayout>
     <ExpandableListView
         android:id="@+id/bills_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/bill_list_header">
-        <!--app:layout_constraintTop_toBottomOf="@id/bill_list_header"-->
+        android:layout_below="@id/bill_list_header"
+        android:groupIndicator="@null">
     </ExpandableListView>
     <Button
         android:id="@+id/add_bill_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add a bill"
         android:gravity="center"
-        android:layout_alignParentBottom="true"
-        android:onClick="addBill"/>
+        android:background="@drawable/my_button_bg"
+        android:onClick="addBill"
+        android:layout_above="@id/back_group_list"/>
+
+    <Button
+        android:id="@+id/back_group_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/my_button_bg"
+        android:clickable="true"
+        android:onClick="backToGroupList"
+        android:text="Group List"
+        android:textAlignment="center"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

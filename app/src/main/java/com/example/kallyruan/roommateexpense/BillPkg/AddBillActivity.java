@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -106,9 +107,15 @@ public class AddBillActivity extends Activity{
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-                int pos = position + 1;
-                Toast.makeText(AddBillActivity.this, Integer.toString(pos) + " Clicked",
-                        Toast.LENGTH_SHORT).show();
+            }
+        });
+        listView.setOnTouchListener(new View.OnTouchListener() {
+            // Setting on Touch Listener for handling the touch inside ScrollView
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Disallow the touch request for parent scroll on touch of child view
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
             }
         });
     }
@@ -223,5 +230,15 @@ public class AddBillActivity extends Activity{
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
         }
+    }
+
+    /**
+     * Cancels add bill and navigates back to list of bills within a group for a user
+     * @param view
+     */
+    public void cancelAddBill(View view){
+        Intent i = new Intent(this, BillListActivity.class);
+        i.putExtra("group_id", group_id);
+        startActivityForResult(i,1);
     }
 }
