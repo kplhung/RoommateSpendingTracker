@@ -34,16 +34,15 @@ public class CreateActivity extends Activity {
      */
     public void createGroup(View view){
         // get groupName
-        EditText name = (EditText) findViewById(R.id.groupName);
-        String groupName = name.getText().toString();
+        String groupName = ((EditText) findViewById(R.id.enterNameField)).getText().toString();
 
         // get invitee email addresses (up to three)
         ArrayList<String> invitees = new ArrayList<String>();
-        EditText invitee1 = (EditText) findViewById(R.id.invitee1);
+        String invitee1 = ((EditText) findViewById(R.id.enterM1Field)).getText().toString();
         invitees = checkEmail(invitees, invitee1);
-        EditText invitee2 = (EditText) findViewById(R.id.invitee2);
+        String invitee2 = ((EditText) findViewById(R.id.enterM2Field)).getText().toString();
         invitees = checkEmail(invitees, invitee2);
-        EditText invitee3 = (EditText) findViewById(R.id.invitee3);
+        String invitee3 = ((EditText) findViewById(R.id.enterM3Field)).getText().toString();
         invitees = checkEmail(invitees, invitee3);
 
         String user_id = LoginActivity.email;
@@ -57,11 +56,21 @@ public class CreateActivity extends Activity {
             //send invitees email & codes
             sendInviteEmails(invitees, user_id, group_id, groupName);
             //show success message
-            TextView message = (TextView) findViewById(R.id.message);
-            message.setVisibility(View.VISIBLE);
+            Toast.makeText(getApplicationContext(), "Success!",
+                    Toast.LENGTH_LONG).show();
+            seeGroups();
         } else {
             System.out.println("Group not successfully created.");
         }
+    }
+
+    /**
+     * After creating a group, user should be directly led to see a list of groups he/she is in
+     */
+    private void seeGroups(){
+        Intent i = new Intent(this, GroupListAcitivity.class);
+        startActivityForResult(i,1);
+        finish();
     }
 
     /**
@@ -110,10 +119,9 @@ public class CreateActivity extends Activity {
      * @param invitee to be invited
      * @return ArrayList of invitees
      */
-    public ArrayList<String> checkEmail(ArrayList<String> list, EditText invitee){
-        String email = invitee.getText().toString();
-        if (!email.equals("Invitee email address") ){
-            list.add(email);
+    public ArrayList<String> checkEmail(ArrayList<String> list, String invitee){
+        if (!invitee.equals("Invitee email address") ){
+            list.add(invitee);
         }
         return list;
     }
