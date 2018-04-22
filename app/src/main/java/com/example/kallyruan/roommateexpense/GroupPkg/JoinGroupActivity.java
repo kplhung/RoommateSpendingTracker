@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.kallyruan.roommateexpense.DB.DBQueries;
+import com.example.kallyruan.roommateexpense.MenuActivity;
 import com.example.kallyruan.roommateexpense.UserPkg.LoginActivity;
 import com.example.kallyruan.roommateexpense.R;
 import com.example.kallyruan.roommateexpense.UserPkg.User;
@@ -61,5 +62,14 @@ public class JoinGroupActivity extends Activity{
         Intent i = new Intent(this,GroupListAcitivity.class);
         startActivityForResult(i,1);
         finish();
+    }
+
+    /**
+     * Navigates user back to main menu
+     * @param view
+     */
+    public void backToMenu(View view){
+        Intent i = new Intent(this,MenuActivity.class);
+        startActivityForResult(i,1);
     }
 }
