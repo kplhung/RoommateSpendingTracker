@@ -32,7 +32,7 @@
         android:layout_weight="1"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:layout_marginLeft="160dp"/>
+        android:layout_marginLeft="165dp"/>
 
     <TextView
         android:id="@+id/alert"
