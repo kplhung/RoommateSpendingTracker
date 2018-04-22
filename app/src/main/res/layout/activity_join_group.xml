@@ -64,7 +64,7 @@
         android:background="@drawable/my_button_bg"
         android:clickable="true"
         android:onClick="backToMenu"
-        android:text="Back"
+        android:text="Menu"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
