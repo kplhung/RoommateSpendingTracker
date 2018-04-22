@@ -30,7 +30,5 @@ dependencies {
     implementation files('libs/activation.jar')
     implementation files('libs/mail.jar')
     implementation files('libs/additionnal.jar')
-    // compile files('/libs/activation.jar')
-    // compile files('/libs/mail.jar')
-    // compile files('/libs/additionnal.jar')
+    implementation 'com.intuit.sdp:sdp-android:1.0.5'
 }
