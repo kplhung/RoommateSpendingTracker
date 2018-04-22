@@ -37,6 +37,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingTop="20dp"
+        android:paddingHorizontal="5dp"
         android:layout_below="@id/bill_list_title">
         <TextView
             android:layout_width="wrap_content"
@@ -47,7 +48,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AMT (USD)"
+            android:text="AMT"
             android:textSize="15dp"
             android:layout_weight="1"/>
         <TextView
@@ -55,7 +56,7 @@
             android:layout_height="wrap_content"
             android:text="DUE"
             android:textSize="15dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1.5"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,7 +68,7 @@
             android:layout_height="wrap_content"
             android:text="CONFIRM"
             android:textSize="15dp"
-            android:layout_weight="1"/>
+            android:layout_weight="0.6"/>
     </LinearLayout>
     <ExpandableListView
         android:id="@+id/bills_list"
