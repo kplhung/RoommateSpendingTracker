@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * Created by kallyruan on 13/2/18.
  */
 
-public class GroupListAcitivity extends Activity{
+public class GroupListActivity extends Activity{
 
     //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
     ArrayAdapter<Integer> adapter_id;

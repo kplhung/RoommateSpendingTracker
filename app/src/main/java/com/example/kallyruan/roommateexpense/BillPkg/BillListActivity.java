@@ -3,25 +3,19 @@ package com.example.kallyruan.roommateexpense.BillPkg;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ImageView;
 
 import com.example.kallyruan.roommateexpense.DB.DBQueries;
-import com.example.kallyruan.roommateexpense.GroupPkg.Group;
-import com.example.kallyruan.roommateexpense.GroupPkg.GroupListAcitivity;
-import com.example.kallyruan.roommateexpense.MenuActivity;
+import com.example.kallyruan.roommateexpense.GroupPkg.GroupListActivity;
 import com.example.kallyruan.roommateexpense.UserPkg.LoginActivity;
 import com.example.kallyruan.roommateexpense.R;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -120,7 +114,7 @@ public class BillListActivity extends Activity {
      * @param view
      */
     public void backToGroupList(View view){
-        Intent i = new Intent(this,GroupListAcitivity.class);
+        Intent i = new Intent(this,GroupListActivity.class);
         startActivityForResult(i,1);
     }
 

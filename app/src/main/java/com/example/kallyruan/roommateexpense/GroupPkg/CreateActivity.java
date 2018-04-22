@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kallyruan.roommateexpense.DB.DBQueries;
@@ -68,7 +67,7 @@ public class CreateActivity extends Activity {
      * After creating a group, user should be directly led to see a list of groups he/she is in
      */
     private void seeGroups(){
-        Intent i = new Intent(this, GroupListAcitivity.class);
+        Intent i = new Intent(this, GroupListActivity.class);
         startActivityForResult(i,1);
         finish();
     }

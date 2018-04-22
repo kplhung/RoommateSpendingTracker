@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -196,7 +195,7 @@ public class GroupManageActivity extends Activity{
      * @param view
      */
     public void backToExistingGroupList(View view){
-        Intent i = new Intent(this,GroupListAcitivity.class);
+        Intent i = new Intent(this,GroupListActivity.class);
         startActivityForResult(i,1);
     }
 

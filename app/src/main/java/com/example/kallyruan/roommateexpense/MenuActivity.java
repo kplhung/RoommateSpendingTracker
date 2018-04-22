@@ -8,20 +8,16 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.kallyruan.roommateexpense.BillPkg.Bill;
 import com.example.kallyruan.roommateexpense.BillPkg.BillListActivity;
 import com.example.kallyruan.roommateexpense.BillPkg.UpcomingBillAdapter;
 import com.example.kallyruan.roommateexpense.DB.DBQueries;
 import com.example.kallyruan.roommateexpense.GroupPkg.CreateActivity;
-import com.example.kallyruan.roommateexpense.GroupPkg.GroupListAcitivity;
+import com.example.kallyruan.roommateexpense.GroupPkg.GroupListActivity;
 import com.example.kallyruan.roommateexpense.GroupPkg.JoinGroupActivity;
 import com.example.kallyruan.roommateexpense.UserPkg.LoginActivity;
-import com.example.kallyruan.roommateexpense.UserPkg.PasswordChangeActivity;
 import com.example.kallyruan.roommateexpense.UserPkg.ProfileActivity;
-
-import org.w3c.dom.Text;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -60,7 +56,7 @@ public class MenuActivity extends Activity {
     public void myGroup(View view){
         Intent i = getIntent();
         String username = i.getStringExtra("username");
-        Intent j = new Intent(this, GroupListAcitivity.class);
+        Intent j = new Intent(this, GroupListActivity.class);
         j.putExtra("username", username);
         startActivityForResult(j,1);
     }
