@@ -12,6 +12,9 @@ import android.widget.Toast;
 import android.widget.ImageView;
 
 import com.example.kallyruan.roommateexpense.DB.DBQueries;
+import com.example.kallyruan.roommateexpense.GroupPkg.Group;
+import com.example.kallyruan.roommateexpense.GroupPkg.GroupListAcitivity;
+import com.example.kallyruan.roommateexpense.MenuActivity;
 import com.example.kallyruan.roommateexpense.UserPkg.LoginActivity;
 import com.example.kallyruan.roommateexpense.R;
 
@@ -41,58 +44,14 @@ public class BillListActivity extends Activity {
         Intent i = getIntent();
         group_id = i.getStringExtra("group_id");
         String userEmail = LoginActivity.email;
+        TextView title = (TextView) findViewById(R.id.bill_list_title);
+        title.setText("My Bills for " + instance.getGroupName(group_id));
 
         // get list of bills
         ExpandableListView listView = (ExpandableListView) findViewById(R.id.bills_list);
         prepareBillData();
         BillAdapter adapter = new BillAdapter(this, bills, group_id, userEmail);
         listView.setAdapter(adapter);
-        // Listview Group click listener
-//        listView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-//
-//            @Override
-//            public boolean onGroupClick(ExpandableListView parent, View v,
-//                                        int groupPosition, long id) {
-//                 Toast.makeText(getApplicationContext(),
-//                 "Group Clicked " + bills.get(groupPosition).getName(),
-//                 Toast.LENGTH_SHORT).show();
-//                return false;
-//            }
-//        });
-
-        // Listview Group expanded listener
-//        listView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-//
-//            @Override
-//            public void onGroupExpand(int groupPosition) {
-//                Toast.makeText(getApplicationContext(),
-//                        bills.get(groupPosition).getName() + " Expanded",
-//                        Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
-        // Listview Group collasped listener
-//        listView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-//
-//            @Override
-//            public void onGroupCollapse(int groupPosition) {
-//                Toast.makeText(getApplicationContext(),
-//                        bills.get(groupPosition).getName() + " Collapsed",
-//                        Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-//        {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, final View view, int position, long id)
-//            {
-//                pos = position + 1;
-//                Toast.makeText(BillListActivity.this, Integer.toString(pos)+" Clicked",
-//                        Toast.LENGTH_SHORT).show();
-//            }
-//
-//        });
     }
 
     /**
@@ -154,6 +113,15 @@ public class BillListActivity extends Activity {
         i.putExtra("bill_date", bill.getDueDate());
         i.putExtra("bill_desc", bill.getDesc());
         startActivityForResult(i, 1);
+    }
+
+    /**
+     * Navigates back to user's group list
+     * @param view
+     */
+    public void backToGroupList(View view){
+        Intent i = new Intent(this,GroupListAcitivity.class);
+        startActivityForResult(i,1);
     }
 
     /**

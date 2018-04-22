@@ -144,40 +144,51 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
+        android:paddingHorizontal="10dp"
         android:orientation="horizontal"
+        android:background="#FFFFFF"
         app:layout_constraintTop_toBottomOf="@id/Manage_Profile">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Label" />
+            android:text="LABEL"
+            android:textStyle="bold"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Amount (USD)" />
+            android:text="AMT (USD)"
+            android:textStyle="bold"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Due Date" />
+            android:text="DUE DATE"
+            android:textStyle="bold"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Group" />
+            android:text="GROUP"
+            android:textStyle="bold"/>
     </LinearLayout>
+    <View
+        android:id="@+id/divider"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="#c0c0c0"
+        app:layout_constraintTop_toBottomOf="@id/upcoming_bills_list_header"/>
 
     <ListView
         android:id="@+id/upcoming_bills_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        app:layout_constraintTop_toBottomOf="@id/upcoming_bills_list_header"></ListView>
+        android:background="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/divider"></ListView>
 
 </android.support.constraint.ConstraintLayout>
