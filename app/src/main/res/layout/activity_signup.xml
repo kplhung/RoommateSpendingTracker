@@ -1,137 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#caf0f7"
-    tools:context="com.example.kallyruan.roommateexpense.UserPkg.SignupActivity"
-    tools:layout_editor_absoluteY="81dp">
+    android:layout_height="match_parent" >
 
     <TextView
         android:id="@+id/loginSticker"
         android:layout_width="102dp"
         android:layout_height="34dp"
-        android:layout_marginLeft="48dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/emailField"
+        android:layout_marginLeft="23dp"
+        android:layout_marginStart="23dp"
         android:clickable="true"
         android:gravity="center"
         android:onClick="setIcon1"
         android:text="Username"
-        android:textSize="18dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteY="42dp" />
+        android:textSize="16dp" />
 
     <TextView
         android:id="@+id/passwordSticker"
         android:layout_width="97dp"
         android:layout_height="41dp"
-        android:layout_marginLeft="48dp"
-        android:layout_marginTop="20dp"
+        android:layout_alignRight="@+id/loginSticker"
+        android:layout_alignEnd="@+id/loginSticker"
+        android:layout_alignTop="@+id/passwordField"
         android:gravity="center"
         android:text="Password"
-        android:textSize="18dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginSticker" />
+        android:textSize="16dp" />
 
     <EditText
         android:id="@+id/emailField"
         android:layout_width="189dp"
         android:layout_height="45dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:inputType="text"
-        app:layout_constraintStart_toEndOf="@+id/loginSticker"
-        app:layout_constraintTop_toBottomOf="parent"
-        tools:layout_editor_absoluteX="166dp"
-        tools:layout_editor_absoluteY="42dp" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="27dp"
+        android:layout_marginEnd="27dp"
+        android:layout_marginTop="33dp"
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/passwordField"
         android:layout_width="189dp"
         android:layout_height="41dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:inputType="text"
-        app:layout_constraintStart_toEndOf="@+id/passwordSticker"
-        app:layout_constraintTop_toBottomOf="@+id/emailField"
-        tools:layout_editor_absoluteX="157dp"
-        tools:layout_editor_absoluteY="108dp" />
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/emailField"
+        android:layout_alignStart="@+id/emailField"
+        android:layout_marginTop="111dp"
+        android:inputType="text" />
 
     <Button
         android:id="@+id/signUpButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:text="Sign up"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordField"
-        app:layout_constraintVertical_bias="0.896" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/my_button_bg"
+        android:text="Sign up" />
 
     <TextView
         android:id="@+id/nicknameSticker"
         android:layout_width="97dp"
         android:layout_height="41dp"
-        android:layout_marginLeft="48dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="20dp"
+        android:layout_alignRight="@+id/loginSticker"
+        android:layout_alignEnd="@+id/loginSticker"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="178dp"
+        android:gravity="center"
         android:text="Nickname"
-        android:textSize="18dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordSticker"
-        tools:layout_editor_absoluteX="67dp"
-        tools:layout_editor_absoluteY="185dp" />
+        android:textSize="16dp" />
 
     <EditText
         android:id="@+id/nicknameField"
         android:layout_width="189dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_alignBottom="@+id/nicknameSticker"
+        android:layout_alignLeft="@+id/passwordField"
+        android:layout_alignStart="@+id/passwordField"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text=""
-        app:layout_constraintStart_toEndOf="@+id/nicknameSticker"
-        app:layout_constraintTop_toBottomOf="@+id/passwordField"
-        tools:layout_editor_absoluteX="170dp"
-        tools:layout_editor_absoluteY="167dp" />
+        android:text="" />
 
     <TextView
         android:id="@+id/notice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="230dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginStart="36dp"
         android:text="Pick A User Icon"
-        android:textSize="18dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nicknameSticker" />
+        android:textSize="16dp" />
 
     <GridView
         android:id="@+id/user_icon_gridView"
         android:layout_width="370dp"
-        android:layout_height="200dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_height="135dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="75dp"
         android:columnWidth="80dp"
         android:gravity="center"
         android:horizontalSpacing="8dp"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/signUpButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notice"
-        app:layout_constraintVertical_bias="0.655" />
+        android:verticalSpacing="8dp" />
 
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
