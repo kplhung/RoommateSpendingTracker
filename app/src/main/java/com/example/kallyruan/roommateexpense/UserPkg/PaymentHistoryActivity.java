@@ -1,10 +1,12 @@
 package com.example.kallyruan.roommateexpense.UserPkg;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -28,6 +30,13 @@ public class PaymentHistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_history);
+        Button back = (Button) findViewById(R.id.backToProfile);
+        back.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),
+                        ProfileActivity.class));
+            }
+        });
 
         // get user's old bills in a result set
         DBQueries dbq = DBQueries.getInstance();
