@@ -314,7 +314,7 @@ public class DBQueries {
                 String remove = "DELETE FROM Users WHERE user_id = ?";
                 pstmt = con.prepareStatement(remove);
                 pstmt.setString(1, oldEmail);
-                stmt.executeUpdate();
+                pstmt.executeUpdate();
 
                 return true;
             } catch (SQLException e) {
