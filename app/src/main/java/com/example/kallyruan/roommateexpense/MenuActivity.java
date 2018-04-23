@@ -194,7 +194,9 @@ public class MenuActivity extends Activity {
                 break;
         }
     }
-
+    /**
+    * direct to MainActivity class and turn UI to welcome page
+    **/
     public void signOut(){
         Intent i = new Intent(this, MainActivity.class);
         startActivityForResult(i, 1);

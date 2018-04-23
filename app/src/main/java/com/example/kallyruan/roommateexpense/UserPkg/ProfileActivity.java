@@ -185,7 +185,9 @@ public class ProfileActivity extends Activity {
                 break;
         }
     }
-
+    /**
+    * redirect to Welcome page and MainActivity class
+    **/
     public void signOut(){
         Intent i = new Intent(this, MainActivity.class);
         startActivityForResult(i, 1);
