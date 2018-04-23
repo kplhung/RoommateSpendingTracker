@@ -48,6 +48,8 @@ public class EmailChangeActivity extends Activity {
      *  replace the account address with the new email address
      */
     public void changeEmail(){
+        Toast toast;
+        boolean result=false;
         //get user inputs
         EditText email = findViewById(R.id.old_email);
         String old_email = email.getText().toString();
@@ -55,59 +57,44 @@ public class EmailChangeActivity extends Activity {
         String account_password = password.getText().toString();
         EditText email_new = findViewById(R.id.new_email);
         String new_email = email_new.getText().toString();
+
         //check whether email and password are correct
         DBQueries db = DBQueries.getInstance();
         int rs = db.login(old_email, account_password);
         Handler h = new Handler();
+
         //only update the account email when current email and password are correct
         if(rs != 2){
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "Email or password incorrect!; Please try again!",
-                    Toast.LENGTH_SHORT);
-            toast.show();
+            toast = Toast.makeText(getApplicationContext(),
+                    "Email or password incorrect!; Please try again!", Toast.LENGTH_SHORT);
+        }else{
+            result = db.changeEmail(old_email, new_email);
+            //check changeEmail successful from DBQueries
+            if(result) {
+                toast = Toast.makeText(getApplicationContext(),
+                        "Successfully changed the account email!; Please login again!",
+                        Toast.LENGTH_SHORT);
+            }else{
+                toast = Toast.makeText(getApplicationContext(),
+                        "Something wrong!; Please try again!", Toast.LENGTH_SHORT);
+            }
+        }
+        //show toast and redirect to responding page
+        toast.show();
+        if(result){
+            // redirect to sign up page
+            h.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                }}, 500);
+        }else{
             // redirect to email change page
             h.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    startActivity(new Intent(getApplicationContext(),
-                            EmailChangeActivity.class));
-                }
-            }, 500);
-        }else{
-            System.out.println(rs);
-            boolean result = db.changeEmail(old_email, new_email);
-
-            //check changeEmail successful from DBQueries
-            if(result) {
-                // show up the message
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "Successfully changed the account email!; Please login again!",
-                        Toast.LENGTH_SHORT);
-                toast.show();
-
-                // redirect to sign up page
-                h.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                    }
-                }, 500);
-
-            }else{
-                // show up the error message
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "Something wrong!; Please try again!",
-                        Toast.LENGTH_SHORT);
-                toast.show();
-
-                // redirect to sign up page
-                h.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        startActivity(new Intent(getApplicationContext(), EmailChangeActivity.class));
-                    }
-                }, 500);
-            }
+                    startActivity(new Intent(getApplicationContext(), EmailChangeActivity.class));
+                }}, 500);
         }
     }
 
@@ -138,8 +125,8 @@ public class EmailChangeActivity extends Activity {
         try {
             iconIndex = Integer.parseInt(icon);
         } catch (Exception e) {
+            //default image
             iconIndex = -1;
-            System.out.println("No icon image recorded. Put default image instead.");
         }
 
         ImageView image = findViewById(R.id.user_icon);
