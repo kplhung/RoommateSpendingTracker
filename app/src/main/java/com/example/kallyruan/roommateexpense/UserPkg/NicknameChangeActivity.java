@@ -24,6 +24,11 @@ public class NicknameChangeActivity extends Activity {
         showUserInfo();
     }
 
+    /**
+     * This is to pop up a dialog to let user confirm their action.
+     * If action confirmed, call changeNickName() to update database
+     * @param view
+     **/
     public void confirmChangeNickname(View view){
         AlertDialog dialog = new AlertDialog.Builder(this).setTitle("Confirm action " +
                 "dialog").setIcon(R.mipmap.usericon_2)
@@ -39,11 +44,18 @@ public class NicknameChangeActivity extends Activity {
         dialog.show();
     }
 
+    /**
+     * If user cancel their change action, refresh UI
+     * @param view
+     */
     public void cancel(View view){
         Intent i = new Intent(this, ProfileActivity.class);
         startActivityForResult(i, 1);
     }
 
+    /**
+     * Update new user nickname info to database. Show success or failure toast based on results
+     */
     public void changeNickname(){
         //get user inputs
         EditText name = findViewById(R.id.name);
