@@ -153,7 +153,11 @@ public class IconChangeActivity extends AppCompatActivity {
             }, 500);
         }
     }
-
+    
+/**
+* This function is to direct to Profile page
+* @param View
+**/
     public void back(View view){
         Intent i = new Intent(this, ProfileActivity.class);
         startActivityForResult(i, 1);
