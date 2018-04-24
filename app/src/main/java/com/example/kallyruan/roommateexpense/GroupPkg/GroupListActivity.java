@@ -45,6 +45,14 @@ public class GroupListActivity extends Activity{
                 loadBillList(view);
             }
         });
+        //check whether click on signOut button
+        android.support.v7.widget.AppCompatImageView view = findViewById(R.id.signOutButton);
+        view.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                signOut();
+            }
+        });
     }
 
     /**
