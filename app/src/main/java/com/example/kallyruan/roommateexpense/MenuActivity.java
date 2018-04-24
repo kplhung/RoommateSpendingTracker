@@ -148,8 +148,10 @@ public class MenuActivity extends Activity {
      * Shows user icon and nickname
      **/
     public void showUserInfo(){
-        // get nickname, email and set to TextView content
+        // get nickname and set to TextView content
         String nickname = instance.getNickname(LoginActivity.email);
+        TextView email = findViewById(R.id.user_email);
+        email.setText(LoginActivity.email);
         TextView userNickname = findViewById(R.id.user_nickname);
         userNickname.setText(nickname);
 
