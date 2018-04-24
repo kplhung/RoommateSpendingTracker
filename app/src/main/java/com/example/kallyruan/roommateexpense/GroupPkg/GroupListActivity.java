@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.kallyruan.roommateexpense.BillPkg.BillListActivity;
 import com.example.kallyruan.roommateexpense.DB.DBQueries;
+import com.example.kallyruan.roommateexpense.MainActivity;
 import com.example.kallyruan.roommateexpense.UserPkg.LoginActivity;
 import com.example.kallyruan.roommateexpense.MenuActivity;
 import com.example.kallyruan.roommateexpense.R;
@@ -42,6 +43,14 @@ public class GroupListActivity extends Activity{
             public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
                 action_index = position;
                 loadBillList(view);
+            }
+        });
+        //check whether click on signOut button
+        android.support.v7.widget.AppCompatImageView view = findViewById(R.id.signOutButton);
+        view.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                signOut();
             }
         });
     }
@@ -88,13 +97,14 @@ public class GroupListActivity extends Activity{
     }
 
     /**
-     * Get user icon and nickname from database and show it in UI
+     * Shows user icon and nickname
      **/
-    public void showUserInfo() {
+    public void showUserInfo(){
         DBQueries instance = DBQueries.getInstance();
-
-        //get nickname and set to TextView content
+        // get nickname and set to TextView content
         String nickname = instance.getNickname(LoginActivity.email);
+        TextView email = findViewById(R.id.user_email);
+        email.setText(LoginActivity.email);
         TextView userNickname = findViewById(R.id.user_nickname);
         userNickname.setText(nickname);
 
@@ -103,7 +113,6 @@ public class GroupListActivity extends Activity{
         int iconIndex;
         try {
             iconIndex = Integer.parseInt(icon);
-
         } catch (Exception e) {
             iconIndex = -1;
             System.out.println("No icon image recorded. Put default image instead.");
@@ -139,5 +148,13 @@ public class GroupListActivity extends Activity{
                 image.setImageResource(R.mipmap.usericon_5);
                 break;
         }
+    }
+
+    /**
+     * redirect to Welcome page and MainActivity class
+     **/
+    public void signOut(){
+        Intent i = new Intent(this, MainActivity.class);
+        startActivityForResult(i, 1);
     }
 }
